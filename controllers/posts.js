@@ -1,6 +1,8 @@
 const cloudinary = require("../middleware/cloudinary");
 const Post = require("../models/Post");
 
+
+
 module.exports = {
   getProfile: async (req, res) => {
     try {
@@ -13,7 +15,8 @@ module.exports = {
   getFeed: async (req, res) => {
     try {
       const posts = await Post.find().populate("user").populate("media").sort({ createdAt: "desc" }).lean();
-      res.render("feed.ejs", { posts: posts });
+
+      res.render("feed.ejs", { posts });
     } catch (err) {
       console.log(err);
     }
@@ -28,20 +31,20 @@ module.exports = {
   },
   createPost: async (req, res) => {
     console.log(req.file.mimetype)
-    try {
+    
       // Upload media to cloudinary
       const result = await cloudinary.uploader.upload(req.file.path, { resource_type: req.file.mimetype.startsWith('video') ? 'video' : 'image' });
-  
+   try{
       await Post.create({
         title: req.body.title,
         media: {
           type: req.file.mimetype.startsWith('video') ? 'video' : 'image',
           url: result.secure_url,
-          cloudinaryId: result.public_id
         },
         caption: req.body.caption,
         likes: 0,
         user: req.user.id,
+        cloudinaryId: result.public_id
       });
   console.log(req.file.mimetype)
       console.log("Post has been added!");
@@ -69,8 +72,9 @@ module.exports = {
     try {
       // Find post by id
       let post = await Post.findById({ _id: req.params.id });
+      // console.log(post.media.url)
       // Delete image from cloudinary
-      await cloudinary.uploader.destroy(post.cloudinaryId);
+      await cloudinary.uploader.destroy(post.media.url);
       // Delete post from db
       await Post.remove({ _id: req.params.id });
       console.log("Deleted Post");

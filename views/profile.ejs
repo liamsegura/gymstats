@@ -32,9 +32,10 @@
       <div class="col-6">
         <ul class="row list-unstyled">
         <% for(var i=0; i<posts.length; i++) {%>
+          <% const thumbnailUrl = posts[i].media.url.replace(/\.[^/.]+$/, "") + ".jpg"; %>
           <li class="col-6 justify-content-between mt-5">
             <a href="/post/<%= posts[i]._id%>">
-              <img class="img-fluid" src="<%= posts[i].media.url%>">
+              <img class="img-fluid" src="<%= thumbnailUrl %>">
             </a>
           </li>
         <% } %>

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { image } = require("../middleware/cloudinary");
 
 const PostSchema = new mongoose.Schema({
   title: {
@@ -14,11 +15,7 @@ const PostSchema = new mongoose.Schema({
     url: {
       type: String,
       required: true,
-    },
-    cloudinaryId: {
-      type: String,
-      required: true,
-    },
+    }
   },
   caption: {
     type: String,
@@ -31,6 +28,10 @@ const PostSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+  },
+  cloudinaryId: {
+    type: String,
+    required: true,
   },
   createdAt: {
     type: Date,
