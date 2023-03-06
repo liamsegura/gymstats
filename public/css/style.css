@@ -53,4 +53,6 @@
   .font-weight-bold {
     font-weight: 600;
   }
-  
+  .row{
+    --bs-gutter-x: 0!important;
+  }
