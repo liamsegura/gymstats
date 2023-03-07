@@ -1,13 +1,17 @@
 <%- include('partials/header') -%>
 
 <div class="container">
-  <div class="column mt-5">
-    <div>
-      <div>
-        <p><strong>User Name</strong>: <%= user.userName.toLowerCase() %></p>
-        <p><strong>Email</strong>: <%= user.email %></p>
+  <div class="">
+    
+    
+    <div class="profile-info">
+      
+        <h2> <%= user.userName.toLowerCase() %></h2>
+        <div class="">
+          <img class="rounded-circle mr-3" src="/imgs/Default-Profile-Picture-Transparent-Images.png" alt="Profile picture" width="100" height="100">
         <a href="/logout" class="col-3 btn btn-primary">Logout</a>
       </div>
+    </div>
  
     <div class="col-0">
       <ul class="row list-unstyled profile-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(125px, 1fr)); grid-gap: 0;">
@@ -19,9 +23,7 @@
         </li>
         <% } %>
       </ul>
-      <div class="row justify-content-center mt-5">
-        <a class="btn btn-primary" href="/feed">Return to Feed</a>
-      </div>
+    
     </div>
   </div>
 </div>
