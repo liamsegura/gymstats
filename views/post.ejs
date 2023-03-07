@@ -7,7 +7,18 @@
       
       
   </div>
-  <div class="row align-items-center justify-content-between mt-3">
+  
+  <% if(post.user == user.id){ %>
+    <div class="col-12 p-2">
+      <a href="/profile" ><strong><%= userName %></strong></a> <p><%= post.caption %></p>
+    </div>
+    <% } else {%>
+  <div class="col-12 p-2">
+    <a href="/viewProfile/<%= post.user %>" ><strong><%= userName %></strong></a> <p><%= post.caption %></p>
+  </div>
+  <% } %>
+
+  <div class="row align-items-center justify-content-between mb-3">
     <div class="col-3">
       <form action="/post/likePost/<%= post.id %>?_method=PUT" method="POST">
         <button class="btn btn-link p-0">
@@ -28,15 +39,7 @@
     </div>
     <% } %>
   </div>
-  <% if(post.user == user.id){ %>
-    <div class="col-12 mt-3 p-2">
-      <a href="/profile" ><strong><%= userName %></strong></a> <p><%= post.caption %></p>
-    </div>
-    <% } else {%>
-  <div class="col-12 mt-3 p-2">
-    <a href="/viewProfile/<%= post.user %>" ><strong><%= userName %></strong></a> <p><%= post.caption %></p>
-  </div>
-  <% } %>
+
 </div>
 
 

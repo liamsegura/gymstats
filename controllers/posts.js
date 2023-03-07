@@ -27,7 +27,7 @@ module.exports = {
     try {
       const posts = await Post.find().populate("user").populate("media").sort({ createdAt: "desc" }).lean();
 
-      res.render("feed.ejs", { posts });
+      res.render("feed.ejs", { posts, user: req.user });
     } catch (err) {
       console.log(err);
     }
