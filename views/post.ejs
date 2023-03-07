@@ -1,4 +1,5 @@
 <%- include('partials/header') -%>
+
 <div class="container">
   <div class="row justify-content-center mt-5">
   
@@ -27,10 +28,15 @@
     </div>
     <% } %>
   </div>
-  
+  <% if(post.user == user.id){ %>
+    <div class="col-12 mt-3 p-2">
+      <a href="/profile" ><strong><%= userName %></strong></a> <p><%= post.caption %></p>
+    </div>
+    <% } else {%>
   <div class="col-12 mt-3 p-2">
-    <p><strong><%= userName %></strong> <%= post.caption %></p>
+    <a href="/viewProfile/<%= post.user %>" ><strong><%= userName %></strong></a> <p><%= post.caption %></p>
   </div>
+  <% } %>
 </div>
 
 

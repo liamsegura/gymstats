@@ -12,6 +12,17 @@ module.exports = {
       console.log(err);
     }
   },
+  viewProfile: async (req, res) => {
+    try {
+      const posts = await Post.find({ user: req.params.id });
+ 
+      const userName = await Post.find({ user: req.params.id }).populate("user")
+      console.log()
+      res.render("viewProfile.ejs", { posts: posts, userName: userName[0].user.userName.toLowerCase()});
+    } catch (err) {
+      console.log(err);
+    }
+  },
   getFeed: async (req, res) => {
     try {
       const posts = await Post.find().populate("user").populate("media").sort({ createdAt: "desc" }).lean();
