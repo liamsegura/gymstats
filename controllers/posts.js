@@ -23,9 +23,9 @@ module.exports = {
   },
   getPost: async (req, res) => {
     try {
-      const post = await Post.findById(req.params.id).populate("user");
-      res.render("post.ejs", { post: post, user: req.user });
-      console.log(post)
+      const post = await Post.findById(req.params.id);
+      const userName = await Post.findById(req.params.id).populate("user")
+      res.render("post.ejs", { post: post, user: req.user, userName: userName.user.userName.toLowerCase() });
     } catch (err) {
       console.log(err);
     }
