@@ -2,10 +2,7 @@ const mongoose = require("mongoose");
 const { image } = require("../middleware/cloudinary");
 
 const PostSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
+  
   media: {
     type: {
       type: String,

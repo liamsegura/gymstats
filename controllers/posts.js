@@ -29,6 +29,13 @@ module.exports = {
       console.log(err);
     }
   },
+  getPostMenu: async (req, res) => { 
+    try{
+      res.render("postmenu.ejs")
+    } catch (err) {
+      console.log(err);
+    }
+  },
   createPost: async (req, res) => {
     console.log(req.file.mimetype)
     
@@ -36,7 +43,6 @@ module.exports = {
       const result = await cloudinary.uploader.upload(req.file.path, { resource_type: req.file.mimetype.startsWith('video') ? 'video' : 'image' });
    try{
       await Post.create({
-        title: req.body.title,
         media: {
           type: req.file.mimetype.startsWith('video') ? 'video' : 'image',
           url: result.secure_url,
@@ -72,9 +78,8 @@ module.exports = {
     try {
       // Find post by id
       let post = await Post.findById({ _id: req.params.id });
-      // console.log(post.media.url)
       // Delete image from cloudinary
-      await cloudinary.uploader.destroy(post.media.url);
+      await cloudinary.uploader.destroy(post.cloudinaryId);
       // Delete post from db
       await Post.remove({ _id: req.params.id });
       console.log("Deleted Post");
