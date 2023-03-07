@@ -75,11 +75,13 @@ module.exports = {
     }
   },
   deletePost: async (req, res) => {
+ 
     try {
       // Find post by id
       let post = await Post.findById({ _id: req.params.id });
+      console.log(post)
       // Delete image from cloudinary
-      await cloudinary.uploader.destroy(post.cloudinaryId);
+      await cloudinary.uploader.destroy(post.cloudinaryId, { resource_type: post.media.type.startsWith('video') ? 'video' : 'image' });
       // Delete post from db
       await Post.remove({ _id: req.params.id });
       console.log("Deleted Post");

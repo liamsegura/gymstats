@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { image } = require("../middleware/cloudinary");
 
 const PostSchema = new mongoose.Schema({
   
