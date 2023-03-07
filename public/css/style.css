@@ -10,6 +10,7 @@ a {
     text-decoration: none;
   }
 
+
 .container{
     padding: 0px;
 }
@@ -84,7 +85,7 @@ a {
   }
   
   .logo {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: bold;
     margin-right: auto;
   }
