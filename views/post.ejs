@@ -1,36 +1,37 @@
 <%- include('partials/header') -%>
 <div class="container">
   <div class="row justify-content-center mt-5">
-    <div class="col-6">
+  
       <img class="img-fluid" src="<%= post.media.url%>" />
-      <div class="row justify-content-between">
-        <form
-          class="col-1"
-          action="/post/likePost/<%= post.id %>?_method=PUT"
-          method="POST"
-        >
-          <button class="btn btn-primary fa fa-heart" type="submit"></button>
-        </form>
-        <h3 class="col-3">Likes: <%= post.likes %></h3>
-        <%if(post.user == user.id){ %>
-        <form
-          action="/post/deletePost/<%= post.id %>?_method=DELETE"
-          method="POST"
-          class="col-3"
-        >
-          <button class="btn btn-primary fa fa-trash" type="submit"></button>
-        </form>
-        <%}%>
-      </div>
+      
+      
+  </div>
+  <div class="row align-items-center justify-content-between mt-3">
+    <div class="col-3">
+      <form action="/post/likePost/<%= post.id %>?_method=PUT" method="POST">
+        <button class="btn btn-link p-0">
+          <i class="far fa-heart"></i>
+        </button>
+      </form>
     </div>
-    <div class="col-3 mt-5">
-      <p><%= post.caption %></p>
+    <div class="col-6 text-center">
+      <span><%= post.likes %> likes</span>
     </div>
-    <div class="col-6 mt-5">
-      <a class="btn btn-primary" href="/profile">Return to Profile</a>
-      <a class="btn btn-primary" href="/feed">Return to Feed</a>
+    <% if(post.user == user.id){ %>
+    <div class="col-3 text-right">
+      <form action="/post/deletePost/<%= post.id %>?_method=DELETE" method="POST">
+        <button class="btn btn-link p-0">
+          <i class="far fa-trash-alt"></i>
+        </button>
+      </form>
     </div>
+    <% } %>
+  </div>
+  
+  <div class="col-12 mt-3">
+    <p><strong><%= post.user.userName.toLowerCase() %></strong> <%= post.caption %></p>
   </div>
 </div>
+
 
 <%- include('partials/footer') -%>

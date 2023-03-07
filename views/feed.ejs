@@ -7,7 +7,7 @@
         <div class="d-flex align-items-center mb-1">
           <img class="rounded-circle mr-3" src="/imgs/221477617_1801047823416161_2319731700073592842_n.jpg" alt="Profile picture" width="30" height="30">
           <div class="d-flex flex-column">
-            <span class="font-weight-bold"><%= posts[i].user.userName %></span>
+            <span class="font-weight-bold"><%= posts[i].user.userName.toLowerCase() %></span>
           </div>
         </div>
         <a href="/post/<%= posts[i]._id%>" class="post">
