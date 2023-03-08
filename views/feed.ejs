@@ -10,7 +10,7 @@
           <% if(posts[i].user.userName == loggedUser.userName){ %>
             
             <a href="/profile/<%= loggedUser._id %>" >
-              <div class="d-flex flex-column">
+              <div class="d-flex flex-row align-items-center">
                 <img class="rounded-circle mr-3" src="/imgs/Default-Profile-Picture-Transparent-Images.png" alt="Profile picture" width="30" height="30">
                 <span class="font-weight-bold"><%= posts[i].user.userName.toLowerCase() %></span>
               </div>
