@@ -4,9 +4,13 @@
         <div class="footer justify-content-between">
           <div class="links">
 
-            <span class="post"><a href="/feed">FEED</a></span>
-            <span class="profile"><a href="/profile/<%= loggedUser._id %>">PROFILE</a></span>
- 
+            <div class="home-button">
+                <a href="/feed"><i class="fas fa-home"></i></a>
+            </div>
+            <div class="profile-button">
+                <a href="/profile/<%= loggedUser._id %>">  <i class="fas fa-user"></i></a>
+            </div>
+
           </div>
         </div>
       </header>
