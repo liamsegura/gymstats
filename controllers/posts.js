@@ -84,7 +84,7 @@ module.exports = {
       const result = await cloudinary.uploader.upload(
       req.file.path,
        { resource_type: req.file.mimetype.startsWith('video') ? 'video' : 'image',
-       bit_rate: "250k",
+       bit_rate: "550k",
        transformation: [
         {duration: "30.0"},
         {quality: "80:qmax_20"}
