@@ -2,48 +2,51 @@
 <div class="container">
   <div class="flex-column justify-content-center mt-5">
     <ul class="col-12 col-md-8 col-lg-6 list-unstyled mx-auto">
-      <% for(var i=0; i<posts.length; i++) {%>
+      <% for(var i=0; i<mergedArray.length; i++) {%>
         
       <li class="post-item mb-5">
         <div class="d-flex align-items-center mb-1 p-2">
-          
-          <% if(posts[i].user.userName == loggedUser.userName){ %>
-            
-            <a href="/profile/<%= loggedUser._id %>" >
+   
+            <a href="/profile/<%= mergedArray[i].user._id %>" >
               <div class="d-flex flex-row align-items-center">
                 <img class="rounded-circle mr-3" src="/imgs/Default-Profile-Picture-Transparent-Images.png" alt="Profile picture" width="30" height="30">
-                <span class="font-weight-bold"><%= posts[i].user.userName.toLowerCase() %></span>
+                <span class="font-weight-bold"><%= mergedArray[i].user.userName.toLowerCase() %></span>
               </div>
             </a>
 
-            <% } else {%>
-              
-            <a href="/profile/<%= posts[i].user._id %>" >
-              <div class="d-flex flex-row align-items-center">
-                <img class="rounded-circle mr-3" src="/imgs/Default-Profile-Picture-Transparent-Images.png" alt="Profile picture" width="30" height="30">
-                <span class="font-weight-bold"><%= posts[i].user.userName.toLowerCase() %></span>
-              </div>
-            </a>
-         
-            <% } %>
-          
         </div>
-        <a href="/post/<%= posts[i]._id%>" class="post">
+        <a href="/post/<%= mergedArray[i]._id%>" class="post">
           <div class="post-thumbnail">
-            <img class="img-fluid post-img" src="<%= posts[i].media.url %>" alt="Image">
+            <img class="img-fluid post-img" src="<%= mergedArray[i].media.url %>" alt="Image">
           </div>
           <div class="post-info ml-3 d-flex flex-column p-2">
             <div class="d-flex align-items-center mb-1">
               <div class="d-flex flex-column">
-                <span class="font-weight-bold mr-1"><%= posts[i].caption %></span>
-                <span class="text-muted"><%= posts[i].createdAt.toDateString() %></span>
+
+                <% if(mergedArray[i].catagory) {%>
+                  <div class="d-flex flex-row align-items-center">
+                   
+                    <h3>PERSONAL RECORD</h3>
+                    
+                  
+                    <div class="trophy-icon">
+                      <i class="fas fa-trophy"></i>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-column">
+                  <p ><%= mergedArray[i].catagory %></p>
+                </div>
+                <%}%>
+
+                <span class="font-weight-bold mr-1"><%= mergedArray[i].caption %></span>
+                <span class="text-muted"><%= mergedArray[i].createdAt.toDateString() %></span>
              
            
               </div>
             </div>
             <div class="mb-3">
     
-              <span class="font-weight-bold mr-1"><%= posts[i].likes %></span>
+              <span class="font-weight-bold mr-1"><%= mergedArray[i].likes %></span>
               <span class="text-muted">likes</span>
               
             </div>

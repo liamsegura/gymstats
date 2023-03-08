@@ -17,6 +17,29 @@
           <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
         </form>
       </div>
+
+      <div class="p-5">
+        <h2>Add a personal record</h2>
+        <form action="/pr/createPR" enctype="multipart/form-data" method="POST">
+          <div class="mb-3">
+
+            <select class="form-control" id="catagory" name="catagory" required>
+              <option value="" disabled selected>Select PR</option>
+              <option value="benchpress">Bench Press 1RM</option>
+              <option value="deadlift">Dead Lift 1RM</option>
+              <option value="squat">Squat 1RM</option>
+            </select>
+
+            <label for="caption" class="form-label">Caption</label>
+            <textarea class="form-control" id="caption" name="caption" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="mediaUpload" class="form-label">Media (Video)</label>
+            <input type="file" class="form-control" id="mediaUpload" name="media" accept="video/*">
+          </div>
+          <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
+        </form>
+      </div>
     </div>
     <div class="col-0">
      

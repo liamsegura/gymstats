@@ -92,7 +92,16 @@ a:hover{
     content: "\f067";
   }
   
-
+  .trophy-icon {
+    display: inline-block;
+    color: #ffd700; /* Gold color */
+    font-size: 20px;
+  }
+  
+  .fa-trophy:before {
+    content: "\f091";
+  }
+  
 
 .container{
     padding: 0px;

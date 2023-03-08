@@ -1,10 +1,11 @@
 const cloudinary = require("../middleware/cloudinary");
 const Post = require("../models/Post");
 const User = require("../models/User");
-
+const PR = require("../models/PR")
 
 
 module.exports = {
+
   getProfile: async (req, res) => {
     try {
       const posts = await Post.find({ user: req.params.id });
@@ -14,23 +15,60 @@ module.exports = {
       console.log(err);
     }
   },
+
   getFeed: async (req, res) => {
     try {
-      const posts = await Post.find().populate("user").populate("media").sort({ createdAt: "desc" }).lean();
-      res.render("feed.ejs", { posts, loggedUser: req.user });
+
+      const posts = await Post.find().populate("user").populate("media").lean();
+      const PRs = await PR.find().populate("user").populate("media").lean();
+      const mergedArray = [...posts, ...PRs];
+      mergedArray.sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+
+      res.render("feed.ejs", { mergedArray, loggedUser: req.user });
     } catch (err) {
       console.log(err);
     }
   },
+
   getPost: async (req, res) => {
     try {
-      const post = await Post.findById(req.params.id);
-      const user = await User.findById({_id: post.user});
-      res.render("post.ejs", { post: post, loggedUser: req.user, user: user });
+        const postId = req.params.id;
+
+        // Search for the post in the Post collection
+        let post = await Post.findOne({ _id: postId }).populate({
+          path: 'user',
+          model: 'User'
+        }).populate("media").lean();
+        
+
+        // If a post with the given ID is not found in the Post collection, search for it in the PR collection
+        if (!post) {
+            const pr = await PR.findOne({ _id: postId }).populate("user").populate("media").lean();
+            if (pr) {
+                // If a PR with the given ID is found, assign it to the post variable
+                post = pr;
+            }
+        }
+
+        if (!post) {
+            // If neither a post nor a PR with the given ID is found, return a 404 error
+            return res.status(404).render("404.ejs");
+        }
+
+        // If a post or PR with the given ID is found, render the post.ejs template with the post and user objects
+        const user = await User.findById(post.user);
+        console.log("post.user:", post.user._id);
+        console.log("loggedUser.id:", req.user._id);
+
+        res.render("post.ejs", { post: post, loggedUser: req.user, user: user });
+
     } catch (err) {
-      console.log(err);
+        console.log(err);
     }
-  },
+},
+
   getPostMenu: async (req, res) => { 
     try{
       res.render("postmenu.ejs", {loggedUser: req.user})
@@ -38,6 +76,7 @@ module.exports = {
       console.log(err);
     }
   },
+
   createPost: async (req, res) => {
     console.log(req.file.mimetype)
     
@@ -56,7 +95,7 @@ module.exports = {
       });
   console.log(req.file.mimetype)
       console.log("Post has been added!");
-      res.redirect("/profile");
+      res.redirect("/feed");
     } catch (err) {
       console.log(err);
     }
@@ -76,6 +115,7 @@ module.exports = {
       console.log(err);
     }
   },
+
   deletePost: async (req, res) => {
  
     try {
@@ -87,9 +127,9 @@ module.exports = {
       // Delete post from db
       await Post.remove({ _id: req.params.id });
       console.log("Deleted Post");
-      res.redirect("/profile");
+      res.redirect("/feed");
     } catch (err) {
-      res.redirect("/profile");
+      res.redirect("/feed");
     }
   },
 };
