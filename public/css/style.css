@@ -1,17 +1,46 @@
-/* .profile-grid {
-    transform: rotate(180deg);
-}
-.profile-grid > li {
-    transform: rotate(-180deg);
-} */
+body{padding-top:3.5rem;
+padding-bottom: 3rem;}
 
 a {
     color: #262626;
     text-decoration: none;
   }
+
 a:hover{
     color: #0e0e0e;
 }
+
+.fixed-header{
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.fixed-footer{
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.header {
+    background-color: #fff;
+    border-bottom: 1px solid #dbdbdb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+  }
+.footer {
+    background-color: #fff;
+    border-bottom: 1px solid #dbdbdb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem;
+  }
+
 .index-btn{
     width: 60%!important;
     margin-bottom: 1rem;
@@ -91,16 +120,8 @@ a:hover{
   .row{
     --bs-gutter-x: 0!important;
   }
+  
 
-
-  .header {
-    background-color: #fff;
-    border-bottom: 1px solid #dbdbdb;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-  }
   
   .logo {
     font-size: 2.5rem;
@@ -129,7 +150,7 @@ a:hover{
   .profile-info{
     display: flex;
     justify-content: space-between; 
-    padding: 2rem;
+    padding: 2.5rem;
   }
   .profile-info > div{
     display: flex;
