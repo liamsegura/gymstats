@@ -52,7 +52,7 @@ module.exports = {
       let pr = await PR.findById({ _id: req.params.id });
       console.log(pr)
       // Delete image from cloudinary
-      await cloudinary.uploader.destroy(pr.cloudinaryId, { resource_type:  'video' });
+      await cloudinary.uploader.destroy(pr.cloudinaryId, { resource_type:  'video', quality: 70, bit_rate: "250k" });
       // Delete post from db
       await PR.remove({ _id: req.params.id });
       console.log("Deleted Pr");

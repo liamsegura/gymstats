@@ -81,7 +81,7 @@ module.exports = {
     console.log(req.file.mimetype)
     
       // Upload media to cloudinary
-      const result = await cloudinary.uploader.upload(req.file.path, { resource_type: req.file.mimetype.startsWith('video') ? 'video' : 'image' });
+      const result = await cloudinary.uploader.upload(req.file.path, { resource_type: req.file.mimetype.startsWith('video') ? 'video' : 'image', quality: 70, bit_rate: "250k"});
    try{
       await Post.create({
         media: {
