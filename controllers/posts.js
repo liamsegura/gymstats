@@ -1,24 +1,15 @@
 const cloudinary = require("../middleware/cloudinary");
 const Post = require("../models/Post");
+const User = require("../models/User");
 
 
 
 module.exports = {
   getProfile: async (req, res) => {
     try {
-      const posts = await Post.find({ user: req.user.id });
-      res.render("profile.ejs", { posts: posts, user: req.user });
-    } catch (err) {
-      console.log(err);
-    }
-  },
-  viewProfile: async (req, res) => {
-    try {
       const posts = await Post.find({ user: req.params.id });
- 
-      const userName = await Post.find({ user: req.params.id }).populate("user")
-      console.log()
-      res.render("viewProfile.ejs", { posts: posts, userName: userName[0].user.userName.toLowerCase()});
+      const user = await User.findById( req.params.id )
+      res.render("profile.ejs", { posts: posts, loggedUser: req.user, user: user});
     } catch (err) {
       console.log(err);
     }
@@ -26,8 +17,7 @@ module.exports = {
   getFeed: async (req, res) => {
     try {
       const posts = await Post.find().populate("user").populate("media").sort({ createdAt: "desc" }).lean();
-
-      res.render("feed.ejs", { posts, user: req.user });
+      res.render("feed.ejs", { posts, loggedUser: req.user });
     } catch (err) {
       console.log(err);
     }
@@ -35,15 +25,15 @@ module.exports = {
   getPost: async (req, res) => {
     try {
       const post = await Post.findById(req.params.id);
-      const userName = await Post.findById(req.params.id).populate("user")
-      res.render("post.ejs", { post: post, user: req.user, userName: userName.user.userName.toLowerCase() });
+      const user = await User.findById({_id: post.user});
+      res.render("post.ejs", { post: post, loggedUser: req.user, user: user });
     } catch (err) {
       console.log(err);
     }
   },
   getPostMenu: async (req, res) => { 
     try{
-      res.render("postmenu.ejs")
+      res.render("postmenu.ejs", {loggedUser: req.user})
     } catch (err) {
       console.log(err);
     }

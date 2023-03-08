@@ -8,13 +8,13 @@
       
   </div>
   
-  <% if(post.user == user.id){ %>
+  <% if(post.user == loggedUser.id){ %>
     <div class="col-12 p-2">
-      <a href="/profile" ><strong><%= userName %></strong></a> <p><%= post.caption %></p>
+      <a href="/profile/<%= loggedUser._id %>" ><strong><%= user.userName.toLowerCase() %></strong></a> <p><%= post.caption %></p>
     </div>
     <% } else {%>
   <div class="col-12 p-2">
-    <a href="/viewProfile/<%= post.user %>" ><strong><%= userName %></strong></a> <p><%= post.caption %></p>
+    <a href="/profile/<%= post.user %>" ><strong><%= user.userName.toLowerCase() %></strong></a> <p><%= post.caption %></p>
   </div>
   <% } %>
 
@@ -29,7 +29,7 @@
     <div class="col-6 text-center">
       <span><%= post.likes %> likes</span>
     </div>
-    <% if(post.user == user.id){ %>
+    <% if(post.user == loggedUser.id){ %>
     <div class="col-3 text-right">
       <form action="/post/deletePost/<%= post.id %>?_method=DELETE" method="POST">
         <button class="btn btn-link p-0">

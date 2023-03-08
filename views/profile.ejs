@@ -1,24 +1,30 @@
 <%- include('partials/header') -%>
-
 <div class="container">
   <div class="">
     
     
+       
     <div class="profile-info">
       
-        <h2> <%= user.userName.toLowerCase() %></h2>
-        <div class="">
-          <img class="rounded-circle mr-3 mb-2" src="/imgs/Default-Profile-Picture-Transparent-Images.png" alt="Profile picture" width="100" height="100">
-        <a href="/logout" class="col-3 btn btn-primary">Logout</a>
+      <h2> <%= user.userName.toLowerCase() %></h2>
+      <div class="">
+        <img class="rounded-circle mr-3 mb-2" src="/imgs/Default-Profile-Picture-Transparent-Images.png" alt="Profile picture" width="100" height="100">
+        
+  <% if(posts[0].user == loggedUser.id){ %>
+      <a href="/logout" class="col-3 btn btn-primary">Logout</a>
+    <% } else {%>
+      <a href="#" class="col-3 btn btn-primary">Add Friend</a>
+  <% } %>
+    
       </div>
-    </div>
- 
+  </div>
+
     <div class="col-0">
       <ul class="row list-unstyled profile-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(125px, 1fr)); grid-gap: 0;">
         <%for(var i= (posts.length-1); i>=0; i--){%>
         <li style="width: 100%;">
           <a href="/post/<%= posts[i]._id%>" style="display: block; position: relative; padding-bottom: 100%; height: 0;">
-            <img class="img-fluid" src="<%= posts[i].media.url%>" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+            <img class="img-fluid" src="<%= posts[i].media.url %>" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
           </a>
         </li>
         <% } %>

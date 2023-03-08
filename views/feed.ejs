@@ -3,19 +3,32 @@
   <div class="flex-column justify-content-center mt-5">
     <ul class="col-12 col-md-8 col-lg-6 list-unstyled mx-auto">
       <% for(var i=0; i<posts.length; i++) {%>
-        <a href="/post/<%= posts[i]._id%>" class="post">
+        
       <li class="post-item mb-5">
         <div class="d-flex align-items-center mb-1 p-2">
-          <img class="rounded-circle mr-3" src="/imgs/Default-Profile-Picture-Transparent-Images.png" alt="Profile picture" width="30" height="30">
-        
-       
-          <div class="d-flex flex-column">
-            <span class="font-weight-bold"><%= posts[i].user.userName.toLowerCase() %></span>
-          </div>
+          
+          <% if(posts[i].user.userName == loggedUser.userName){ %>
+            
+            <a href="/profile/<%= loggedUser._id %>" >
+              <div class="d-flex flex-column">
+                <img class="rounded-circle mr-3" src="/imgs/Default-Profile-Picture-Transparent-Images.png" alt="Profile picture" width="30" height="30">
+                <span class="font-weight-bold"><%= posts[i].user.userName.toLowerCase() %></span>
+              </div>
+            </a>
 
+            <% } else {%>
+              
+            <a href="/profile/<%= posts[i].user._id %>" >
+              <div class="d-flex flex-row align-items-center">
+                <img class="rounded-circle mr-3" src="/imgs/Default-Profile-Picture-Transparent-Images.png" alt="Profile picture" width="30" height="30">
+                <span class="font-weight-bold"><%= posts[i].user.userName.toLowerCase() %></span>
+              </div>
+            </a>
+         
+            <% } %>
           
         </div>
- 
+        <a href="/post/<%= posts[i]._id%>" class="post">
           <div class="post-thumbnail">
             <img class="img-fluid post-img" src="<%= posts[i].media.url %>" alt="Image">
           </div>
