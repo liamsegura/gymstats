@@ -1,6 +1,9 @@
 body{padding-top:3.5rem;
 padding-bottom: 3rem;}
 
+video{
+    object-fit: cover!important;
+}
 a {
     color: #262626;
     text-decoration: none;

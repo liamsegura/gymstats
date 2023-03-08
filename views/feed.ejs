@@ -15,9 +15,17 @@
             </a>
 
         </div>
-        <a href="/post/<%= mergedArray[i]._id%>" class="post">
+        
           <div class="post-thumbnail">
-            <img class="img-fluid post-img" src="<%= mergedArray[i].media.url %>" alt="Image">
+            <% if(mergedArray[i].media.type == "image"){ %>
+              <a href="/post/<%= mergedArray[i]._id%>" class="post">
+               <img class="img-fluid post-img" src="<%= mergedArray[i].media.url %>" alt="Image">
+              </a>
+            <% }else{ %>
+              <video class="post-thumbnail" id="my-video-<%= mergedArray[i]._id %>" controls autoplay muted loop>
+                <source src="<%= mergedArray[i].media.url %>" type="video/mp4">
+              </video>
+            <%}%>
           </div>
           <div class="post-info ml-3 d-flex flex-column p-2">
             <div class="d-flex align-items-center mb-1">
@@ -37,28 +45,47 @@
                   <p ><%= mergedArray[i].catagory %></p>
                 </div>
                 <%}%>
-
+                <a href="/post/<%= mergedArray[i]._id%>" class="post">
                 <span class="font-weight-bold mr-1"><%= mergedArray[i].caption %></span>
                 <span class="text-muted"><%= mergedArray[i].createdAt.toDateString() %></span>
              
            
               </div>
             </div>
+           
             <div class="mb-3">
     
               <span class="font-weight-bold mr-1"><%= mergedArray[i].likes %></span>
               <span class="text-muted">likes</span>
               
             </div>
+          </a>
           </div>
      
       </li>
-    </a>
+  
       <% } %>
     </ul>
   </div>
 </div>
+<script>
+const videos = document.querySelectorAll("[id^='my-video-']");
 
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    const video = entry.target;
+    if (entry.isIntersecting) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  });
+});
+
+videos.forEach(video => {
+  observer.observe(video);
+});
+</script>
 <%- include('partials/footer') -%>
 
 
