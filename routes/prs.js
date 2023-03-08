@@ -9,6 +9,8 @@ const { ensureAuth, ensureGuest } = require("../middleware/auth");
 
 router.post("/createPR", upload.single("media"), prsController.createPR);
 
+router.put("/likePR/:id", prsController.likePR);
+
 router.delete("/deletePR/:id", prsController.deletePR);
 
 module.exports = router;

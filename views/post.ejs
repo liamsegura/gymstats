@@ -16,11 +16,20 @@
 
   <div class="row align-items-center justify-content-between mb-3">
     <div class="col-3">
-      <form action="/post/likePost/<%= post.id %>?_method=PUT" method="POST">
+      <% if(!post.catagory ){ %>
+      <form action="/post/likePost/<%= post._id %>?_method=PUT" method="POST">
         <button class="btn btn-link p-0">
           <i class="far fa-heart"></i>
         </button>
       </form>
+      <%}%>
+      <% if(post.catagory ){ %>
+        <form action="/pr/likePR/<%= post._id %>?_method=PUT" method="POST">
+          <button class="btn btn-link p-0">
+            <i class="far fa-heart"></i>
+          </button>
+        </form>
+        <%}%>
     </div>
     <div class="col-6 text-center">
       <span><%= post.likes %> likes</span>
