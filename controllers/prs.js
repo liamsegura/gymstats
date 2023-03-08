@@ -10,11 +10,18 @@ module.exports = {
     console.log(req.file.mimetype)
     
       // Upload media to cloudinary
-      const result = await cloudinary.uploader.upload(req.file.path, { resource_type: req.file.mimetype.startsWith('video') ? 'video' : 'image' });
+      const result = await cloudinary.uploader.upload(req.file.path, { resource_type: 'video',
+      quality: 70, 
+      bit_rate: "250k",
+      transformation: [
+       {duration: "30.0"},
+       {quality: "70:qmax_20"}
+       ]
+     });
    try{
       await PR.create({
         media: {
-          type: req.file.mimetype.startsWith('video') ? 'video' : 'image',
+          type: 'video',
           url: result.secure_url,
         },
         caption: req.body.caption,
@@ -52,14 +59,7 @@ module.exports = {
       let pr = await PR.findById({ _id: req.params.id });
       console.log(pr)
       // Delete image from cloudinary
-      await cloudinary.uploader.destroy(pr.cloudinaryId, { resource_type:  'video',
-      quality: 70, 
-      bit_rate: "250k",
-      transformation: [
-       {duration: "30.0"},
-       {quality: "70:qmax_20"}
-       ]
-     });
+      await cloudinary.uploader.destroy(pr.cloudinaryId, { resource_type:  'video' });
       // Delete post from db
       await PR.remove({ _id: req.params.id });
       console.log("Deleted Pr");
