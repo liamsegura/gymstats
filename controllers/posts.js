@@ -87,7 +87,6 @@ module.exports = {
        bit_rate: "550k",
        transformation: [
         {duration: "30.0"},
-        {quality: "80:qmax_20"}
         ]
       });
    try{
