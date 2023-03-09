@@ -23,7 +23,7 @@ module.exports = {
 
 
 
-    const result = browser(req.headers['user-agent'])
+      const result = browser(req.headers['user-agent'])
       console.log(result)
 
       const posts = await Post.find().populate("user").populate("media").lean();
@@ -41,6 +41,8 @@ module.exports = {
 
   getPost: async (req, res) => {
     try {
+
+        const result = browser(req.headers['user-agent'])
         const postId = req.params.id;
 
         // Search for the post in the Post collection
@@ -66,10 +68,8 @@ module.exports = {
 
         // If a post or PR with the given ID is found, render the post.ejs template with the post and user objects
         const user = await User.findById(post.user);
-        console.log("post.user:", post.user._id);
-        console.log("loggedUser.id:", req.user._id);
 
-        res.render("post.ejs", { post: post, loggedUser: req.user, user: user });
+        res.render("post.ejs", { post: post, loggedUser: req.user, user: user, browser: result });
 
     } catch (err) {
         console.log(err);

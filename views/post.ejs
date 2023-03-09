@@ -2,8 +2,20 @@
 
 <div class="container">
   <div class="row justify-content-center mt-5">
-  
-      <img class="img-fluid" src="<%= post.media.url%>" />
+       <!-- Check if the browser is Safari -->
+       <% if (post.media.type === "video" && browser.name === "safari") { %>
+          <img class="img-fluid post-img" src="<%= post.media.url %>" alt="Video">
+      <% } else if (post.media.type == "video") { %>
+       
+          <video class="img-fluid post-img" src="<%= post.media.url %>" alt="Video" controls playsinline autoplay loop onerror="console.error('Error loading video:', this.error)">
+            <source src="<%= post.media.url %>" type="video/mp4">
+          </video>
+        
+      <% } else { %>
+
+          <img class="img-fluid post-img" src="<%= post.media.url %>" alt="Image">
+
+      <% } %>
       
       
   </div>
