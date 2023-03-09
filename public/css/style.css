@@ -153,8 +153,7 @@ a:hover{
   }
   
   .post-img {
-    width: 293px;
-    height: 293px;
+    width: 100%;
     object-fit: cover;
   }
   
