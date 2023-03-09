@@ -159,6 +159,12 @@ a:hover{
   
   .post-img {
     object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  .post-video {
+    object-fit: cover;
     height: 77vh;
     width: 100%;
   }

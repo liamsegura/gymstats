@@ -21,7 +21,7 @@
           </a>
         <% } else if (mergedArray[i].media.type == "video") { %>
           <a href="/post/<%= mergedArray[i]._id %>" class="post">
-            <video class="img-fluid post-img lazy" data-src="<%= mergedArray[i].media.url %>" alt="Video" controls playsinline autoplay muted loop onerror="console.error('Error loading video:', this.error)">
+            <video class="img-fluid post-video lazy" data-src="<%= mergedArray[i].media.url %>" alt="Video" controls playsinline autoplay muted loop onerror="console.error('Error loading video:', this.error)">
               <source src="<%= mergedArray[i].media.url %>" type="video/mp4">
             </video>
           </a>
