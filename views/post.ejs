@@ -10,9 +10,7 @@
           </video>
         
       <% } else { %>
-
           <img class="img-fluid post-img" src="<%= post.media.url %>" alt="Image">
-
       <% } %>
       
       
@@ -81,9 +79,6 @@ const video = document.querySelector('video');
       video.pause();
       playButton.textContent = 'Play';
     }
-  });
- 
- 
-  
+  }); 
   </script>
 <%- include('partials/footer') -%>

@@ -144,6 +144,11 @@ a:hover{
     height: 100%;
     object-fit:contain!important;
   }
+  .post-thumbnail video {
+    width: 100%;
+    height: 100%;
+    object-fit:contain!important;
+  }
   
   .post-info {
     display: flex;
@@ -154,7 +159,7 @@ a:hover{
   
   .post-img {
     object-fit: cover;
-    height: 65vh;
+    height: 77vh;
     width: 100%;
   }
   
