@@ -4,6 +4,7 @@ const User = require("../models/User");
 const PR = require("../models/PR")
 
 
+
 module.exports = {
 
   getProfile: async (req, res) => {
@@ -19,6 +20,10 @@ module.exports = {
   getFeed: async (req, res) => {
     try {
 
+console.log(req.headers)
+
+      
+
       const posts = await Post.find().populate("user").populate("media").lean();
       const PRs = await PR.find().populate("user").populate("media").lean();
       const mergedArray = [...posts, ...PRs];
@@ -26,7 +31,7 @@ module.exports = {
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
 
-      res.render("feed.ejs", { mergedArray, loggedUser: req.user });
+      res.render("feed.ejs", { mergedArray, loggedUser: req.user, req: req });
     } catch (err) {
       console.log(err);
     }

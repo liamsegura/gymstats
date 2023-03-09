@@ -14,11 +14,25 @@
               </a>
           </div>
           <div class="post-thumbnail">
-           
-              <a href="/post/<%= mergedArray[i]._id %>" class="post">
-                <img class="img-fluid post-img lazy" data-src="<%= mergedArray[i].media.url %>" alt="Video">
-              </a>
-           
+        <!-- Check if the browser is Safari -->
+        <% if (mergedArray[i].media.type === "video" && req.headers['user-agent'].toLowerCase().indexOf('safari') !== -1) { %>
+          <a href="/post/<%= mergedArray[i]._id %>" class="post">
+            <img class="img-fluid post-img lazy" data-src="<%= mergedArray[i].media.url %>" alt="Video">
+          </a>
+        <% } else if (mergedArray[i].media.type == "video") { %>
+          <a href="/post/<%= mergedArray[i]._id %>" class="post">
+            <video class="img-fluid post-img lazy" data-src="<%= mergedArray[i].media.url %>" alt="Video" controls playsinline onerror="console.error('Error loading video:', this.error)">
+              <source src="<%= mergedArray[i].media.url %>" type="video/mp4">
+            </video>
+          </a>
+        <% } else { %>
+          <a href="/post/<%= mergedArray[i]._id %>" class="post">
+            <img class="img-fluid post-img lazy" data-src="<%= mergedArray[i].media.url %>" alt="Image">
+          </a>
+
+        <% } %>
+      
+        
           </div>
           <div class="post-info ml-3 d-flex flex-column p-2">
             <div class="d-flex align-items-center mb-1">
@@ -55,7 +69,9 @@
   </div>
 </div>
 
-<script src="/js/lazyLoadPosts.js"></script>
+<script src="/js/lazyLoadPosts.js">
+  
+</script>
 
 <%- include('partials/footer') -%>
 
