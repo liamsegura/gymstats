@@ -4,99 +4,59 @@
     <ul class="col-12 col-md-8 col-lg-6 list-unstyled mx-auto">
       <% for(var i=0; i<mergedArray.length; i++) {%>
         
-      <li class="post-item mb-5">
-        <div class="d-flex align-items-center mb-1 p-2">
-   
-            <a href="/profile/<%= mergedArray[i].user._id %>" >
-              <div class="d-flex flex-row align-items-center">
-                <img class="rounded-circle mr-3" src="/imgs/Default-Profile-Picture-Transparent-Images.png" alt="Profile picture" width="30" height="30">
-                <span class="font-weight-bold"><%= mergedArray[i].user.userName.toLowerCase() %></span>
-              </div>
-            </a>
-
-        </div>
-        
-        <div class="post-thumbnail">
-          <% if (mergedArray[i].media.type === 'image') { %>
-            <a href="/post/<%= mergedArray[i]._id %>" class="post">
-              <img id="post-img-<%= mergedArray[i]._id %>" class="img-fluid post-img" src="<%= mergedArray[i].media.url %>" alt="Image">
-            </a>
-          <% } else { %>
-            <a href="/post/<%= mergedArray[i]._id %>" class="post">
-              <img id="post-img-<%= mergedArray[i]._id %>" class="img-fluid post-img" src="<%= mergedArray[i].media.url %>" alt="Video">
-            </a>
-          <% } %>
-        </div>
-        
+        <li id="post-<%= mergedArray[i]._id %>" class="post-item mb-5 lazy">
+          <div class="d-flex align-items-center mb-1 p-2">
+              <a href="/profile/<%= mergedArray[i].user._id %>" >
+                <div class="d-flex flex-row align-items-center">
+                  <img class="rounded-circle mr-3" src="/imgs/Default-Profile-Picture-Transparent-Images.png" alt="Profile picture" width="30" height="30">
+                  <span class="font-weight-bold"><%= mergedArray[i].user.userName.toLowerCase() %></span>
+                </div>
+              </a>
+          </div>
+          <div class="post-thumbnail">
+           
+              <a href="/post/<%= mergedArray[i]._id %>" class="post">
+                <img class="img-fluid post-img lazy" data-src="<%= mergedArray[i].media.url %>" alt="Video">
+              </a>
+           
+          </div>
           <div class="post-info ml-3 d-flex flex-column p-2">
             <div class="d-flex align-items-center mb-1">
               <div class="d-flex flex-column">
-
                 <% if(mergedArray[i].catagory) {%>
                   <div class="d-flex flex-row align-items-center">
-                   
                     <h3>PERSONAL RECORD</h3>
-                    
-                  
                     <div class="trophy-icon">
                       <i class="fas fa-trophy"></i>
                     </div>
                   </div>
                   <div class="d-flex flex-column">
-                  <p ><%= mergedArray[i].catagory %></p>
-                </div>
+                    <p ><%= mergedArray[i].catagory %></p>
+                  </div>
                 <%}%>
                 <a href="/post/<%= mergedArray[i]._id%>" class="post">
-                <span class="font-weight-bold mr-1"><%= mergedArray[i].caption %></span>
-                <span class="text-muted"><%= mergedArray[i].createdAt.toDateString() %></span>
-             
-           
+                  <span class="font-weight-bold mr-1"><%= mergedArray[i].caption %></span>
+                  <span class="text-muted"><%= mergedArray[i].createdAt.toDateString() %></span>
+                </a>
               </div>
             </div>
-           
             <div class="mb-3">
-    
               <span class="font-weight-bold mr-1"><%= mergedArray[i].likes %></span>
               <span class="text-muted">likes</span>
-              
             </div>
-          </a>
           </div>
-     
-      </li>
-  
+        </li>
+        
       <% } %>
+      
+    
+      
     </ul>
   </div>
 </div>
-<script>
 
-const lazyLoad = target => {
-  const io = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const img = entry.target;
-        const dataSrc = img.getAttribute('src');
-        img.setAttribute('src', dataSrc);
-        observer.disconnect();
-      }
-    });
-  });
+<script src="/js/lazyLoadPosts.js"></script>
 
-  io.observe(target);
-};
-
-const images = document.querySelectorAll('.post-img');
-
-images.forEach(img => {
-  const postId = img.id.split('-')[2]; // extract the post ID from the image ID
-  lazyLoad(img);
-
-  // Optional: log the post ID to the console for debugging
-  console.log(`Lazy loading post ${postId}`);
-});
-
-</script>
 <%- include('partials/footer') -%>
 
 
