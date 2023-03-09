@@ -5,7 +5,7 @@
        <!-- Check if the browser is Safari -->
       <%  if (post.media.type == "video") { %>
        
-          <video class="img-fluid post-img" src="<%= post.media.url %>" alt="Video" controls="false" controlsList="nodownload" playsinline mute loop autoplay  onerror="console.error('Error loading video:', this.error)">
+          <video class="img-fluid post-video" src="<%= post.media.url %>" alt="Video" controls="false" controlsList="nodownload" playsinline mute loop autoplay  onerror="console.error('Error loading video:', this.error)">
             <source src="<%= post.media.url %>" type="video/mp4">
           </video>
         
