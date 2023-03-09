@@ -16,17 +16,18 @@
 
         </div>
         
-          <div class="post-thumbnail">
-            <% if(mergedArray[i].media.type == "image"){ %>
-              <a href="/post/<%= mergedArray[i]._id%>" class="post">
-               <img class="img-fluid post-img" src="<%= mergedArray[i].media.url %>" alt="Image">
-              </a>
-            <% }else{ %>
-              <video class="post-thumbnail" id="my-video-<%= mergedArray[i]._id %>" controls autoplay muted loop>
-                <source src="<%= mergedArray[i].media.url %>" type="video/mp4">
-              </video>
-            <%}%>
-          </div>
+        <div class="post-thumbnail">
+          <% if (mergedArray[i].media.type === 'image') { %>
+            <a href="/post/<%= mergedArray[i]._id %>" class="post">
+              <img id="post-img-<%= mergedArray[i]._id %>" class="img-fluid post-img" src="<%= mergedArray[i].media.url %>" alt="Image">
+            </a>
+          <% } else { %>
+            <a href="/post/<%= mergedArray[i]._id %>" class="post">
+              <img id="post-img-<%= mergedArray[i]._id %>" class="img-fluid post-img" src="<%= mergedArray[i].media.url %>" alt="Video">
+            </a>
+          <% } %>
+        </div>
+        
           <div class="post-info ml-3 d-flex flex-column p-2">
             <div class="d-flex align-items-center mb-1">
               <div class="d-flex flex-column">
@@ -69,22 +70,32 @@
   </div>
 </div>
 <script>
-const videos = document.querySelectorAll("[id^='my-video-']");
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    const video = entry.target;
-    if (entry.isIntersecting) {
-      video.play();
-    } else {
-      video.pause();
-    }
+const lazyLoad = target => {
+  const io = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        const dataSrc = img.getAttribute('src');
+        img.setAttribute('src', dataSrc);
+        observer.disconnect();
+      }
+    });
   });
+
+  io.observe(target);
+};
+
+const images = document.querySelectorAll('.post-img');
+
+images.forEach(img => {
+  const postId = img.id.split('-')[2]; // extract the post ID from the image ID
+  lazyLoad(img);
+
+  // Optional: log the post ID to the console for debugging
+  console.log(`Lazy loading post ${postId}`);
 });
 
-videos.forEach(video => {
-  observer.observe(video);
-});
 </script>
 <%- include('partials/footer') -%>
 
