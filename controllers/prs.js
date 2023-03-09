@@ -12,16 +12,20 @@ module.exports = {
       // Upload media to cloudinary
       const result = await cloudinary.uploader.upload(req.file.path, { resource_type: 'video',
       bit_rate: "550k",
-       transformation: [
+      transformation: [
         {duration: "30.0"},
-        {quality: "80:qmax_20"}
-        ]
+        {named: "e_thumb"},
+      ]
       });
+
+      const thumbnailUrl = result.eager && result.eager[0] && result.eager[0].secure_url;
+
    try{
       await PR.create({
         media: {
           type: 'video',
           url: result.secure_url,
+          thumbnailUrl: thumbnailUrl || result.secure_url.replace(/\.[^/.]+$/, ".jpg"),
         },
         caption: req.body.caption,
         likes: 0,

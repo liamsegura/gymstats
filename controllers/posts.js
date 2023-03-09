@@ -12,6 +12,7 @@ module.exports = {
     try {
       const posts = await Post.find({ user: req.params.id });
       const user = await User.findById( req.params.id )
+
       res.render("profile.ejs", { posts: posts, loggedUser: req.user, user: user});
     } catch (err) {
       console.log(err);
@@ -85,35 +86,40 @@ module.exports = {
   },
 
   createPost: async (req, res) => {
-    console.log(req.file.mimetype)
-    
-      // Upload media to cloudinary
-      const result = await cloudinary.uploader.upload(
-      req.file.path,
-       { resource_type: req.file.mimetype.startsWith('video') ? 'video' : 'image',
-       bit_rate: "550k",
-       transformation: [
+  console.log(req.file.mimetype);
+  
+  try {
+    // Upload media to cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      resource_type: req.file.mimetype.startsWith('video') ? 'video' : 'image',
+      bit_rate: "550k",
+      transformation: [
         {duration: "30.0"},
-        ]
-      });
-   try{
-      await Post.create({
-        media: {
-          type: req.file.mimetype.startsWith('video') ? 'video' : 'image',
-          url: result.secure_url,
-        },
-        caption: req.body.caption,
-        likes: 0,
-        user: req.user.id,
-        cloudinaryId: result.public_id
-      });
-  console.log(req.file.mimetype)
-      console.log("Post has been added!");
-      res.redirect("/feed");
-    } catch (err) {
-      console.log(err);
-    }
-  },
+        {named: "e_thumb"},
+      ]
+    });
+    
+    const thumbnailUrl = result.eager && result.eager[0] && result.eager[0].secure_url;
+    
+    await Post.create({
+      media: {
+        type: req.file.mimetype.startsWith('video') ? 'video' : 'image',
+        url: result.secure_url,
+        thumbnailUrl: thumbnailUrl || result.secure_url.replace(/\.[^/.]+$/, ".jpg"),
+      },
+      caption: req.body.caption,
+      likes: 0,
+      user: req.user.id,
+      cloudinaryId: result.public_id
+    });
+
+    console.log("Post has been added!");
+    res.redirect("/feed");
+  } catch (err) {
+    console.log(err);
+  }
+},
+
   
   likePost: async (req, res) => {
     try {
