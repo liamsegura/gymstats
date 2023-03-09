@@ -3,6 +3,7 @@ const Post = require("../models/Post");
 const User = require("../models/User");
 const PR = require("../models/PR")
 
+const browser = require('browser-detect');
 
 
 module.exports = {
@@ -20,9 +21,10 @@ module.exports = {
   getFeed: async (req, res) => {
     try {
 
-console.log(req.headers)
 
-      
+
+    const result = browser(req.headers['user-agent'])
+      console.log(result)
 
       const posts = await Post.find().populate("user").populate("media").lean();
       const PRs = await PR.find().populate("user").populate("media").lean();
@@ -31,7 +33,7 @@ console.log(req.headers)
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
 
-      res.render("feed.ejs", { mergedArray, loggedUser: req.user, req: req });
+      res.render("feed.ejs", { mergedArray, loggedUser: req.user, browser: result });
     } catch (err) {
       console.log(err);
     }

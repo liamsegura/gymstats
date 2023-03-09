@@ -15,7 +15,7 @@
           </div>
           <div class="post-thumbnail">
         <!-- Check if the browser is Safari -->
-        <% if (mergedArray[i].media.type === "video" && req.headers['user-agent'].toLowerCase().indexOf('safari') !== -1) { %>
+        <% if (mergedArray[i].media.type === "video" && browser.name === "safari") { %>
           <a href="/post/<%= mergedArray[i]._id %>" class="post">
             <img class="img-fluid post-img lazy" data-src="<%= mergedArray[i].media.url %>" alt="Video">
           </a>

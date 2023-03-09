@@ -30,28 +30,4 @@ function loadLazyLoadItem(lazyLoadItem) {
   // Load any other content of the lazyLoadItem element here
 }
 
-console.log('connected');
 
-
-    let browserName = "";
-
-    if(navigator.vendor.match(/google/i)) {
-        browserName = 'chrome/blink';
-    }
-    else if(navigator.vendor.match(/apple/i)) {
-        browserName = 'safari/webkit';
-    }
-    else if(navigator.userAgent.match(/firefox\//i)) {
-        browserName = 'firefox/gecko';
-    }
-    else if(navigator.userAgent.match(/edge\//i)) {
-        browserName = 'edge/edgehtml';
-    }
-    else if(navigator.userAgent.match(/trident\//i)) {
-        browserName = 'ie/trident';
-    }
-    else
-    {
-        browserName = navigator.userAgent + "\n" + navigator.vendor;
-    }
-    alert(browserName);
