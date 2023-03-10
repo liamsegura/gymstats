@@ -34,7 +34,7 @@
             </button>
           </form>
           <%}%>
-          <div class="col-6 text-center">
+          <div class="text-center">
             <span><%= post.likes %> likes</span>
           </div>
           <% if(post.user._id.toString() == loggedUser._id.toString() && !post.catagory ){ %>
