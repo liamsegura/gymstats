@@ -46,18 +46,19 @@
               </form>
             </div>
             <% } %>
+            <% if(post.user._id.toString() == loggedUser._id.toString() && post.catagory){ %>
+              <div class="text-right">
+                <form action="/pr/deletePR/<%= post._id %>?_method=DELETE" method="POST">
+                  <button class="btn btn-link p-0">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </form>
+              </div>
+              <% } %>
+           
           </div>
           
-      <% if(post.user._id.toString() == loggedUser._id.toString() && post.catagory){ %>
-        <div class="text-right">
-          <form action="/pr/deletePR/<%= post._id %>?_method=DELETE" method="POST">
-            <button class="btn btn-link p-0">
-              <i class="far fa-trash-alt"></i>
-            </button>
-          </form>
-        </div>
-        <% } %>
-     
+   
    
   
     </div>
