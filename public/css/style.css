@@ -113,7 +113,16 @@ a:hover{
     content: "\f091";
   }
   
-
+  .video-container {
+    position: relative;
+  }
+  .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
 .container{
     padding: 0px;
     max-width: 500px!important;

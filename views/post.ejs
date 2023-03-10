@@ -5,10 +5,15 @@
        <!-- Check if the browser is Safari -->
       <%  if (post.media.type == "video") { %>
        
-          <video class="img-fluid post-video" src="<%= post.media.url %>" alt="Video" controls="false" controlsList="nodownload" playsinline mute loop autoplay  onerror="console.error('Error loading video:', this.error)">
-            <source src="<%= post.media.url %>" type="video/mp4">
-          </video>
+        <video id="my-video" class="video-js vjs-default-skin vjs-big-play-centered img-fluid post-video" preload="auto" width="100%" height="auto" poster="<%= post.media.thumbNail %>" data-setup='{"fluid": true, "playbackRates": [0.5, 1, 1.5, 2], "controls": true, "autoplay": true, "loop": true, "muted": true, "controlBar": {"playToggle": {}, "currentTimeDisplay": {}, "timeDivider": {}, "durationDisplay": {}, "volumePanel": {"inline": false, "vertical": true}, "progressControl": {"keepTooltipsInside": true}}}'>
+          <source src="<%= post.media.url %>" type="video/mp4">
+          <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser that
+            <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+          </p>
+        </video>
         
+
       <% } else { %>
           <img class="img-fluid post-img" src="<%= post.media.url %>" alt="Image">
       <% } %>
@@ -99,17 +104,6 @@
 </div>
 
 <script>
-const video = document.querySelector('video');
-  const playButton = document.querySelector('.play-button');
-  
-  playButton.addEventListener('click', () => {
-    if (video.paused) {
-      video.play();
-      playButton.textContent = 'Pause';
-    } else {
-      video.pause();
-      playButton.textContent = 'Play';
-    }
-  }); 
-  </script>
+
+</script>
 <%- include('partials/footer') -%>

@@ -20,11 +20,16 @@
             <img class="img-fluid post-img lazy" data-src="<%= mergedArray[i].media.url %>" alt="Video">
           </a>
         <% } else if (mergedArray[i].media.type == "video") { %>
-          <a href="/post/<%= mergedArray[i]._id %>" class="post">
-            <video class="img-fluid post-video lazy" data-src="<%= mergedArray[i].media.url %>" alt="Video" controls playsinline autoplay muted loop onerror="console.error('Error loading video:', this.error)">
-              <source src="<%= mergedArray[i].media.url %>" type="video/mp4">
-            </video>
-          </a>
+          
+        <a href="/post/<%= mergedArray[i]._id %>" class="post">
+          <video id="my-video" class="video-js vjs-default-skin vjs-big-play-centered img-fluid post-video lazy" preload="auto" width="100%" height="auto" poster="<%= mergedArray[i].media.thumbNail %>" data-setup='{"fluid": true, "playbackRates": [0.5, 1, 1.5, 2], "controls": true, "autoplay": true, "loop": true, "muted": true, "controlBar": {"playToggle": {}, "currentTimeDisplay": {}, "timeDivider": {}, "durationDisplay": {}, "volumePanel": {"inline": false, "vertical": true}, "progressControl": {"keepTooltipsInside": true}}}'>
+            <source src="<%= mergedArray[i].media.url %>" type="video/mp4">
+            <p class="vjs-no-js">
+              To view this video please enable JavaScript, and consider upgrading to a web browser that
+              <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
+          </video>
+        </a>
         <% } else { %>
           <a href="/post/<%= mergedArray[i]._id %>" class="post">
             <img class="img-fluid post-img lazy" data-src="<%= mergedArray[i].media.url %>" alt="Image">
