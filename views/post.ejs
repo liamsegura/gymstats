@@ -18,51 +18,54 @@
 
   <div class="col-12 p-4">
     <a href="/profile/<%= post.user._id %>" ><strong><%= user.userName.toLowerCase() %></strong></a> <p><%= post.caption %></p>
-  </div>
-
-
-  <div class="row align-items-center justify-content-between mb-3">
-    <div class="col-3">
-      <% if(!post.catagory ){ %>
-      <form action="/post/likePost/<%= post._id %>?_method=PUT" method="POST">
-        <button class="btn btn-link p-0">
-          <i class="far fa-heart"></i>
-        </button>
-      </form>
-      <%}%>
-      <% if(post.catagory ){ %>
-        <form action="/pr/likePR/<%= post._id %>?_method=PUT" method="POST">
+    <div class="row align-items-center justify-content-between mb-3">
+      <div class="col-3">
+        <% if(!post.catagory ){ %>
+        <form action="/post/likePost/<%= post._id %>?_method=PUT" method="POST">
           <button class="btn btn-link p-0">
             <i class="far fa-heart"></i>
           </button>
         </form>
         <%}%>
-    </div>
-    <div class="col-6 text-center">
-      <span><%= post.likes %> likes</span>
-    </div>
-    <% if(post.user._id.toString() == loggedUser._id.toString() && !post.catagory ){ %>
-    <div class="col-3 text-right">
-      <form action="/post/deletePost/<%= post._id %>?_method=DELETE" method="POST">
-        <button class="btn btn-link p-0">
-          <i class="far fa-trash-alt"></i>
-        </button>
-      </form>
-    </div>
-    <% } %>
-    <% if(post.user._id.toString() == loggedUser._id.toString() && post.catagory){ %>
+        <% if(post.catagory ){ %>
+          <form action="/pr/likePR/<%= post._id %>?_method=PUT" method="POST">
+            <button class="btn btn-link p-0">
+              <i class="far fa-heart"></i>
+            </button>
+          </form>
+          <%}%>
+      </div>
+      <div class="col-6 text-center">
+        <span><%= post.likes %> likes</span>
+      </div>
+      <% if(post.user._id.toString() == loggedUser._id.toString() && !post.catagory ){ %>
       <div class="col-3 text-right">
-        <form action="/pr/deletePR/<%= post._id %>?_method=DELETE" method="POST">
+        <form action="/post/deletePost/<%= post._id %>?_method=DELETE" method="POST">
           <button class="btn btn-link p-0">
             <i class="far fa-trash-alt"></i>
           </button>
         </form>
       </div>
       <% } %>
+      <% if(post.user._id.toString() == loggedUser._id.toString() && post.catagory){ %>
+        <div class="col-3 text-right">
+          <form action="/pr/deletePR/<%= post._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-link p-0">
+              <i class="far fa-trash-alt"></i>
+            </button>
+          </form>
+        </div>
+        <% } %>
+     
    
- 
-
+  
+    </div>
+  
+  
   </div>
+
+
+  
   <ul class="comments">
     <% for(var i=0; i<comments.length; i++) {%>
       <li class="d-flex">
