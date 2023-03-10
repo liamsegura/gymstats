@@ -65,9 +65,20 @@
   </div>
   <ul class="comments">
     <% for(var i=0; i<comments.length; i++) {%>
-      <li class="">
-        <a href="/profile/<%= comments[i].user._id %>" ><span><strong><%= comments[i].user.userName%></strong>:</span></a>  <span><%= comments[i].comment%></span>
+      <li class="d-flex">
+        <a href="/profile/<%= comments[i].user._id %>" ><p><strong><%= comments[i].user.userName%></strong>:</p></a>  
+        <p class="mr-3"><%= comments[i].comment%></p>
+        <% if(comments[i].user._id.toString() == loggedUser._id.toString() ){ %>
+          <div class="col-3 text-right">
+            <form action="/comment/deleteComment/<%= comments[i]._id %>?_method=DELETE" method="POST">
+              <button class="btn btn-link p-0">
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </form>
+          </div>
+          <% } %>
       </li>
+    
     <% } %>
   </ul>
   <div class="">

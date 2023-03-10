@@ -5,6 +5,9 @@ video{
     object-fit: contain!important;
 }
 
+i{
+  color: #0e0e0e;
+}
 ul{
   padding-left: 1.5rem;
 }
@@ -120,6 +123,12 @@ a:hover{
   list-style: none;
   padding-bottom: 0.5rem;
   padding-left: 0;
+}
+.comments a{
+  padding-right: 0.5rem;
+}
+.comments div{
+  margin-left: auto;
 }
 .comment-form{
   padding: 0 1.5rem;

@@ -15,5 +15,21 @@ module.exports = {
     } catch (err) {
       console.log(err);
     }
-  }
+  },
+
+  deleteComment: async (req, res) => {
+ 
+    try {
+      // Find post by id
+      let post = await Comment.findById({ _id: req.params.id });
+      
+      console.log(post.post)
+      // Delete post from db
+      await Comment.remove({ _id: req.params.id });
+      console.log("Deleted Comment");
+      res.redirect("/post/" + post.post.toString());
+    } catch (err) {
+      res.redirect("/post/" + post.post.toString());
+    }
+  },
 };
