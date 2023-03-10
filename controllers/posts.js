@@ -25,7 +25,7 @@ module.exports = {
 
 
       const result = browser(req.headers['user-agent'])
-      console.log(result)
+
 
       const posts = await Post.find().populate("user").populate("media").lean();
       const PRs = await PR.find().populate("user").populate("media").lean();
