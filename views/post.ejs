@@ -19,7 +19,7 @@
   <div class="col-12 p-4">
     <a href="/profile/<%= post.user._id %>" ><strong><%= user.userName.toLowerCase() %></strong></a> <p><%= post.caption %></p>
     <div class="row align-items-center justify-content-between mb-3">
-      <div class="col-3">
+      <div class="d-flex p-0 w-0 justify-content-between">
         <% if(!post.catagory ){ %>
         <form action="/post/likePost/<%= post._id %>?_method=PUT" method="POST">
           <button class="btn btn-link p-0">
@@ -34,21 +34,22 @@
             </button>
           </form>
           <%}%>
-      </div>
-      <div class="col-6 text-center">
-        <span><%= post.likes %> likes</span>
-      </div>
-      <% if(post.user._id.toString() == loggedUser._id.toString() && !post.catagory ){ %>
-      <div class="col-3 text-right">
-        <form action="/post/deletePost/<%= post._id %>?_method=DELETE" method="POST">
-          <button class="btn btn-link p-0">
-            <i class="far fa-trash-alt"></i>
-          </button>
-        </form>
-      </div>
-      <% } %>
+          <div class="col-6 text-center">
+            <span><%= post.likes %> likes</span>
+          </div>
+          <% if(post.user._id.toString() == loggedUser._id.toString() && !post.catagory ){ %>
+            <div class=" text-right">
+              <form action="/post/deletePost/<%= post._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-link p-0">
+                  <i class="far fa-trash-alt"></i>
+                </button>
+              </form>
+            </div>
+            <% } %>
+          </div>
+          
       <% if(post.user._id.toString() == loggedUser._id.toString() && post.catagory){ %>
-        <div class="col-3 text-right">
+        <div class="text-right">
           <form action="/pr/deletePR/<%= post._id %>?_method=DELETE" method="POST">
             <button class="btn btn-link p-0">
               <i class="far fa-trash-alt"></i>
@@ -75,7 +76,7 @@
           <div class="col-3 text-right">
             <form action="/comment/deleteComment/<%= comments[i]._id %>?_method=DELETE" method="POST">
               <button class="btn btn-link p-0">
-                <i class="far fa-trash-alt"></i>
+                <i class="fas fa-times"></i>
               </button>
             </form>
           </div>
