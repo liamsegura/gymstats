@@ -1,8 +1,8 @@
 const cloudinary = require("../middleware/cloudinary");
 const Post = require("../models/Post");
 const User = require("../models/User");
-const PR = require("../models/PR")
-
+const PR = require("../models/PR");
+const Comment = require("../models/Comments");
 const browser = require('browser-detect');
 
 
@@ -45,6 +45,7 @@ module.exports = {
 
         const result = browser(req.headers['user-agent'])
         const postId = req.params.id;
+        const comments = await Comment.find({post: req.params.id}).sort({ createdAt: "desc" }).lean();
 
         // Search for the post in the Post collection
         let post = await Post.findOne({ _id: postId }).populate({
@@ -70,7 +71,7 @@ module.exports = {
         // If a post or PR with the given ID is found, render the post.ejs template with the post and user objects
         const user = await User.findById(post.user);
 
-        res.render("post.ejs", { post: post, loggedUser: req.user, user: user, browser: result });
+        res.render("post.ejs", { post: post, loggedUser: req.user, user: user, browser: result, comments: comments });
 
     } catch (err) {
         console.log(err);

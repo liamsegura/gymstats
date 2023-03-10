@@ -9,8 +9,7 @@
       <h2> <%= user.userName.toLowerCase() %></h2>
       <div class="">
         <img class="rounded-circle mr-3 mb-2" src="/imgs/Default-Profile-Picture-Transparent-Images.png" alt="Profile picture" width="100" height="100">
-        <% console.log(user._id) %>
-        <% console.log(loggedUser._id) %>
+ 
   <% if(user._id.toString() == loggedUser._id.toString()){ %>
       <a href="/logout" class="col-3 btn btn-primary">Logout</a>
     <% } else {%>

@@ -4,6 +4,10 @@ padding-bottom: 3rem;}
 video{
     object-fit: contain!important;
 }
+
+ul{
+  padding-left: 1.5rem;
+}
 a {
     color: #262626;
     text-decoration: none;
@@ -112,7 +116,14 @@ a:hover{
     max-width: 500px!important;
 }
 
-
+.comments li{
+  list-style: none;
+  padding-bottom: 0.5rem;
+  padding-left: 0;
+}
+.comment-form{
+  padding: 0 1.5rem;
+}
 
 .grid { grid-template-areas: b a;}
 .post-item {
