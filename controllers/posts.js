@@ -45,7 +45,8 @@ module.exports = {
 
         const result = browser(req.headers['user-agent'])
         const postId = req.params.id;
-        const comments = await Comment.find({post: req.params.id}).sort({ createdAt: "desc" }).lean();
+        const comments = await Comment.find({post: req.params.id}).populate({ path: 'user', model: 'User', select: 'userName' }).sort({ createdAt: "desc" }).lean();
+        console.log(comments)
 
         // Search for the post in the Post collection
         let post = await Post.findOne({ _id: postId }).populate({

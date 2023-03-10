@@ -66,7 +66,7 @@
   <ul class="comments">
     <% for(var i=0; i<comments.length; i++) {%>
       <li class="">
-        <span><strong><%= comments[i].userName%></strong></span>:  <span><%= comments[i].comment%></span>
+        <span><strong><%= comments[i].user.userName%></strong></span>:  <span><%= comments[i].comment%></span>
       </li>
     <% } %>
   </ul>
