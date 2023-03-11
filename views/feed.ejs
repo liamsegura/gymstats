@@ -32,7 +32,8 @@
           preload="auto"
           poster="<%= mergedArray[i].media.thumbnailUrl %>"
           data-setup='{"fluid": true, "userActions": {"doubleClick": false}, "controlBar": { "fullscreenToggle": false, "pictureInPictureToggle": false }}'
-        >
+          playsinline
+          >
             <source src="<%= mergedArray[i].media.url %>" type="video/mp4">
             <p class="vjs-no-js">
               To view this video please enable JavaScript, and consider upgrading to a web browser that
