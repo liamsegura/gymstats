@@ -1,9 +1,10 @@
 <%- include('partials/header') -%>
 
 <div class="container">
+  <%  if (post.media.type == "video") { %>
   <div class="row justify-content-center mt-5 video-margin">
        <!-- Check if the browser is Safari -->
-      <%  if (post.media.type == "video") { %>
+     
        
         
           <video
@@ -27,6 +28,7 @@
         
 
       <% } else { %>
+        <div class="row justify-content-center mt-5"></div>
           <img class="img-fluid post-img" src="<%= post.media.url %>" alt="Image">
       <% } %>
       
