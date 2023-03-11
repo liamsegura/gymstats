@@ -4,7 +4,25 @@ padding-bottom: 3rem;}
 video{
     object-fit: contain!important;
 }
+.video-margin{
+  margin: auto;
+width: 40vh;
+}
+.vjs-poster {
 
+  background-color: #ffffff!important;
+
+  }
+  .video-js {
+ 
+    background-color: rgb(255, 255, 255)!important;
+
+  }
+  .vjs-big-play-button {
+    background: rgba(255, 255, 255, 0.251)!important;
+    border-radius: 20%!important;
+    border: none!important;
+}
 i{
   color: #0e0e0e;
 }

@@ -1,17 +1,28 @@
 <%- include('partials/header') -%>
 
 <div class="container">
-  <div class="row justify-content-center mt-5">
+  <div class="row justify-content-center mt-5 video-margin">
        <!-- Check if the browser is Safari -->
       <%  if (post.media.type == "video") { %>
        
-        <video id="my-video" class="video-js vjs-default-skin vjs-big-play-centered img-fluid post-video" preload="auto" width="100%" height="auto" poster="<%= post.media.thumbNail %>" data-setup='{"fluid": true, "playbackRates": [0.5, 1, 1.5, 2], "controls": true, "autoplay": true, "loop": true, "muted": true, "controlBar": {"playToggle": {}, "currentTimeDisplay": {}, "timeDivider": {}, "durationDisplay": {}, "volumePanel": {"inline": false, "vertical": true}, "progressControl": {"keepTooltipsInside": true}}}'>
+        
+          <video
+          id="my-video"
+          class="video-js vjs-big-play-centered img-fluid post-video"
+          autoplay
+          loop
+          controls
+          preload="auto"
+          poster="<%= post.media.thumbnailUrl %>"
+          data-setup='{"fluid": true, "userActions": {"doubleClick": false}, "controlBar": { "fullscreenToggle": false, "pictureInPictureToggle": false }}'
+        >
           <source src="<%= post.media.url %>" type="video/mp4">
           <p class="vjs-no-js">
             To view this video please enable JavaScript, and consider upgrading to a web browser that
             <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
           </p>
         </video>
+        
         
 
       <% } else { %>
@@ -103,7 +114,4 @@
 
 </div>
 
-<script>
-
-</script>
 <%- include('partials/footer') -%>
