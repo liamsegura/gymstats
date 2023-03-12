@@ -29,6 +29,9 @@ i{
 ul{
   padding-left: 1.5rem;
 }
+p{
+  margin-bottom: 0rem;
+}
 a {
     color: #262626;
     text-decoration: none;
