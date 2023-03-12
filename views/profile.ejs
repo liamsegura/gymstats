@@ -58,6 +58,7 @@
       </ul>
     
     </div>
+    <% if(prs.length > 0){ %>
     <div id="table-container" style="display:none;" class="col-12">
       <table  class="table table-bordered">
         <thead>
@@ -92,6 +93,11 @@
         </tbody>
       </table>
     </div>
+    <% } else { %>
+      <div class="container">
+      <p class="p-3">this user has no personal records</p>
+    </div>
+      <% } %>
   </div>
 </div>
 <!-- <script src="/js/profile.js"></script> -->
