@@ -27,7 +27,7 @@
             <th>BW</th>
             <th>Category</th>
             <th>Weight</th>
-            <th>Likes</th>
+
           </tr>
         </thead>
         <tbody>
@@ -37,10 +37,10 @@
             <%  if (maxWeightPr === pr) { %>
               <tr>
                 <td><%= pr.user.userName %></td>
-                <td><%= pr.user.bodyweight == 0 ? "n/a" : pr.user.bodyweight + "kg" %></td>
+                <td><%= pr.bodyweight == 0 ? "n/a" : pr.bodyweight + "kg" %></td>
                 <td><%= pr.category %></td>
                 <td><%= pr.weight %>kg</td>
-                <td><%= pr.likes %></td>
+  
               </tr>
             <% } %>
             <% } %>
