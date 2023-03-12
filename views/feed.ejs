@@ -48,6 +48,7 @@
       
         
           </div>
+        <a href="/post/<%= mergedArray[i]._id%>" class="post">
           <div class="post-info ml-3 d-flex flex-column p-2">
             <div class="d-flex align-items-center mb-1">
               <div class="mb-3">
@@ -68,14 +69,14 @@
                     <p ><%= `${mergedArray[i].category}  ${mergedArray[i].weight}KG @ ${bodyWeight} bodyweight` %></p>
                   </div>
                 <%}%>
-                <a href="/post/<%= mergedArray[i]._id%>" class="post">
+              
                   <span class="font-weight-bold mr-1"><%= mergedArray[i].caption %></span>
                   <span class="text-muted"><%= mergedArray[i].createdAt.toDateString() %></span>
                   <span class="text-muted">view comments</span>
                 </a>
               </div>
             </div>
-           
+          </a>
         </li>
         
       <% } %>

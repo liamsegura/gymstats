@@ -34,7 +34,14 @@
   </div>
   
     <div class="col-0">
-      <ul class="row list-unstyled profile-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(125px, 1fr)); grid-gap: 0;">
+
+      <div class="col-12 d-flex">
+        <button id="posts-btn" class="btn btn-primary rounded-0 border-0 active" ><i class="fas fa-table"></i></button>
+        <button id="table-btn" class="btn btn-primary rounded-0 border-0"><i class="fas fa-trophy"></i></button>
+      </div>
+
+
+      <ul id="posts-container" class="row list-unstyled profile-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(125px, 1fr)); grid-gap: 0;">
         <%for(var i= (posts.length-1); i>=0; i--){%>
 
         <li style="width: 100%;">
@@ -51,9 +58,64 @@
       </ul>
     
     </div>
+    <div id="table-container" style="display:none;" class="col-12">
+      <table  class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Weight</th>
+            <th>BW</th>
+          </tr>
+        </thead>  
+        <tbody>
+          <% for (const pr of prs) {%>
+              <tr>
+                <td>
+                  <a href="/post/<%= pr._id %>" class="post">
+                    <%= pr.category %>
+                  </a>
+                </td>
+                <td>
+                  <a href="/post/<%= pr._id %>" class="post">
+                    <%= pr.weight %>KG
+                  </a>
+                </td>
+                <td>
+                  <a href="/post/<%= pr._id %>" class="post">
+                    <%= pr.bodyweight == 0 ? "n/a" : pr.bodyweight + "kg" %>
+                  </a>
+                </td>
+              </tr>
+         
+            <% } %>
+       
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 <!-- <script src="/js/profile.js"></script> -->
+<script>
+  const postsContainer = document.getElementById("posts-container");
+  const tableContainer = document.getElementById("table-container");
+  const postsBtn = document.getElementById("posts-btn");
+  const tableBtn = document.getElementById("table-btn");
+
+postsBtn.addEventListener("click", () => {
+  postsContainer.style.display = "grid";
+  tableContainer.style.display = "none";
+  postsBtn.classList.add("active"); // Add active class to the clicked button
+  tableBtn.classList.remove("active"); // Remove active class from the other button
+});
+
+tableBtn.addEventListener("click", () => {
+  postsContainer.style.display = "none";
+  tableContainer.style.display = "block";
+  tableBtn.classList.add("active"); // Add active class to the clicked button
+  postsBtn.classList.remove("active"); // Remove active class from the other button
+});
+
+</script>
 
 
 <%- include('partials/footer') -%>

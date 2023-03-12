@@ -83,6 +83,9 @@ td > a {
 .btn{
     width: 100%;
 }
+.btn > i{
+  color: white!important;
+}
 .btn-primary {
     color: #fff;
     background-color: #0e0e0e;
@@ -91,6 +94,14 @@ td > a {
 .btn-primary:hover{
     background-color: black;
     border: none;
+}
+.btn-profile {
+  color: #fff;
+  background-color: #000000;
+}
+.btn-profile:hover {
+  color: #fff;
+  background-color: #000000;
 }
 .home-button {
     border: none;
@@ -128,8 +139,10 @@ td > a {
   
   .trophy-icon {
     display: inline-block;
-    color: #c6ad1f!important; /* Gold color */
     font-size: 20px;
+  }
+  .trophy-icon i{
+    color: #c6ad1f!important; /* Gold color */
   }
   
   .fa-trophy:before {
@@ -153,6 +166,9 @@ td > a {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
+  }
+  .active {
+    background-color: #536166!important; /* Change to the desired color */
   }
 .container{
     padding: 0px;

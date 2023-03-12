@@ -14,9 +14,11 @@ module.exports = {
       const posts = await Post.find({ user: userId });
       const user = await User.findById(userId);
       const isFollowing = user.followers.includes(req.user._id);
+      const prs = await PR.find({ user: userId })
       
       res.render("profile.ejs", {
         posts,
+        prs,
         loggedUser: req.user,
         user,
         isFollowing
