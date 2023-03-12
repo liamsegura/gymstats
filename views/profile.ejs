@@ -58,9 +58,10 @@
       </ul>
     
     </div>
-    <% if(prs.length > 0){ %>
+   
     <div id="table-container" style="display:none;" class="col-12">
       <table  class="table table-bordered">
+        <% if(prs.length > 0){ %>
         <thead>
           <tr>
             <th>Category</th>
@@ -107,6 +108,9 @@
   const postsBtn = document.getElementById("posts-btn");
   const tableBtn = document.getElementById("table-btn");
 
+  postsBtn.classList.add("active");
+
+  
 postsBtn.addEventListener("click", () => {
   postsContainer.style.display = "grid";
   tableContainer.style.display = "none";

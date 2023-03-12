@@ -239,7 +239,7 @@ td > a {
   
   .post-img {
     object-fit: cover;
-    max-height: 85vh;
+    max-height: 70vh;
     width: 100%;
   }
 
