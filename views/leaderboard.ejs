@@ -32,7 +32,7 @@
         </thead>
         <tbody>
           <% for (const pr of prs) {%>
-            <%  const matches = prs.filter(p => p.user.userName === pr.user.userName && p.user.bodyweight === pr.user.bodyweight);%>
+            <%  const matches = prs.filter(p => p.user.userName === pr.user.userName && p.bodyweight === pr.bodyweight);%>
             <%  const maxWeightPr = matches.reduce((max, p) => p.weight > max.weight ? p : max, matches[0]);%>
             <%  if (maxWeightPr === pr) { %>
               <tr>
