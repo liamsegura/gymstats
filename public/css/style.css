@@ -83,9 +83,7 @@ td > a {
 .btn{
     width: 100%;
 }
-.btn > i{
-  color: white!important;
-}
+
 .btn-primary {
     color: #fff;
     background-color: #0e0e0e;
@@ -167,8 +165,14 @@ td > a {
     transform: translate(-50%, -50%);
     z-index: 1;
   }
+  .posts-btn{
+    background-color: #ffffff!important;
+  }
+  .table-btn{
+    background-color: #ffffff!important;
+  }
   .active {
-    background-color: #536166!important; /* Change to the desired color */
+    background-color: #dadada!important; /* Change to the desired color */
   }
 .container{
     padding: 0px;
