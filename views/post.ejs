@@ -37,14 +37,14 @@
     <a href="/profile/<%= post.user._id %>" ><strong><%= user.userName.toLowerCase() %></strong></a> <p><%= post.caption %></p>
     <div class="row align-items-center justify-content-between mb-3">
       <div class="d-flex p-0 w-0 justify-content-between">
-        <% if(!post.catagory ){ %>
+        <% if(!post.category ){ %>
         <form action="/post/likePost/<%= post._id %>?_method=PUT" method="POST">
           <button class="btn btn-link p-0">
             <i class="far fa-heart"></i>
           </button>
         </form>
         <%}%>
-        <% if(post.catagory ){ %>
+        <% if(post.category ){ %>
           <form action="/pr/likePR/<%= post._id %>?_method=PUT" method="POST">
             <button class="btn btn-link p-0">
               <i class="far fa-heart"></i>
@@ -54,7 +54,7 @@
           <div class="text-center">
             <span><%= post.likes %> likes</span>
           </div>
-          <% if(post.user._id.toString() == loggedUser._id.toString() && !post.catagory ){ %>
+          <% if(post.user._id.toString() == loggedUser._id.toString() && !post.category ){ %>
             <div class=" text-right">
               <form action="/post/deletePost/<%= post._id %>?_method=DELETE" method="POST">
                 <button class="btn btn-link p-0">
@@ -63,7 +63,7 @@
               </form>
             </div>
             <% } %>
-            <% if(post.user._id.toString() == loggedUser._id.toString() && post.catagory){ %>
+            <% if(post.user._id.toString() == loggedUser._id.toString() && post.category){ %>
               <div class="text-right">
                 <form action="/pr/deletePR/<%= post._id %>?_method=DELETE" method="POST">
                   <button class="btn btn-link p-0">
