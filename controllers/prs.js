@@ -30,7 +30,7 @@ module.exports = {
         caption: req.body.caption,
         likes: 0,
         user: req.user.id,
-        catagory: req.body.catagory,
+        category: req.body.category,
         cloudinaryId: result.public_id
       });
   console.log(req.file.mimetype)

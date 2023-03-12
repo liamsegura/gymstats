@@ -29,8 +29,12 @@ const PRSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  catagory: {
+  category: {
     type:String,
+    required: true,
+  },
+  bodyweight: {
+    type: Number,
     required: true,
   },
   cloudinaryId: {

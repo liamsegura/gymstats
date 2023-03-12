@@ -1,0 +1,39 @@
+<%- include('partials/header') -%>
+
+<h1>Leaderboard</h1>
+<form>
+  <label for="category-select">Select a category:</label>
+  <select id="category-select" name="category" onchange="this.form.submit()">
+    <option value="">All categories</option>
+    <% for (const category of ['benchpress', 'squat', 'deadlift']) { %>
+    <option value="<%= category %>" <%= category === selectedCategory ? 'selected' : '' %>>
+      <%= category.charAt(0).toUpperCase() + category.slice(1) %>
+    </option>
+    <% } %>
+  </select>
+</form>
+<% if (prs.length === 0) { %>
+<h1>No PRs found for <%= selectedCategory %></h1>
+<% } else { %>
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Category</th>
+      <th>Likes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for (const pr of prs) { %>
+    <tr>
+      <td><%= pr.user.userName %></td>
+      <td><%= pr.category %></td>
+      <td><%= pr.likes %></td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
+<% } %>
+
+
+<%- include('partials/footer') -%>
