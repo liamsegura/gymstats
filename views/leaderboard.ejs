@@ -6,7 +6,7 @@
     <form class="col-12 mb-4">
       <div class="form-group">
         <label for="category-select">Select a category:</label>
-        <select class="form-control" id="category-select" name="category" onchange="this.form.submit()">
+        <select class="form-control form-control-lg" id="category-select" name="category" onchange="this.form.submit()">
           <option value="">All categories</option>
           <% for (const category of ['benchpress', 'squat', 'deadlift']) { %>
           <option value="<%= category %>" <%= category === selectedCategory ? 'selected' : '' %>>
@@ -19,27 +19,22 @@
     <% if (prs.length === 0) { %>
     <h2 class="col-12 text-center">No PRs found for <%= selectedCategory %></h2>
     <% } else { %>
-    <div class="col-12">
-      <table class="table table-bordered">
+    <div class="col-12 table-responsive">
+      <table class="table table-bordered table-striped">
         <thead>
           <tr>
             <th>User</th>
             <th>BW</th>
             <th>Category</th>
             <th>Weight</th>
-
           </tr>
         </thead>
-         
-        
         <tbody>
           <% for (const pr of prs) {%>
             <%  const matches = prs.filter(p => p.user.userName === pr.user.userName && p.bodyweight === pr.bodyweight);%>
             <%  const maxWeightPr = matches.reduce((max, p) => p.weight > max.weight ? p : max, matches[0]);%>
             <%  if (maxWeightPr === pr) { %>
-             
               <tr>
-                
                 <td>
                   <a href="/post/<%= pr._id %>" class="post">
                     <%= pr.user.userName %>
@@ -57,19 +52,17 @@
                 </td>
                 <td>
                   <a href="/post/<%= pr._id %>" class="post">
-                    <%= pr.weight %>
+                    <%= pr.weight %>kg
                   </a>
                 </td>
               </tr>
-         
             <% } %>
-            <% } %>
+          <% } %>
         </tbody>
       </table>
     </div>
     <% } %>
   </div>
 </div>
-
 
 <%- include('partials/footer') -%>

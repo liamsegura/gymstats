@@ -8,8 +8,8 @@
       <div>
       <h2> <%= user.userName.toLowerCase() %></h2>
       
-      <p>Followers: <%= user.followers.length %></p>
-      <p>Following: <%= user.following.length %></p>
+      <p class="small">Followers: <%= user.followers.length %></p>
+      <p class="small">Following: <%= user.following.length %></p>
       </div>
       <div class="">
         <img class="rounded-circle mr-3 mb-2" src="<%= user.profilePic %>" alt="Profile picture" width="100" height="100">
@@ -60,7 +60,7 @@
     </div>
    
     <div id="table-container" style="display:none;" class="col-12">
-      <table  class="table table-bordered">
+      <table  class="table table-bordered table-striped">
         <% if(prs.length > 0){ %>
         <thead>
           <tr>
@@ -79,7 +79,7 @@
                 </td>
                 <td>
                   <a href="/post/<%= pr._id %>" class="post">
-                    <%= pr.weight %>KG
+                    <%= pr.weight %>kg
                   </a>
                 </td>
                 <td>
