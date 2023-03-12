@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, unique: true },
   password: String,
   profilePic: { type: String},
-  weight: {type: Number},
+  bodyweight: {type: Number},
   followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });

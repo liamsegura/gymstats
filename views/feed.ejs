@@ -56,7 +56,8 @@
               </div>
             </div>
               <div class="d-flex flex-column">
-                <% if(mergedArray[i].catagory) {%>
+                <% console.log(mergedArray[i]) %>
+                <% if(mergedArray[i].category) {%>
                   <div class="d-flex flex-row align-items-center">
                     <h3>PERSONAL RECORD</h3>
                     <div class="trophy-icon">
@@ -64,7 +65,7 @@
                     </div>
                   </div>
                   <div class="d-flex flex-column">
-                    <p ><%= mergedArray[i].catagory %></p>
+                    <p ><%= mergedArray[i].category %></p>
                   </div>
                 <%}%>
                 <a href="/post/<%= mergedArray[i]._id%>" class="post">

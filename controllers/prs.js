@@ -31,6 +31,7 @@ module.exports = {
         likes: 0,
         user: req.user.id,
         category: req.body.category,
+        bodyweight: req.user.bodyweight,
         cloudinaryId: result.public_id
       });
   console.log(req.file.mimetype)
