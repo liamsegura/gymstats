@@ -10,14 +10,22 @@ module.exports = {
 
   getProfile: async (req, res) => {
     try {
-      const posts = await Post.find({ user: req.params.id });
-      const user = await User.findById( req.params.id )
-
-      res.render("profile.ejs", { posts: posts, loggedUser: req.user, user: user});
+      const userId = req.params.id;
+      const posts = await Post.find({ user: userId });
+      const user = await User.findById(userId);
+      const isFollowing = user.followers.includes(req.user._id);
+      
+      res.render("profile.ejs", {
+        posts,
+        loggedUser: req.user,
+        user,
+        isFollowing
+      });
     } catch (err) {
       console.log(err);
     }
   },
+
 
   getFeed: async (req, res) => {
     try {

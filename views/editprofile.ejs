@@ -1,0 +1,29 @@
+<%- include('partials/header') -%>
+
+<div class="container">
+  <div class="column">
+    <div class="">
+      <div class="p-5">
+        <h2>Add a post</h2>
+        <form action="/post/createPost" enctype="multipart/form-data" method="POST">
+          <div class="mb-3">
+            <label for="caption" class="form-label">Caption</label>
+            <textarea class="form-control" id="caption" name="caption" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="mediaUpload" class="form-label">Media (Image or Video)</label>
+            <input type="file" class="form-control" id="mediaUpload" name="media">
+          </div>
+          <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-0">
+     
+    </div>
+  </div>
+</div>
+
+
+
+<%- include('partials/footer') -%>

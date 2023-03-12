@@ -12,6 +12,7 @@ const mainRoutes = require("./routes/main");
 const postRoutes = require("./routes/posts");
 const prRoutes = require("./routes/prs");
 const commentRoutes = require("./routes/comments");
+const userRoutes = require("./routes/users");
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -60,9 +61,11 @@ app.use("/", mainRoutes);
 app.use("/post", postRoutes);
 app.use("/pr", prRoutes);
 app.use("/comment", commentRoutes);
+app.use("/users", userRoutes);
 
 //Server Running
 connectDB().then(() => {
+  
   app.listen(process.env.PORT, () => {
       console.log("listening for requests");
   })
