@@ -88,6 +88,7 @@ exports.postSignup = (req, res, next) => {
     userName: req.body.userName,
     email: req.body.email,
     password: req.body.password,
+    profilePic: "/imgs/Default-Profile-Picture-Transparent-Images.png"
   });
 
   User.findOne(

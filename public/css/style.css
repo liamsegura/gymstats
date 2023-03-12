@@ -219,6 +219,10 @@ a:hover{
   .rounded-circle {
     border-radius: 50%;
   }
+
+  .feed-pic{
+    margin-right: 0.3rem;
+  }
   
   .text-muted {
     color: #8e8e8e;
