@@ -133,6 +133,14 @@ a:hover{
   .fa-trophy:before {
     content: "\f091";
   }
+
+  .leaderboard-button {
+    border: none;
+    background-color: transparent;
+    color: #000;
+    font-size: 24px;
+    padding-right: 1rem;
+  }
   
   .video-container {
     position: relative;

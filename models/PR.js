@@ -37,6 +37,10 @@ const PRSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  weight: {
+    type: Number,
+    required: true,
+  },
   cloudinaryId: {
     type: String,
     required: true,

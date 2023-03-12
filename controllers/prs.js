@@ -32,6 +32,7 @@ module.exports = {
         user: req.user.id,
         category: req.body.category,
         bodyweight: req.user.bodyweight,
+        weight: req.body.weight,
         cloudinaryId: result.public_id
       });
   console.log(req.file.mimetype)

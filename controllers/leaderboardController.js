@@ -10,7 +10,7 @@ getLeaderboard: async (req, res) => {
     let prs = await PR.find(selectedCategory ? { category: selectedCategory } : {})
       .sort({ likes: -1 })
       .limit(10)
-      .populate({ path: 'user', model: 'User', select: 'userName' });
+      .populate({ path: 'user', model: 'User' });
     res.render('leaderboard', { prsByCategory, prs, selectedCategory, loggedUser: req.user,});
   } catch (error) {
     console.error(error);

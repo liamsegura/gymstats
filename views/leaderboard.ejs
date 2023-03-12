@@ -24,18 +24,26 @@
         <thead>
           <tr>
             <th>User</th>
+            <th>BW</th>
             <th>Category</th>
+            <th>Weight</th>
             <th>Likes</th>
           </tr>
         </thead>
         <tbody>
-          <% for (const pr of prs) { %>
-          <tr>
-            <td><%= pr.user.userName %></td>
-            <td><%= pr.category %></td>
-            <td><%= pr.likes %></td>
-          </tr>
-          <% } %>
+          <% for (const pr of prs) {%>
+            <%  const matches = prs.filter(p => p.user.userName === pr.user.userName && p.user.bodyweight === pr.user.bodyweight);%>
+            <%  const maxWeightPr = matches.reduce((max, p) => p.weight > max.weight ? p : max, matches[0]);%>
+            <%  if (maxWeightPr === pr) { %>
+              <tr>
+                <td><%= pr.user.userName %></td>
+                <td><%= pr.user.bodyweight == 0 ? "n/a" : pr.user.bodyweight + "kg" %></td>
+                <td><%= pr.category %></td>
+                <td><%= pr.weight %>kg</td>
+                <td><%= pr.likes %></td>
+              </tr>
+            <% } %>
+            <% } %>
         </tbody>
       </table>
     </div>
