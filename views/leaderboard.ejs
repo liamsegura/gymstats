@@ -30,18 +30,38 @@
 
           </tr>
         </thead>
+         
+        
         <tbody>
           <% for (const pr of prs) {%>
             <%  const matches = prs.filter(p => p.user.userName === pr.user.userName && p.bodyweight === pr.bodyweight);%>
             <%  const maxWeightPr = matches.reduce((max, p) => p.weight > max.weight ? p : max, matches[0]);%>
             <%  if (maxWeightPr === pr) { %>
+             
               <tr>
-                <td><%= pr.user.userName %></td>
-                <td><%= pr.bodyweight == 0 ? "n/a" : pr.bodyweight + "kg" %></td>
-                <td><%= pr.category %></td>
-                <td><%= pr.weight %>kg</td>
-  
+                
+                <td>
+                  <a href="/post/<%= pr._id %>" class="post">
+                    <%= pr.user.userName %>
+                  </a>
+                </td>
+                <td>
+                  <a href="/post/<%= pr._id %>" class="post">
+                    <%= pr.bodyweight == 0 ? "n/a" : pr.bodyweight + "kg" %>
+                  </a>
+                </td>
+                <td>
+                  <a href="/post/<%= pr._id %>" class="post">
+                    <%= pr.category %>
+                  </a>
+                </td>
+                <td>
+                  <a href="/post/<%= pr._id %>" class="post">
+                    <%= pr.weight %>
+                  </a>
+                </td>
               </tr>
+         
             <% } %>
             <% } %>
         </tbody>

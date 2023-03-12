@@ -40,7 +40,9 @@ a {
 a:hover{
     color: #0e0e0e;
 }
-
+td > a {
+  display: block;
+}
 .fixed-header{
     position: fixed;
     top: 0;
