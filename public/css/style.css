@@ -79,6 +79,12 @@ textarea:focus, input:focus{
   background-color: var(--white)!important;
   color: var(--black)!important;
 }
+textarea, input{
+  outline: none!important;
+  background-color: var(--white)!important;
+  color: var(--black)!important;
+}
+
 
 .fixed-header{
     position: fixed;
