@@ -13,11 +13,40 @@
             <div class="leaderboard-button">
                 <a href="/leaderboard">  <i class="fas fa-th-list"></i></a>
             </div>
-            
+            <div id="dark-mode-toggle">
+                <i id="toggle-icon" class="fas fa-sun"></i>
+              </div>
           </div>
         </div>
       </header>
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>   
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+      <script>
+        const darkModeButton = document.getElementById('dark-mode-toggle');
+        const body = document.body;
+        const toggleIcon = document.getElementById('toggle-icon');
+      
+        // Read darkMode state from localStorage
+        const darkMode = localStorage.getItem('darkMode') === 'true';
+        if (darkMode) {
+          body.classList.add('dark-mode');
+          toggleIcon.classList.replace('fa-sun', 'fa-moon');
+        }
+      
+        darkModeButton.addEventListener('click', () => {
+          body.classList.toggle('dark-mode');
+      
+          // Update icon
+          if (body.classList.contains('dark-mode')) {
+            toggleIcon.classList.replace('fa-sun', 'fa-moon');
+          } else {
+            toggleIcon.classList.replace('fa-moon', 'fa-sun');
+          }
+      
+          // Store the darkMode state in localStorage
+          localStorage.setItem('darkMode', body.classList.contains('dark-mode'));
+        });
+      </script>
 </body>
 </html>

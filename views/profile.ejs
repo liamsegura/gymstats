@@ -60,8 +60,8 @@
     </div>
    
     <div id="table-container" style="display:none;" class="col-12">
+      <% if(prs.length > 0){ %>
       <table  class="table table-bordered table-striped">
-        <% if(prs.length > 0){ %>
         <thead>
           <tr>
             <th>Category</th>
@@ -93,13 +93,12 @@
        
         </tbody>
       </table>
-    </div>
     <% } else { %>
       <div class="container">
-      <p class="p-3">this user has no personal records</p>
+        <p class="p-3">this user has no personal records</p>
+      </div>
+       <% } %>
     </div>
-      <% } %>
-  </div>
 </div>
 <!-- <script src="/js/profile.js"></script> -->
 <script>
