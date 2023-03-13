@@ -383,4 +383,10 @@ width: 100%;
     .profile-grid{
       grid-template-columns: repeat(auto-fit, minmax(90px, 1fr))!important;
     }
+    #toggle-icon{
+      font-size: 18px;
+    }
+    .leaderboard-button {
+      font-size: 18px;
+    }
   }
