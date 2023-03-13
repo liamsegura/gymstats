@@ -36,6 +36,18 @@
   <div class="col-12 p-4">
     <a href="/profile/<%= post.user._id %>" ><strong><%= user.userName.toLowerCase() %></strong></a> <p><%= post.caption %></p>
     <div class="row align-items-center justify-content-between mb-3">
+      <% if(post.category) {%>
+        <div class="d-flex flex-row align-items-center">
+          <h3>PERSONAL RECORD</h3>
+          <div class="trophy-icon">
+            <i class="fas fa-trophy"></i>
+          </div>
+        </div>
+        <div class="d-flex flex-column">
+          <% let bodyWeight = post.bodyweight == 0 ? "n/a" : post.bodyweight + "KG" %>
+          <p ><%= `${post.category}  ${post.weight}KG @ ${bodyWeight} bodyweight` %></p>
+        </div>
+      <%}%>
       <div class="d-flex p-0 w-0 justify-content-between">
         <% if(!post.category ){ %>
         <form action="/post/likePost/<%= post._id %>?_method=PUT" method="POST">
@@ -80,7 +92,7 @@
    
   
     </div>
-  
+    
   
   </div>
 
