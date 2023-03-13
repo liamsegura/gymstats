@@ -62,7 +62,6 @@ app.use("/post", postRoutes);
 app.use("/pr", prRoutes);
 app.use("/comment", commentRoutes);
 app.use("/users", userRoutes);
-app.use("/leaderboard", mainRoutes);
 
 //Server Running
 connectDB().then(() => {

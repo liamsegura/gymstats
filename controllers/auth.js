@@ -1,6 +1,7 @@
 const passport = require("passport");
 const validator = require("validator");
 const User = require("../models/User");
+const cloudinary = require("../middleware/cloudinary");
 
 
 exports.getLogin = (req, res) => {
@@ -66,7 +67,9 @@ exports.getSignup = (req, res) => {
   });
 };
 
-exports.postSignup = (req, res, next) => {
+
+exports.postSignup = async (req, res, next) => {
+  let user; // Declare user variable here
   const validationErrors = [];
   if (!validator.isEmail(req.body.email))
     validationErrors.push({ msg: "Please enter a valid email address." });
@@ -81,40 +84,63 @@ exports.postSignup = (req, res, next) => {
     req.flash("errors", validationErrors);
     return res.redirect("../signup");
   }
+
   req.body.email = validator.normalizeEmail(req.body.email, {
     gmail_remove_dots: false,
   });
 
-  const user = new User({
-    userName: req.body.userName,
-    email: req.body.email,
-    password: req.body.password,
-    profilePic: "/imgs/Default-Profile-Picture-Transparent-Images.png"
-  });
+  try {
+    if (req.file && req.file.path) {
+    const result = await cloudinary.uploader.upload(req.file.path);
+    user = new User({
+      userName: req.body.userName,
+      email: req.body.email,
+      password: req.body.password,
+      profilePic: {
+        url: result.secure_url,
+        type: req.file.mimetype
+      },
+      cloudinaryId: result.public_id
 
-  User.findOne(
-    { $or: [{ email: req.body.email }, { userName: req.body.userName }] },
-    (err, existingUser) => {
-      if (err) {
-        return next(err);
-      }
-      if (existingUser) {
-        req.flash("errors", {
-          msg: "Account with that email address or username already exists.",
-        });
-        return res.redirect("../signup");
-      }
-      user.save((err) => {
-        if (err) {
-          return next(err);
-        }
-        req.logIn(user, (err) => {
-          if (err) {
-            return next(err);
-          }
-          res.redirect("/feed");
-        });
+    })}else{
+      user = new User({
+        userName: req.body.userName,
+        email: req.body.email,
+        password: req.body.password,
+        profilePic: {
+          url: "https://res.cloudinary.com/dtehfrg5n/image/upload/zko47so3nlmfp0oj9xkv",
+          type: "image/jpeg",
+        },
+        cloudinaryId: "zko47so3nlmfp0oj9xkv",
+    })
+  }
+
+    const existingUser = await User.findOne({
+      $or: [{ email: req.body.email }, { userName: req.body.userName }],
+    });
+
+    if (existingUser) {
+      req.flash("errors", {
+        msg: "Account with that email address or username already exists.",
       });
+      return res.redirect("../signup");
     }
-  );
+
+    await user.save();
+    req.logIn(user, async (err) => {
+      if (err) {
+        req.flash("errors", {
+          msg: "An error occurred while logging in. Please try again later.",
+        });
+        return res.redirect("../login");
+      }
+      res.redirect("/feed");
+    });
+  } catch (err) {
+    console.log("Error occurred while signing up user:", err);
+    req.flash("errors", {
+      msg: "An error occurred while signing up. Please try again later.",
+    });
+    res.redirect("../signup");
+  }
 };

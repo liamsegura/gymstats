@@ -1,5 +1,44 @@
 const User = require('../models/User');
 const Relationship = require('../models/Relationship');
+const cloudinary = require("../middleware/cloudinary");
+
+
+exports.saveProfile = async (req, res) => {
+  try {
+    // Check if the new username already exists in the database
+    const user = await User.findOne({ userName: req.body.userName });
+    if (user && user._id.toString() !== req.params.id) {
+      req.flash("errors", {
+        msg: "Account with that username already exists.",
+      });
+      // If the username exists and belongs to a different user, don't update
+      console.log(`Username "${req.body.userName}" already exists`);
+      res.redirect(`/editProfile/${req.params.id}`);
+      return;
+    }
+
+    // Update the user document
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: {
+          userName: req.body.userName,
+          profilePic:
+            req.body.profilePic === undefined
+              ? "/imgs/Default-Profile-Picture-Transparent-Images.png"
+              : req.body.profilePic,
+          bodyweight: req.body.bodyweight,
+        },
+      },
+      { new: true }
+    );
+    console.log("User Updated");
+    res.redirect(`/profile/${req.params.id}`);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 
 exports.followUser = async (req, res) => {
   try {
@@ -73,3 +112,4 @@ exports.unfollowUser = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+

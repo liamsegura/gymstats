@@ -5,21 +5,37 @@
     <div class="">
       <div class="p-5">
         <h2>Add a post</h2>
-        <form action="/post/createPost" enctype="multipart/form-data" method="POST">
+        <% if (locals.messages.errors) { %>
+          <% messages.errors.forEach( el => { %>
+              <div class="alert alert-danger"><%= el.msg %></div>
+          <% }) %>    
+      <% } %>
+      <% if (locals.messages.info) { %>
+          <% messages.info.forEach( el => { %>
+              <div class="alert alert-info"><%= el.msg %></div>
+          <% }) %>    
+      <% } %>
+        <form action="/users/saveProfile/<%= user._id %>?_method=PUT" method="POST">
           <div class="mb-3">
-            <label for="caption" class="form-label">Caption</label>
-            <textarea class="form-control" id="caption" name="caption" required></textarea>
+              <label for="userName" class="form-label">User Name</label>
+              <input type="text" class="form-control" id="userName" name="userName" value="<%= user.userName %>" v-model:value="username" pattern="[A-Za-z0-9]+" onkeydown="if(['Space'].includes(arguments[0].code)){return false;}" style="text-transform: lowercase;">
           </div>
           <div class="mb-3">
-            <label for="mediaUpload" class="form-label">Media (Image or Video)</label>
-            <input type="file" class="form-control" id="mediaUpload" name="media">
-          </div>
-          <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
+            <label for="profilePic" class="form-label">Profile Pic</label>
+            <input type="file" class="form-control" id="profilePic" name="profilePic" accept="image/*">
+        </div>
+        <div class="mb-3">
+          <label for="bodyweight" class="form-label">Body Weight</label>
+          <input type="number" class="form-control" id="bodyweight" name="bodyweight" value="<%= user.bodyweight %>">
+      </div>
+      
+        <button type="submit" class="btn btn-primary">Submit</button>
+
         </form>
       </div>
     </div>
     <div class="col-0">
-     
+    
     </div>
   </div>
 </div>

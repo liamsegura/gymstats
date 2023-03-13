@@ -28,6 +28,26 @@ module.exports = {
     }
   },
 
+  editProfile: async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const posts = await Post.find({ user: userId });
+      const user = await User.findById(userId);
+      const isFollowing = user.followers.includes(req.user._id);
+      const prs = await PR.find({ user: userId })
+      
+      res.render("editProfile.ejs", {
+        posts,
+        prs,
+        loggedUser: req.user,
+        user,
+        isFollowing
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
 
   getFeed: async (req, res) => {
     try {

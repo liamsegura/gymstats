@@ -12,7 +12,7 @@
       <p class="small">Following: <%= user.following.length %></p>
       </div>
       <div class="">
-        <img class="rounded-circle mr-3 mb-2" src="<%= user.profilePic %>" alt="Profile picture" width="100" height="100">
+        <img class="rounded-circle mr-3 mb-2" src="<%= user.profilePic.url %>" alt="Profile picture" width="100" height="100">
         
   <% if(user._id.toString() == loggedUser._id.toString()){ %>
       <a href="/logout" class="col-3 btn btn-primary">Logout</a>

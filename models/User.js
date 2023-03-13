@@ -5,10 +5,17 @@ const UserSchema = new mongoose.Schema({
   userName: { type: String, unique: true },
   email: { type: String, unique: true },
   password: String,
-  profilePic: { type: String},
+  profilePic: {
+    url: { type: String, required: true },
+    type: { type: String, required: true },
+  },
   bodyweight: {type: Number},
   followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+  following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  cloudinaryId: {
+    type: String,
+    required: true,
+  },
 });
 
 // Password hash middleware.

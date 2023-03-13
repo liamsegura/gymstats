@@ -6,6 +6,8 @@ const { ensureAuth, ensureGuest } = require("../middleware/auth");
 // Follow a user
 router.post('/:userId/follow/:userToFollowId', userController.followUser);
 
+router.put("/saveProfile/:id", userController.saveProfile);
+
 // Unfollow a user
 router.delete('/:userId/unfollow/:userToUnfollowId', userController.unfollowUser);
 
