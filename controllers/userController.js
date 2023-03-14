@@ -18,20 +18,6 @@ exports.saveProfile = async (req, res) => {
       return;
     }
 
-    result = {}
-
-    if (req.file && req.file.path) {
-      if(user.cloudinaryId){
-      await cloudinary.uploader.destroy(user.cloudinaryId, { resource_type: "image" })
-      }
-      result = await cloudinary.uploader.upload(req.file.path, {
-        transformation: [
-         { width: 200, height: 200, crop: "fill" }
-        ]
-      })}else{
-        
-        result = {secure_url: user.profilePic.url, public_id: user.cloudinaryId}
-      }
     // Update the user document
     const updatedUser = await User.findOneAndUpdate(
       { _id: req.params.id },
@@ -39,6 +25,35 @@ exports.saveProfile = async (req, res) => {
         $set: {
           userName: req.body.userName,
           bodyweight: req.body.bodyweight,
+        },
+      },
+      { new: true }
+    );
+    console.log("User Updated");
+    res.redirect(`/profile/${req.params.id}`);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
+exports.saveProfilePic = async (req, res) => {
+  try {
+    console.log(req.file)
+      const user = await User.findById(req.params.id)
+      console.log(user)
+      await cloudinary.uploader.destroy(user.cloudinaryId, { resource_type: "image" })
+      
+      result = await cloudinary.uploader.upload(req.file.path, {
+        transformation: [
+         { width: 200, height: 200, crop: "fill" }
+        ]})
+
+    // Update the user document
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: {
           profilePic: {
             url: result.secure_url,
             type: req.file ? req.file.mimetype : user.profilePic.type
@@ -54,6 +69,7 @@ exports.saveProfile = async (req, res) => {
     console.log(err);
   }
 };
+
 
 
 exports.followUser = async (req, res) => {
@@ -128,4 +144,5 @@ exports.unfollowUser = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 

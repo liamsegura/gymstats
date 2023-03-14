@@ -69,7 +69,9 @@ a:hover{
 td > a {
   display: block;
 }
-
+#form-container {
+  display: none;
+}
 .form-control{
   background-color: var(--border);
   color: var(--black);
