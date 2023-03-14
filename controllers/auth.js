@@ -93,9 +93,8 @@ exports.postSignup = async (req, res, next) => {
     if (req.file && req.file.path) {
     const result = await cloudinary.uploader.upload(req.file.path, {
       transformation: [
-        { width: 100, height: 100 }
-      ]
-    });
+       { width: 200, height: 200, crop: "fill" }
+      ]});
     user = new User({
       userName: req.body.userName,
       email: req.body.email,
@@ -104,7 +103,7 @@ exports.postSignup = async (req, res, next) => {
         url: result.secure_url,
         type: req.file.mimetype
       },
-      cloudinaryId: result.public_id
+      cloudinaryId: result.public_id,
 
     })}else{
       user = new User({
@@ -114,8 +113,8 @@ exports.postSignup = async (req, res, next) => {
         profilePic: {
           url: "",
           type: "image/jpeg",
-        },
-        cloudinaryId: "",
+        }
+
     })
   }
 

@@ -6,6 +6,7 @@ const cloudinary = require("../middleware/cloudinary");
 exports.saveProfile = async (req, res) => {
   try {
     console.log(req.file)
+    console.log(req.body)
     // Check if the new username already exists in the database
     const user = await User.findOne({ userName: req.body.userName });
     if (user && user._id.toString() !== req.params.id) {

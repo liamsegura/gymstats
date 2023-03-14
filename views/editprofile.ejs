@@ -19,7 +19,7 @@
               <div class="alert alert-info"><%= el.msg %></div>
           <% }) %>    
       <% } %>
-        <form action="/users/saveProfile/<%= user._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+        <form action="/users/saveProfile/<%= user._id %>?_method=PUT" method="POST" enctype="application/x-www-form-urlencoded">
           <div class="mb-3">
               <label for="userName" class="form-label">User Name</label>
               <input type="text" class="form-control" id="userName" name="userName" value="<%= user.userName %>" v-model:value="username" pattern="[A-Za-z0-9]+" onkeydown="if(['Space'].includes(arguments[0].code)){return false;}" style="text-transform: lowercase;">
