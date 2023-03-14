@@ -27,6 +27,7 @@
         <h1 id="openPRForm" class="pointer postmenufont">PERSONAL RECORD</h1>
        <div id="prForm">
         <h1 class="mb-5">Add a personal record</h1>
+        <p class="mb-5 text-muted">Your post will be displayed on the leaderboard, you will need to attach a video of you performing the PR for verification.</p>
         <form action="/pr/createPR" enctype="multipart/form-data" method="POST">
           <div class="mb-3">
             <select class="form-control" id="category" name="category" required>
@@ -34,6 +35,10 @@
               <option value="benchpress">Bench Press 1RM</option>
               <option value="deadlift">Dead Lift 1RM</option>
               <option value="squat">Squat 1RM</option>
+              <option  disabled value="squat">Premuim Overhead Press 1RM</option>
+              <option  disabled value="squat">Premuim Leg Press</option>
+              <option  disabled value="squat">Premuim Barbell Row</option>
+             
             </select>
             
             <div class="mb-3 mt-3">

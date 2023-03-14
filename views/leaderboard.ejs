@@ -8,7 +8,7 @@
         <label for="category-select">Select a category:</label>
         <select class="form-control form-control-lg" id="category-select" name="category" onchange="this.form.submit()">
           <option value="">All categories</option>
-          <% for (const category of ['benchpress', 'squat', 'deadlift']) { %>
+          <% for (const category of ['benchpress', 'squat', 'deadlift', 'weightLost', 'weightGained']) { %>
           <option value="<%= category %>" <%= category === selectedCategory ? 'selected' : '' %>>
             <%= category.charAt(0).toUpperCase() + category.slice(1) %>
           </option>
