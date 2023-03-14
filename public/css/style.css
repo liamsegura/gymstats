@@ -4,7 +4,7 @@
   --black: #2b2b2b;
   --white: #f7f7f7;
   --muted: #8e8e8e;
-  --border: #dbdbdb;
+  --border: #e8e8e8;
 
 }
 
@@ -234,7 +234,9 @@ textarea, input{
 .comment-form{
   padding: 0 1.5rem;
 }
-
+tr, th{
+  padding: .3rem .3rem!important;
+}
 .grid { grid-template-areas: b a;}
 .post-item {
     background-color: var(--white);
@@ -412,6 +414,9 @@ width: 100%;
 }
   @media(max-width: 350px){
 
+    .pt-4{
+      padding-top: 3rem!important;
+    }
     html {
       font-size: 80%!important;
     }

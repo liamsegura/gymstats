@@ -91,7 +91,11 @@ exports.postSignup = async (req, res, next) => {
 
   try {
     if (req.file && req.file.path) {
-    const result = await cloudinary.uploader.upload(req.file.path);
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      transformation: [
+        { width: 100, height: 100 }
+      ]
+    });
     user = new User({
       userName: req.body.userName,
       email: req.body.email,
