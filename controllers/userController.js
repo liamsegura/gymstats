@@ -42,7 +42,10 @@ exports.saveProfilePic = async (req, res) => {
     console.log(req.file)
       const user = await User.findById(req.params.id)
       console.log(user)
+
+      if(user.cloudinaryId){
       await cloudinary.uploader.destroy(user.cloudinaryId, { resource_type: "image" })
+      }
       
       result = await cloudinary.uploader.upload(req.file.path, {
         transformation: [
