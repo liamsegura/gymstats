@@ -195,7 +195,17 @@ textarea, input{
     color: var(--black);
     font-size: 24px;
   }
-  
+  .fa-edit{
+   position: absolute;
+   top: 2;
+    font-size: 12px;
+    opacity: 20%;
+  }
+
+
+
+
+
   .video-container {
     position: relative;
   }

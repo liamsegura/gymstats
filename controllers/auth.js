@@ -112,10 +112,10 @@ exports.postSignup = async (req, res, next) => {
         email: req.body.email,
         password: req.body.password,
         profilePic: {
-          url: "https://res.cloudinary.com/dtehfrg5n/image/upload/zko47so3nlmfp0oj9xkv",
+          url: "",
           type: "image/jpeg",
         },
-        cloudinaryId: "zko47so3nlmfp0oj9xkv",
+        cloudinaryId: "",
     })
   }
 

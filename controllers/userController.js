@@ -5,6 +5,7 @@ const cloudinary = require("../middleware/cloudinary");
 
 exports.saveProfile = async (req, res) => {
   try {
+    console.log(req.file)
     // Check if the new username already exists in the database
     const user = await User.findOne({ userName: req.body.userName });
     if (user && user._id.toString() !== req.params.id) {
@@ -17,17 +18,32 @@ exports.saveProfile = async (req, res) => {
       return;
     }
 
+    result = {}
+
+    if (req.file && req.file.path) {
+      if(user.cloudinaryId){
+      await cloudinary.uploader.destroy(user.cloudinaryId, { resource_type: "image" })
+      }
+      result = await cloudinary.uploader.upload(req.file.path, {
+        transformation: [
+         { width: 200, height: 200, crop: "fill" }
+        ]
+      })}else{
+        
+        result = {secure_url: user.profilePic.url, public_id: user.cloudinaryId}
+      }
     // Update the user document
     const updatedUser = await User.findOneAndUpdate(
       { _id: req.params.id },
       {
         $set: {
           userName: req.body.userName,
-          profilePic:
-            req.body.profilePic === undefined
-              ? "/imgs/Default-Profile-Picture-Transparent-Images.png"
-              : req.body.profilePic,
           bodyweight: req.body.bodyweight,
+          profilePic: {
+            url: result.secure_url,
+            type: req.file ? req.file.mimetype : user.profilePic.type
+          },
+          cloudinaryId: result.public_id
         },
       },
       { new: true }

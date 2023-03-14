@@ -8,7 +8,11 @@
           <div class="d-flex align-items-center mb-1 p-2">
               <a href="/profile/<%= mergedArray[i].user._id %>" >
                 <div class="d-flex flex-row align-items-center">
-                  <img class="rounded-circle mr-3 feed-pic" src="<%= mergedArray[i].user.profilePic.url %>" alt="Profile picture" width="30" height="30">
+                     <%if( mergedArray[i].user.profilePic.url == "" ){%>
+                    <img class="rounded-circle mr-3 feed-pic" src="/imgs/default.png" alt="Profile picture" width="30" height="30">
+                    <%}else{%>
+                    <img class="rounded-circle mr-3 feed-pic" src="<%= mergedArray[i].user.profilePic.url %>" alt="Profile picture" width="30" height="30">
+                    <%}%>
                   <span class="font-weight-bold"><%= mergedArray[i].user.userName.toLowerCase() %></span>
                 </div>
               </a>

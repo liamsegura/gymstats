@@ -15,14 +15,14 @@
               <div class="alert alert-info"><%= el.msg %></div>
           <% }) %>    
       <% } %>
-        <form action="/users/saveProfile/<%= user._id %>?_method=PUT" method="POST">
+        <form action="/users/saveProfile/<%= user._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
           <div class="mb-3">
               <label for="userName" class="form-label">User Name</label>
               <input type="text" class="form-control" id="userName" name="userName" value="<%= user.userName %>" v-model:value="username" pattern="[A-Za-z0-9]+" onkeydown="if(['Space'].includes(arguments[0].code)){return false;}" style="text-transform: lowercase;">
           </div>
           <div class="mb-3">
             <label for="profilePic" class="form-label">Profile Pic</label>
-            <input type="file" class="form-control" id="profilePic" name="profilePic" accept="image/*">
+            <input type="file" class="form-control" id="profilePic" name="file" accept="image/*">
         </div>
         <div class="mb-3">
           <label for="bodyweight" class="form-label">Body Weight</label>
