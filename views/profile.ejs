@@ -6,8 +6,14 @@
        
     <div class="profile-info">
       <div>
+        
+        <% if(user._id.toString() == loggedUser._id.toString()){ %>
       <h2> <%= user.userName.toLowerCase() %><a href="/editProfile/<%= user._id %>"><i class="fas fa-edit"></i></a></h2>
-      
+        <% }else{ %>
+      <h2> <%= user.userName.toLowerCase() %> </h2>
+        <% } %>
+
+
       <p class="small">Followers: <%= user.followers.length %></p>
       <p class="small">Following: <%= user.following.length %></p>
       </div>
