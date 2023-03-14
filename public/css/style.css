@@ -72,6 +72,9 @@ td > a {
 #form-container {
   display: none;
 }
+#postForm, #prForm {
+  border-right: 1px solid var(--border)
+}
 .form-control{
   background-color: var(--border);
   color: var(--black);
