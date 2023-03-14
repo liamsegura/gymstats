@@ -4,18 +4,18 @@
         <div class="footer justify-content-between">
           <div class="links">
 
-            <div class="home-button">
+            <div class="home-button" class="d-flex align-items-center">
                 <a href="/feed"><i class="fas fa-home"></i></a>
             </div>
           
-            <div class="leaderboard-button">
+            <div class="leaderboard-button" class="d-flex align-items-center">
                 <a href="/leaderboard">  <i class="fas fa-th-list"></i></a>
             </div>
-            <div id="dark-mode-toggle">
+            <div id="dark-mode-toggle" class="d-flex align-items-center">
                 <i id="toggle-icon" class="fas fa-sun"></i>
             </div>
             <div class="profile-button">
-                <a href="/profile/<%= loggedUser._id %>">  <i class="fas fa-user"></i></a>
+                <a href="/profile/<%= loggedUser._id %>" class="d-flex align-items-center">  <img  id="profile-pic" class="rounded-circle pointer" src="<%= loggedUser.profilePic.url %>" alt="Profile picture" width="26" height="26"></a>
             </div>
           </div>
         </div>
