@@ -15,6 +15,7 @@
       <div class="">
         <div id="form-container">
 
+          <% if(user._id.toString() == loggedUser._id.toString()){ %>
         <form id="profile-form" action="/users/saveProfilePic/<%= user._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
   
             <label for="profilePic" class="form-label">Profile Pic</label>
@@ -22,6 +23,7 @@
             <button id="submit-btn" type="submit">Submit</button>
        
         </form>
+        <% } %>
 
         </div>
 
