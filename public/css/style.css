@@ -71,7 +71,7 @@ td > a {
 }
 
 .form-control{
-  background-color: var(--white);
+  background-color: var(--border);
   color: var(--black);
 }
 textarea:focus, input:focus{
@@ -81,7 +81,7 @@ textarea:focus, input:focus{
 }
 textarea, input{
   outline: none!important;
-  background-color: var(--white)!important;
+  background-color: var(--border)!important;
   color: var(--black)!important;
 }
 
@@ -349,8 +349,55 @@ textarea, input{
   .profile-info > div{
     display: flex;
     flex-direction: column;
+  } 
+  .postmenufont{
+    font-size: 2rem;
+    font-weight: 700;
   }
-
+  #postForm, #prForm {
+    padding: 4rem;
+    position: fixed;
+    top: 0;
+    left: -400px;
+    width: 400px;
+    height: 92vh;
+    background-color: var(--white);
+    z-index: 999;
+    transition: all 0.3s ease-in-out;
+  }
+  #postForm .close-icon, #prForm .close-icon {
+    font-size: 20px;
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    cursor: pointer;
+  }
+  
+  #postForm.show, #prForm.show {
+    left: 0;
+  }
+  
+  #postForm #closePostForm, #prForm #closePRForm {
+    font-size: 20px;
+    position: absolute;
+    top: 24px;
+    right: 24px;
+  }
+  .pointer{
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    #postForm, #prForm {
+      width: 100%;
+      left: -100%;
+    }
+    
+    #postForm.show, #prForm.show {
+      left: 0;
+    }
+  }
+  
   
   @media (min-width: 1000px){
     .container{

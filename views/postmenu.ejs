@@ -1,10 +1,13 @@
 <%- include('partials/header') -%>
 
-<div class="container">
+<div class="container mt-4">
   <div class="column">
     <div class="">
-      <div class="p-5">
-        <h2>Add a post</h2>
+      
+      <div class="d-flex align-items-center  p-4">
+        <h1 id="openPostForm" class="pointer postmenufont">POST</h1>
+        <div id="postForm">
+          <h1 class="mb-5">Add a post</h1>
         <form action="/post/createPost" enctype="multipart/form-data" method="POST">
           <div class="mb-3">
             <label for="caption" class="form-label">Caption</label>
@@ -15,14 +18,17 @@
             <input type="file" class="form-control" id="mediaUpload" name="media">
           </div>
           <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
+          <i id="closePostForm" class="fas fa-times close-icon"></i>
         </form>
+        </div>
       </div>
 
-      <div class="p-5">
-        <h2>Add a personal record</h2>
+      <div class="d-flex align-items-center p-4">
+        <h1 id="openPRForm" class="pointer postmenufont">PERSONAL RECORD</h1>
+       <div id="prForm">
+        <h1 class="mb-5">Add a personal record</h1>
         <form action="/pr/createPR" enctype="multipart/form-data" method="POST">
           <div class="mb-3">
-
             <select class="form-control" id="category" name="category" required>
               <option value="" disabled selected>Select PR</option>
               <option value="benchpress">Bench Press 1RM</option>
@@ -30,9 +36,9 @@
               <option value="squat">Squat 1RM</option>
             </select>
             
-            <div class="mb-3">
-            <labal for="weight" class="form-label">Weight in kg</labal>
-            <input type="number" id="weight" name="weight" required>
+            <div class="mb-3 mt-3">
+              <label for="weight" class="form-label">Weight in kg</label>
+              <input class="w-100" type="number" id="weight" name="weight" required>
             </div>
             <label for="caption" class="form-label">Caption</label>
             <textarea class="form-control" id="caption" name="caption" required></textarea>
@@ -42,7 +48,9 @@
             <input type="file" class="form-control" id="mediaUpload" name="media" accept="video/*">
           </div>
           <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
+          <i id="closePRForm" class="fas fa-times close-icon"></i>
         </form>
+       </div>
       </div>
     </div>
     <div class="col-0">
@@ -52,5 +60,33 @@
 </div>
 
 
+<script>
+ //Add Post Form
+const postForm = document.querySelector('#postForm');
+const openPostFormBtn = document.querySelector('#openPostForm');
+const closePostFormBtn = document.querySelector('#closePostForm');
+
+openPostFormBtn.addEventListener('click', () => {
+  postForm.classList.add('show');
+});
+
+closePostFormBtn.addEventListener('click', () => {
+  postForm.classList.remove('show');
+});
+
+//Add Personal Record Form
+const prForm = document.querySelector('#prForm');
+const openPRFormBtn = document.querySelector('#openPRForm');
+const closePRFormBtn = document.querySelector('#closePRForm');
+
+openPRFormBtn.addEventListener('click', () => {
+  prForm.classList.add('show');
+});
+
+closePRFormBtn.addEventListener('click', () => {
+  prForm.classList.remove('show');
+});
+
+</script>
 
 <%- include('partials/footer') -%>
