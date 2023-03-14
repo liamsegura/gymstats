@@ -369,7 +369,7 @@ tr, th{
   } 
   .postmenufont{
     font-size: 2rem;
-    font-weight: 700;
+    /* font-weight: 500; */
   }
   #postForm, #prForm {
     padding: 4rem;
