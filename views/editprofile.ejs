@@ -20,10 +20,10 @@
               <label for="userName" class="form-label">User Name</label>
               <input type="text" class="form-control" id="userName" name="userName" value="<%= user.userName %>" v-model:value="username" pattern="[A-Za-z0-9]+" onkeydown="if(['Space'].includes(arguments[0].code)){return false;}" style="text-transform: lowercase;">
           </div>
-          <!-- <div class="mb-3">
+          <div class="mb-3">
             <label for="profilePic" class="form-label">Profile Pic</label>
             <input type="file" class="form-control" id="profilePic" name="file" accept="image/*">
-        </div> -->
+        </div>
         <div class="mb-3">
           <label for="bodyweight" class="form-label">Body Weight</label>
           <input type="number" class="form-control" id="bodyweight" name="bodyweight" value="<%= user.bodyweight %>">
