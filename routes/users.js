@@ -7,6 +7,8 @@ const upload = require("../middleware/multer");
 // Follow a user
 router.post('/:userId/follow/:userToFollowId', userController.followUser);
 
+router.get("/:userId/followers", userController.getFollowers);
+
 router.put("/saveProfile/:id", userController.saveProfile);
 
 router.put("/saveProfilePic/:id", upload.single("file"), userController.saveProfilePic);

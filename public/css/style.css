@@ -24,6 +24,9 @@ padding-bottom: 3rem;}
 th{
   color: var(--black);
 }
+tbody, td, tfoot, th, thead, tr {
+  border-color: var(--border);
+}
 video{
     object-fit: contain!important;
 }
@@ -230,6 +233,9 @@ textarea, input{
   .active {
     background-color: var(--border)!important;
   }
+  .active-color{
+    color: var(--border)
+  }
 .container{
     padding: 0px;
     max-width: 500px!important;
@@ -367,6 +373,46 @@ tr, th{
     display: flex;
     flex-direction: column;
   } 
+  
+
+  .followers-list,
+.following-list {
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+}
+
+.slide-in {
+  animation-name: slide-in;
+}
+
+.slide-out {
+  animation-name: slide-out;
+}
+
+@keyframes slide-in {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+
+
+
+
+
+
   .postmenufont{
     font-size: 2rem;
     /* font-weight: 500; */

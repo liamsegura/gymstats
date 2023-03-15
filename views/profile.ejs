@@ -14,8 +14,11 @@
         <% } %>
 
 
-      <p class="small">Followers: <%= user.followers.length %></p>
-      <p class="small">Following: <%= user.following.length %></p>
+      <a href=" /users/<%=user._id%>/followers ">
+        <p class="small">Followers: <%= user.followers.length %></p>
+        <p class="small">Following: <%= user.following.length %></p>
+      </a>
+      
       </div>
 
       <div class="">

@@ -74,7 +74,21 @@ exports.saveProfilePic = async (req, res) => {
   }
 };
 
+exports.getFollowers = async (req, res) => {
+  try {
 
+    const userId = req.params.userId;
+    const user = await User.findById(userId).populate({ path: 'followers', model: 'User'}).populate({ path: 'following', model: 'User'})
+    res.render("followers.ejs", {
+
+      loggedUser: req.user,
+      user
+
+    });
+  } catch (err) {
+    console.log(err);
+  }
+},
 
 exports.followUser = async (req, res) => {
   try {

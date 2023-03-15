@@ -1,0 +1,77 @@
+<%- include('partials/header') -%>
+<div class="container">
+  <div class="flex-column justify-content-center mt-5">
+    <div style="margin-left: 1rem;"><a href="/profile/<%= user._id %>"><i class="fas fa-arrow-left"></i></a></div>
+    <div class="d-flex justify-content-around w-100 p-2 mb-3">
+      <p id="followers-btn" class="pointer">followers: <%= user.followers.length %></p>
+      <p id="following-btn" class="pointer text-muted">following: <%= user.following.length %></p>
+    </div>
+   
+    <ul id="followers-list" class="col-12 col-md-8 col-lg-6 list-unstyled mx-auto">
+      <% for(var i=0; i<user.followers.length; i++) {%>
+        <li id="post-<%= user.followers[i]._id %>" class="mb-1 lazy">
+          <div class="d-flex align-items-center mb-1 p-2">
+            <a href="/profile/<%= user.followers[i]._id %>" >
+              <div class="d-flex flex-row align-items-center">
+          <%if( user.followers[i].profilePic.url  == "" ){%>
+            <img class="rounded-circle mr-3 feed-pic" src="/imgs/default.png" alt="Profile picture" width="26" height="26">
+            <%}else{%>
+            <img class="rounded-circle mr-3 feed-pic" src="<%= user.followers[i].profilePic.url %>" alt="Profile picture" width="26" height="26">
+            <%}%>
+          <span class="font-weight-bold"> <%= user.followers[i].userName %></span>
+              </div>
+            </a>
+          </div>    
+        </li>
+      <% } %>
+    </ul>
+
+    <ul id="following-list" class="col-12 col-md-8 col-lg-6 list-unstyled mx-auto following-list d-none">
+      <% for(var i=0; i<user.following.length; i++) {%>
+        
+        <li id="post-<%= user.following[i]._id %>" class="mb-1 lazy">
+          <div class="d-flex align-items-center mb-1 p-2">
+            <a href="/profile/<%= user.following[i]._id %>" >
+              <div class="d-flex flex-row align-items-center">
+          <%if( user.following[i].profilePic.url  == "" ){%>
+            <img class="rounded-circle mr-3 feed-pic" src="/imgs/default.png" alt="Profile picture" width="26" height="26">
+            <%}else{%>
+            <img class="rounded-circle mr-3 feed-pic" src="<%= user.following[i].profilePic.url %>" alt="Profile picture" width="26" height="26">
+            <%}%>
+          <span class="font-weight-bold"> <%= user.following[i].userName %></span>
+              </div>
+            </a>
+          </div>
+        </li>
+      <% } %>
+    </ul>
+
+  </div>
+</div>
+
+<script src="/js/lazyLoadPosts.js">
+
+</script>
+<script>  console.log("work")
+
+  const followersBtn = document.querySelector('#followers-btn');
+  const followingBtn = document.querySelector('#following-btn');
+  const followersList = document.querySelector('#followers-list');
+  const followingList = document.querySelector('#following-list');
+  
+  followingBtn.addEventListener('click', () => {
+    console.log('test')
+    followersList.classList.add('d-none');
+    followersBtn.classList.add('text-muted')
+    followingList.classList.remove('d-none');
+    followingBtn.classList.remove('text-muted');
+
+  });
+  followersBtn.addEventListener('click', () => {
+    console.log('testtt')
+    followersBtn.classList.remove('text-muted')
+    followingBtn.classList.add('text-muted');
+    followersList.classList.remove('d-none');
+    followingList.classList.add('d-none');
+  });</script>
+<%- include('partials/footer') -%>
