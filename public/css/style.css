@@ -8,6 +8,9 @@
 
 }
 
+html{
+  font-family: 'Roboto', sans-serif;
+}
 .dark-mode {
   --black: #f0f0f0;
   --white: #2b2b2b;
