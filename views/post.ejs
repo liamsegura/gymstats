@@ -52,7 +52,7 @@
         <% if(!post.category ){ %>
         <form action="/post/likePost/<%= post._id %>" method="POST">
           <button class="btn btn-link p-0">
-            <% if(post.likes.includes(loggedUser._id.toString())) { %>
+            <% if(post.likes.toString().includes(loggedUser._id.toString())) { %>
               <%console.log('true') %>
               <i class="fas fa-heart"></i>
             <% } else { %>
@@ -66,7 +66,7 @@
           <form action="/pr/likePR/<%= post._id %>" method="POST">
             <button class="btn btn-link p-0">
 
-              <% if(post.likes.includes(loggedUser._id.toString())) { %>
+              <% if(post.likes.toString().includes(loggedUser._id.toString())) { %>
                 <i class="fas fa-heart"></i>
               <% } else { %>
                 <i class="far fa-heart"></i>
