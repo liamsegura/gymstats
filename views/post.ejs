@@ -50,22 +50,33 @@
       <%}%>
       <div class="d-flex pt-2 w-0 justify-content-between">
         <% if(!post.category ){ %>
-        <form action="/post/likePost/<%= post._id %>?_method=PUT" method="POST">
+        <form action="/post/likePost/<%= post._id %>" method="POST">
           <button class="btn btn-link p-0">
-            <i class="far fa-heart"></i>
+            <% if(post.likes.includes(loggedUser._id.toString())) { %>
+              <%console.log('true') %>
+              <i class="fas fa-heart"></i>
+            <% } else { %>
+              <i class="far fa-heart"></i>
+            <% } %>
           </button>
         </form>
         <%}%>
         <% if(post.category ){ %>
           
-          <form action="/pr/likePR/<%= post._id %>?_method=PUT" method="POST">
+          <form action="/pr/likePR/<%= post._id %>" method="POST">
             <button class="btn btn-link p-0">
-              <i class="far fa-heart"></i>
+
+              <% if(post.likes.includes(loggedUser._id.toString())) { %>
+                <i class="fas fa-heart"></i>
+              <% } else { %>
+                <i class="far fa-heart"></i>
+              <% } %>
+              
             </button>
           </form>
           <%}%>
           <div class="text-center">
-            <span><%= post.likes %> likes</span>
+            <span><%= post.likes.length %> likes</span>
           </div>
           <% if(post.user._id.toString() == loggedUser._id.toString() && !post.category ){ %>
             <div class=" text-right">

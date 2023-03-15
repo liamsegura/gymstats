@@ -28,7 +28,7 @@ module.exports = {
           thumbnailUrl: thumbnailUrl || result.secure_url.replace(/\.[^/.]+$/, ".jpg"),
         },
         caption: req.body.caption,
-        likes: 0,
+        likes: [],
         user: req.user.id,
         category: req.body.category,
         bodyweight: req.user.bodyweight,
@@ -44,19 +44,32 @@ module.exports = {
   },
   
   likePR: async (req, res) => {
+    const postId = req.params.id;
+    const userId = req.user._id;
     try {
-      await PR.findOneAndUpdate(
-        { _id: req.params.id },
-        {
-          $inc: { likes: 1 },
-        }
-      );
-      console.log("Likes +1");
-      res.redirect(`/post/${req.params.id}`);
+      const post = await PR.findById(postId);
+      if (!post) {
+        return res.status(404).json({ message: "Post not found" });
+      }
+      const likes = post.likes;
+      const userIndex = likes.indexOf(userId);
+      if (userIndex > -1) {
+        // User has already liked the post, so remove their like
+        likes.splice(userIndex, 1);
+      } else {
+        // User has not yet liked the post, so add their like
+        likes.push(userId);
+      }
+      post.likes = likes;
+      const updatedPost = await post.save();
+      res.redirect("/post/" + req.params.id);
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      res.status(500).json({ message: "Server Error" });
     }
   },
+
+
   deletePR: async (req, res) => {
  
     try {
