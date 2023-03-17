@@ -2,11 +2,11 @@
 <%- include('partials/header') -%>
 
 <div class="container">
-  <div class="flex-column justify-content-center mt-5">
-    <div style="margin-left: 1.5rem;"><a href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a></div>
+  <div style="margin-left: 1.5rem;" class="flex-column justify-content-center mt-5">
+    <div ><a href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a></div>
   
  
-    <ul id="followers-list" class="col-12 col-md-8 col-lg-6 list-unstyled mx-auto mt-4">
+    <ul id="followers-list" class="col-12 col-md-8 col-lg-6 list-unstyled mx-auto mt-4" ">
       <% notifications.forEach(notification => { %>
         <% if (notification.type === 'follow') { %>
           <%console.log(notification.read)%>

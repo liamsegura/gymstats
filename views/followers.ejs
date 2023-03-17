@@ -1,7 +1,7 @@
 <%- include('partials/header') -%>
 <div class="container">
-  <div class="flex-column justify-content-center mt-5">
-    <div style="margin-left: 1.5rem;"><a href="/profile/<%= user._id %>"><i class="fas fa-arrow-left"></i></a></div>
+  <div style="margin-left: 1.5rem;" class="flex-column justify-content-center mt-5">
+    <div ><a href="/profile/<%= user._id %>"><i class="fas fa-arrow-left"></i></a></div>
     <div class="d-flex justify-content-around w-100 p-2 mb-3">
       <p id="followers-btn" class="pointer">followers: <%= user.followers.length %></p>
       <p id="following-btn" class="pointer text-muted">following: <%= user.following.length %></p>
