@@ -11,7 +11,7 @@ getLeaderboard: async (req, res) => {
       .sort({ likes: -1 })
       .limit(10)
       .populate({ path: 'user', model: 'User' });
-    res.render('leaderboard', { prsByCategory, prs, selectedCategory, loggedUser: req.user,});
+    res.render('leaderboard', { prsByCategory, prs, selectedCategory, loggedUser: req.user, onNotificationsPage: false});
   } catch (error) {
     console.error(error);
     res.status(500).send('Server Error');

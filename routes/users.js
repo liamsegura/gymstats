@@ -4,10 +4,13 @@ const userController = require('../controllers/userController');
 const { ensureAuth, ensureGuest } = require("../middleware/auth");
 const upload = require("../middleware/multer");
 
+
 // Follow a user
 router.post('/:userId/follow/:userToFollowId', userController.followUser);
 
 router.get("/:userId/followers", userController.getFollowers);
+
+router.get("/notifications", userController.getNotifications);
 
 router.put("/saveProfile/:id", userController.saveProfile);
 

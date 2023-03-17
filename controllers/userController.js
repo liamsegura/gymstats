@@ -1,6 +1,67 @@
 const User = require('../models/User');
 const Relationship = require('../models/Relationship');
+const Notification = require("../models/Notification");
 const cloudinary = require("../middleware/cloudinary");
+const moment = require('moment');
+
+
+exports.getNotifications = async (req, res) => {
+  try {
+    const userId = req.user._id;
+  
+    // Find all notifications for the current user
+    const notifications = await Notification.find({ recipient: userId })
+      .populate({ path: 'generator', model: 'User'})
+      .populate({path: 'post'})
+      .sort({ read: 1, createdAt: 'desc' });
+    
+  
+    await User.findByIdAndUpdate(userId, { unreadCount: 0 });
+
+    notifications.forEach(notification => {
+      if (notification.read) {
+        setTimeout(async () => {
+          await Notification.deleteOne({_id: notification._id});
+        }, 24 * 60 * 60 * 1000); // delete after 24/hrs
+      }
+    })
+    
+    
+    // Format the createdAt date of each notification
+notifications.forEach(notification => {
+  // Calculate the elapsed time
+  const elapsedTime = moment(notification.createdAt).fromNow(true);
+
+  // Format the elapsed time string
+  let elapsedTimeString;
+  if (elapsedTime.startsWith('a few seconds')) {
+    elapsedTimeString = 'Just now';
+  } else if (elapsedTime.startsWith('a minute')) {
+    elapsedTimeString = '1m';
+  } else if (elapsedTime.startsWith('an hour')) {
+    elapsedTimeString = '1h';
+  } else if (elapsedTime.startsWith('a day')) {
+    elapsedTimeString = '1d';
+  } else {
+    elapsedTimeString = elapsedTime.replace('minutes', 'm').replace('hours', 'h').replace('days', 'd');
+  }
+
+  // Set the formatted elapsed time string on the notification object
+  notification.formattedElapsedTime = elapsedTimeString.replace(/\s+/g, '');
+});
+
+res.render('notifications.ejs', {
+  notifications,
+  loggedUser: req.user,
+  onNotificationsPage: true
+});
+
+    
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
 
 
 exports.saveProfile = async (req, res) => {
@@ -82,7 +143,8 @@ exports.getFollowers = async (req, res) => {
     res.render("followers.ejs", {
 
       loggedUser: req.user,
-      user
+      user,
+      onNotificationsPage: false
 
     });
   } catch (err) {
@@ -121,6 +183,15 @@ exports.followUser = async (req, res) => {
     await User.findByIdAndUpdate(userId, { $addToSet: { following: userToFollowId } });
     await User.findByIdAndUpdate(userToFollowId, { $addToSet: { followers: userId } });
 
+      // Create notification for the user being followed
+      const notification = new Notification({
+        type: 'follow',
+        generator: userId,
+        recipient: userToFollowId
+      });
+      await notification.save();
+      await User.findByIdAndUpdate(notification.recipient, { $inc: { unreadCount: 1 } });
+
     res.redirect(`/profile/${userToFollowId}`);
   } catch (error) {
     console.error(error);
@@ -155,6 +226,15 @@ exports.unfollowUser = async (req, res) => {
     await Relationship.findOneAndDelete({ follower: userId, following: userToUnfollowId });
     await User.findByIdAndUpdate(userId, { $pull: { following: userToUnfollowId } });
     await User.findByIdAndUpdate(userToUnfollowId, { $pull: { followers: userId } });
+    const notification = await Notification.findOne({
+      type: 'follow',
+      generator: userId,
+      recipient: userToUnfollowId,
+    });
+    if (notification) {
+      const notificationId = notification._id;
+      await Notification.findByIdAndDelete(notificationId);
+    }
 
     res.redirect(`/profile/${userToUnfollowId}`);
   } catch (error) {

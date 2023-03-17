@@ -13,6 +13,8 @@ const postRoutes = require("./routes/posts");
 const prRoutes = require("./routes/prs");
 const commentRoutes = require("./routes/comments");
 const userRoutes = require("./routes/users");
+const notificationsMiddleware = require('./middleware/notifications');
+
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -26,6 +28,14 @@ app.set("view engine", "ejs");
 
 //Static Folder
 app.use(express.static("public"));
+
+// Enable CORS
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 //Body Parsing
 
@@ -52,6 +62,9 @@ app.use(
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+//notification middleware
+app.use(notificationsMiddleware);
+
 
 //Use flash messages for errors, info, ect...
 app.use(flash());

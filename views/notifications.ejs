@@ -1,0 +1,80 @@
+
+<%- include('partials/header') -%>
+
+<div class="container">
+  <div class="flex-column justify-content-center mt-5">
+    <div style="margin-left: 1.5rem;"><a href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a></div>
+  
+ 
+    <ul id="followers-list" class="col-12 col-md-8 col-lg-6 list-unstyled mx-auto mt-4">
+      <% notifications.forEach(notification => { %>
+        <% if (notification.type === 'follow') { %>
+          <%console.log(notification.read)%>
+      <% if (notification.read === false) { %>
+        <li id="post-<%= notification.generator._id %>" class="mb-1 lazy">
+      <%}else{%>
+        <li id="post-<%= notification.generator._id %>" class="mb-1 lazy read">
+      <%}%>
+          <div class="d-flex align-items-center mb-1 p-2">
+            <a href="/profile/<%= notification.generator._id %>?notificationId=<%= notification._id %>" >
+              <div class="d-flex flex-row align-items-center">
+                <img class="rounded-circle mr-3 feed-pic" src="<%= notification.generator.profilePic.url %>" alt="Profile picture" width="26" height="26">
+                <span class="font-weight-bold"> <%= notification.generator.userName %> followed you <%=notification.formattedElapsedTime %></span>
+              </div>
+            </a>
+          </div>    
+        </li>
+        <% } else if (notification.type === 'post') { %>
+          <% if (notification.read === false) { %>
+            <li id="post-<%= notification.generator._id %>" class="mb-1 lazy">
+          <%}else{%>
+            <li id="post-<%= notification.generator._id %>" class="mb-1 lazy read">
+          <%}%>
+            <div class="d-flex align-items-center mb-1 p-2">
+              <a href="/post/<%= notification.post._id %>?notificationId=<%= notification._id %>" >
+                <div class="d-flex flex-row align-items-center">
+                  <img class="rounded-circle mr-3 feed-pic" src="<%= notification.generator.profilePic.url %>" alt="Profile picture" width="26" height="26">
+                  <span class="font-weight-bold"> <%= notification.generator.userName %> posted a new personal record <%=notification.formattedElapsedTime %></span>
+                </div>
+              </a>
+            </div>    
+          </li>
+        <% } else if (notification.type === 'like') { %>
+          <% if (notification.read === false) { %>
+            <li id="post-<%= notification.generator._id %>" class="mb-1 lazy">
+          <%}else{%>
+            <li id="post-<%= notification.generator._id %>" class="mb-1 lazy read">
+          <%}%>
+            <div class="d-flex align-items-center mb-1 p-2">
+              <a href="/post/<%= notification.post._id %>?notificationId=<%= notification._id %>" >
+                <div class="d-flex flex-row align-items-center">
+                  <img class="rounded-circle mr-3 feed-pic" src="<%= notification.generator.profilePic.url %>" alt="Profile picture" width="26" height="26">
+                  <span class="font-weight-bold"> <%= notification.generator.userName%>  liked your <%= notification.post.category ? "personal record" : "post" %> <%=notification.formattedElapsedTime %></span>
+                </div>
+              </a>
+            </div>    
+          </li>
+          <% } else if (notification.type === 'comment') { %>
+            <% if (notification.read === false) { %>
+              <li id="post-<%= notification.generator._id %>" class="mb-1 lazy">
+            <%}else{%>
+              <li id="post-<%= notification.generator._id %>" class="mb-1 lazy read">
+            <%}%>
+              <div class="d-flex align-items-center mb-1 p-2">
+                <a href="/post/<%= notification.post._id %>?notificationId=<%= notification._id %>" >
+                  <div class="d-flex flex-row align-items-center">
+                    <img class="rounded-circle mr-3 feed-pic" src="<%= notification.generator.profilePic.url %>" alt="Profile picture" width="26" height="26">
+                    <span class="font-weight-bold"> <%= notification.generator.userName %> commented on your <%= notification.post.category ? "personal record" : "post" %> <%=notification.formattedElapsedTime %></span>
+                  </div>
+                </a>
+              </div>    
+            </li>
+            <% }%>
+    <% }) %>
+    </ul>
+
+
+  </div>
+</div>
+
+<%- include('partials/footer') -%>

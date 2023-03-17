@@ -17,7 +17,12 @@ html{
   --muted: #d5d4d4!important;
   --border: #202020;
   }
-
+.read{
+  opacity: 40%;
+}
+.badge{
+  color: var(--black);
+}
 body{
   background-color: var(--white);
   color: var(--black);
@@ -30,6 +35,33 @@ th{
 tbody, td, tfoot, th, thead, tr {
   border-color: var(--border);
 }
+.notification-icon {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.notification-icon i {
+  font-size: 1.5rem;
+}
+
+.notification-count {
+  position: absolute;
+  top: 0px;
+  right: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  background-color: #ff3b30;
+  color: white;
+  border-radius: 50%;
+  font-size: 0.8rem;
+}
+
 video{
     object-fit: contain!important;
 }

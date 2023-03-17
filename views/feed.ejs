@@ -5,7 +5,7 @@
       <% for(var i=0; i<mergedArray.length; i++) {%>
         
         <li id="post-<%= mergedArray[i]._id %>" class="post-item mb-5 lazy">
-          <div class="d-flex align-items-center mb-1 p-2">
+          <div class="d-flex justify-content-between align-items-center mb-1 p-2">
               <a href="/profile/<%= mergedArray[i].user._id %>" >
                 <div class="d-flex flex-row align-items-center">
                      <%if( mergedArray[i].user.profilePic.url == "" ){%>
@@ -15,7 +15,9 @@
                     <%}%>
                   <span class="font-weight-bold"><%= mergedArray[i].user.userName.toLowerCase() %></span>
                 </div>
+                
               </a>
+              <span class="text-muted"><%= mergedArray[i].formattedElapsedTime %></span>
           </div>
           <div class="post-thumbnail">
         <!-- Check if the browser is Safari -->
@@ -54,18 +56,18 @@
           </div>
         <a href="/post/<%= mergedArray[i]._id%>" class="post">
           <div class="post-info ml-3 d-flex flex-column p-2">
-            <div class="d-flex align-items-center mb-1">
-              <div class="mb-3">
-                <span class="font-weight-bold mr-1"><%= mergedArray[i].likes.length > 0 ? mergedArray[i].likes.length : 0 %></span>
-                <span class="text-muted">likes</span>
+            <div class="d-flex align-items-center mb-1 justify-content-between align-items-center">
+              <div class="d-flex">
+                <span class="font-weight-bold mr-1"><%= mergedArray[i].likes.length > 0 ? mergedArray[i].likes.length : 0 %> <span class="text-muted">likes</span></span>
               </div>
+             
             </div>
               <div class="d-flex flex-column">
                 <% if(mergedArray[i].category) {%>
                   <div class="d-flex flex-row align-items-center">
                     <h3>PERSONAL RECORD</h3>
                     <div class="trophy-icon">
-                      <i class="fas fa-trophy"></i>
+                      <i class="fas fa-trophy" style="color: yellow!important;"></i>
                     </div>
                   </div>
                   <div class="d-flex flex-column">
@@ -75,7 +77,6 @@
                 <%}%>
               
                   <span class="font-weight-bold mr-1"><%= mergedArray[i].caption %></span>
-                  <span class="text-muted"><%= mergedArray[i].createdAt.toDateString() %></span>
                   <span class="text-muted pb-2">view comments</span>
                 </a>
               </div>
