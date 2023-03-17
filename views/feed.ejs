@@ -55,27 +55,38 @@
         
           </div>
         <a href="/post/<%= mergedArray[i]._id%>" class="post">
-          <div class="post-info ml-3 d-flex flex-column p-2">
-            <div class="d-flex align-items-center mb-1 justify-content-between align-items-center">
-              <div class="d-flex">
-                <span class="font-weight-bold mr-1"><%= mergedArray[i].likes.length > 0 ? mergedArray[i].likes.length : 0 %> <span class="text-muted">likes</span></span>
+          <div class="post-info ml-3 d-flex align-items-top flex-column p-2">
+            <div class="d-flex align-items-top mb-1 justify-content-between ">
+
+                
+                <% if(mergedArray[i].category) {%>
+                 
+                  
+                    <div>
+                      <span class="font-weight-bold mr-1"><%= mergedArray[i].likes.length > 0 ? mergedArray[i].likes.length : 0 %> <span class="text-muted">likes</span></span>
+                    </div>
+                  
+                      <div >
+                        <div class="trophy-icon d-flex align-items-center justify-content-end">
+                        <h3 class="m-0">PERSONAL RECORD</h3><i class="fas fa-trophy" style="color: yellow!important;"></i>
+                      </div>
+                        <div class="d-flex flex-column">
+                          <% let bodyWeight = mergedArray[i].bodyweight == 0 ? "n/a" : mergedArray[i].bodyweight + "KG" %>
+                          <p ><%= `${mergedArray[i].category}  ${mergedArray[i].weight}KG @ ${bodyWeight} bodyweight` %></p>
+                        </div>
+                      </div>
+
+
+                 
+                <%}else{%>
+                  <span class="font-weight-bold mr-1"><%= mergedArray[i].likes.length > 0 ? mergedArray[i].likes.length : 0 %> <span class="text-muted">likes</span></span>
+                  <%}%>
               </div>
              
-            </div>
-              <div class="d-flex flex-column">
-                <% if(mergedArray[i].category) {%>
-                  <div class="d-flex flex-row align-items-center">
-                    <h3>PERSONAL RECORD</h3>
-                    <div class="trophy-icon">
-                      <i class="fas fa-trophy" style="color: yellow!important;"></i>
-                    </div>
-                  </div>
-                  <div class="d-flex flex-column">
-                    <% let bodyWeight = mergedArray[i].bodyweight == 0 ? "n/a" : mergedArray[i].bodyweight + "KG" %>
-                    <p ><%= `${mergedArray[i].category}  ${mergedArray[i].weight}KG @ ${bodyWeight} bodyweight` %></p>
-                  </div>
-                <%}%>
-              
+
+              <div class="d-flex flex-column mt-2">
+            
+               
                   <span class="font-weight-bold mr-1"><%= mergedArray[i].caption %></span>
                   <span class="text-muted pb-2">view comments</span>
                 </a>
