@@ -96,7 +96,7 @@ exports.postSignup = async (req, res, next) => {
        { width: 200, height: 200, crop: "fill" }
       ]});
     user = new User({
-      userName: req.body.userName,
+      userName: req.body.userName.toLowerCase(),
       email: req.body.email,
       password: req.body.password,
       profilePic: {
@@ -107,7 +107,7 @@ exports.postSignup = async (req, res, next) => {
 
     })}else{
       user = new User({
-        userName: req.body.userName,
+        userName: req.body.userName.toLowerCase(),
         email: req.body.email,
         password: req.body.password,
         profilePic: {
@@ -119,7 +119,7 @@ exports.postSignup = async (req, res, next) => {
   }
 
     const existingUser = await User.findOne({
-      $or: [{ email: req.body.email }, { userName: req.body.userName }],
+      $or: [{ email: req.body.email }, { userName: req.body.userName.toLowerCase() }],
     });
 
     if (existingUser) {
