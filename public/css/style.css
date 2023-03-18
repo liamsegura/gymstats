@@ -123,7 +123,7 @@ textarea:focus, input:focus{
   background-color: var(--white)!important;
   color: var(--black)!important;
 }
-textarea, input{
+textarea, input, select{
   outline: none!important;
   background-color: var(--border)!important;
   color: var(--black)!important;

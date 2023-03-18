@@ -78,18 +78,26 @@ module.exports = {
   // },
 
   deleteComment: async (req, res) => {
- 
     try {
-      // Find post by id
-      let post = await Comment.findById({ _id: req.params.id });
-      await Notification.deleteMany({ comment: req.params.id })
-      console.log(post.post)
-      // Delete post from db
+      const comment = await Comment.findById(req.params.id);
+      let post = await Post.findById(comment.post);
+      if (!post) {
+        post = await PR.findById(comment.post);
+      }
+  
+      const deletedNotification = await Notification.deleteMany({ comment: req.params.id });
+      if (deletedNotification) {
+        await User.findByIdAndUpdate(post.user, { $inc: { unreadCount: -1 } });
+      }
+  
       await Comment.remove({ _id: req.params.id });
       console.log("Deleted Comment");
-      res.redirect("/post/" + post.post.toString());
+      res.redirect("/post/" + post._id.toString());
     } catch (err) {
-      res.redirect("/post/" + post.post.toString());
+      console.log(err);
+      res.redirect("/");
     }
   },
-};
+  
+}
+  

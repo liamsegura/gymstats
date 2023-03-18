@@ -234,6 +234,7 @@ exports.unfollowUser = async (req, res) => {
     if (notification) {
       const notificationId = notification._id;
       await Notification.findByIdAndDelete(notificationId);
+      await User.findByIdAndUpdate(notification.recipient, { $inc: { unreadCount: -1 } });
     }
 
     res.redirect(`/profile/${userToUnfollowId}`);

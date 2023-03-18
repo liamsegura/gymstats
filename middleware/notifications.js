@@ -9,7 +9,6 @@ async function notifications(req, res, next) {
   
     try {
       const count = await User.findById(req.user._id); 
-      console.log(count)
       res.locals.notificationsCount = count.unreadCount || 0; // Initialize count to zero if undefined or null
       return next();
     } catch (err) {

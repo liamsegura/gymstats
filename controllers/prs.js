@@ -4,6 +4,7 @@ const PR = require("../models/PR")
 const Relationship = require("../models/Relationship");
 const Notification = require("../models/Notification");
 const Comment = require("../models/Comments");
+const { post } = require("../routes/main");
 
 
 
@@ -39,6 +40,7 @@ module.exports = {
         category: req.body.category,
         bodyweight: req.user.bodyweight,
         weight: req.body.weight,
+        reps: req.body.reps,
         cloudinaryId: result.public_id
       });
 
@@ -80,56 +82,75 @@ module.exports = {
       if (userIndex > -1) {
         // User has already liked the post, so remove their like
         likes.splice(userIndex, 1);
-      // Delete corresponding notification if exists
-      await Notification.deleteOne({
-        type: "like",
-        generator: userId,
-        recipient: post.user,
-        post: post._id,
-        onModel: "PR",
-      });
-      } else {
-        // User has not yet liked the post, so add their like
-        if(!req.user._id.equals(post.user)){
-        const notification = new Notification({
-          type: 'like',
+        // Delete corresponding notification if exists
+
+        const deletedNotification = await Notification.findOneAndDelete({
+          type: "like",
           generator: userId,
           recipient: post.user,
           post: post._id,
-          onModel: "PR"
         });
-        await notification.save();
-        await User.findByIdAndUpdate(notification.recipient, { $inc: { unreadCount: 1 } });
+        console.log(deletedNotification)
+        if (deletedNotification) {
+          await User.findByIdAndUpdate(post.user, { $inc: { unreadCount: -1 } });
+        }
+      } else {
+        // User has not yet liked the post, so add their like
+        if(!req.user._id.equals(post.user)){
+          const notification = new Notification({
+            type: 'like',
+            generator: userId,
+            recipient: post.user,
+            post: post._id,
+            onModel: "PR"
+          });
+          await notification.save();
+          await User.findByIdAndUpdate(notification.recipient, { $inc: { unreadCount: 1 } });
+        }
+        likes.push(userId);
       }
       
-        likes.push(userId);
-    }
-    post.likes = likes;
-    const updatedPost = await post.save();
+      post.likes = likes;
+      const updatedPost = await post.save();
       res.redirect("/post/" + req.params.id);
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: "Server Error" });
     }
-  },
+  },  
+
 
 
   deletePR: async (req, res) => {
- 
     try {
       // Find post by id
       let pr = await PR.findById({ _id: req.params.id });
-      console.log(pr)
       await Comment.deleteMany({ post: req.params.id });
       await Notification.deleteMany({ post: req.params.id })
+      let user = await User.findById({ _id: pr.user });
+      const notificationPromises = await Promise.all(user.followers.map(async (follower) => {
+        console.log("Processing follower: ", follower);
+        if (follower && follower && follower._id.toString() !== req.user.id) {
+          console.log(follower)
+          await User.findByIdAndUpdate(follower._id, { $inc: { unreadCount: -1 } });
+        }
+        return Promise.resolve(null);
+      }));
+      
+      
+      console.log(notificationPromises)
+  
       // Delete image from cloudinary
       await cloudinary.uploader.destroy(pr.cloudinaryId, { resource_type:  'video' });
       // Delete post from db
       await PR.remove({ _id: req.params.id });
       console.log("Deleted Pr");
+      
+      await Promise.all(notificationPromises); // Wait for all notifications to be updated
       res.redirect("/feed");
     } catch (err) {
       res.redirect("/feed");
     }
   },
+  
 };

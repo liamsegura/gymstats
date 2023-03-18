@@ -121,7 +121,6 @@ module.exports = {
         await Notification.findByIdAndUpdate(notificationId, { read: true });
         }
     
-        console.log(comments)
 
         // Search for the post in the Post collection
         let post = await Post.findOne({ _id: postId }).populate({
@@ -236,22 +235,35 @@ likePost: async (req, res) => {
     if (userIndex > -1) {
       // User has already liked the post, so remove their like
       likes.splice(userIndex, 1);
-    } else {
-      // User has not yet liked the post, so add their like
-      likes.push(userId);
+      // Delete corresponding notification if exists
 
-      if(!req.user._id.equals(post.user)){
-      const notification = new Notification({
-        type: 'like',
+      const deletedNotification = await Notification.deleteMany({
+        type: "like",
         generator: userId,
         recipient: post.user,
         post: post._id,
         onModel: "Post"
       });
-      await notification.save();
-      await User.findByIdAndUpdate(notification.recipient, { $inc: { unreadCount: 1 } });
+      console.log(deletedNotification)
+      if (deletedNotification) {
+        await User.findByIdAndUpdate(post.user, { $inc: { unreadCount: -1 } });
+      }
+    } else {
+      // User has not yet liked the post, so add their like
+      if(!req.user._id.equals(post.user)){
+        const notification = new Notification({
+          type: 'like',
+          generator: userId,
+          recipient: post.user,
+          post: post._id,
+          onModel: "Post"
+        });
+        await notification.save();
+        await User.findByIdAndUpdate(notification.recipient, { $inc: { unreadCount: 1 } });
+      }
+      likes.push(userId);
     }
-    }
+    
     post.likes = likes;
     const updatedPost = await post.save();
     res.redirect("/post/" + req.params.id);
@@ -259,7 +271,7 @@ likePost: async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Server Error" });
   }
-},
+},  
 
 
 

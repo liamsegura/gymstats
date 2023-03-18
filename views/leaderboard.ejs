@@ -8,7 +8,7 @@
         <label for="category-select">Select a category:</label>
         <select class="form-control form-control-lg" id="category-select" name="category" onchange="this.form.submit()">
           <option value="">All categories</option>
-          <% for (const category of ['benchpress', 'squat', 'deadlift', 'weightLost', 'weightGained']) { %>
+          <% for (const category of ['benchpress', 'squat', 'deadlift']) { %>
           <option value="<%= category %>" <%= category === selectedCategory ? 'selected' : '' %>>
             <%= category.charAt(0).toUpperCase() + category.slice(1) %>
           </option>
@@ -27,13 +27,15 @@
             <th>BW</th>
             <th>Category</th>
             <th>Weight</th>
+            <th>Reps</th>
           </tr>
         </thead>
         <tbody>
-          <% for (const pr of prs) {%>
-            <%  const matches = prs.filter(p => p.user.userName === pr.user.userName && p.bodyweight === pr.bodyweight);%>
-            <%  const maxWeightPr = matches.reduce((max, p) => p.weight > max.weight ? p : max, matches[0]);%>
-            <%  if (maxWeightPr === pr) { %>
+          <% for (const pr of prs) { %>
+            <% const matches = prs.filter(p => p.user.userName === pr.user.userName && p.bodyweight === pr.bodyweight && p.weight === pr.weight && p.reps === pr.reps ) %>
+            <% matches.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) %>
+            <% const maxWeightPr = matches.shift() %>
+            <% if (maxWeightPr === pr) { %>
               <tr>
                 <td>
                   <a href="/post/<%= pr._id %>" class="post">
@@ -55,6 +57,12 @@
                     <%= pr.weight %>kg
                   </a>
                 </td>
+                 <td>
+                  <a href="/post/<%= pr._id %>" class="post">
+                    <%= pr.reps %>
+                  </a>
+                </td>
+                
               </tr>
             <% } %>
           <% } %>

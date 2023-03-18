@@ -8,8 +8,8 @@ getLeaderboard: async (req, res) => {
     let selectedCategory = req.query.category || '';
     const prsByCategory = await PR.find()
     let prs = await PR.find(selectedCategory ? { category: selectedCategory } : {})
-      .sort({ likes: -1 })
-      .limit(10)
+      .sort({ weight: -1 })
+      .limit(100)
       .populate({ path: 'user', model: 'User' });
     res.render('leaderboard', { prsByCategory, prs, selectedCategory, loggedUser: req.user, onNotificationsPage: false});
   } catch (error) {

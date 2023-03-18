@@ -44,6 +44,10 @@ const PRSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  reps: {
+    type: Number,
+    required: true,
+  },
   cloudinaryId: {
     type: String,
     required: true,
