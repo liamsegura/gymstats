@@ -118,6 +118,10 @@ td > a {
   background-color: var(--border);
   color: var(--black);
 }
+.form-control-lg {
+  min-height: calc(1.5em + 0rem + 2px)!important;
+  padding: 0.2rem 1rem;
+}
 textarea:focus, input:focus{
   outline: none!important;
   background-color: var(--white)!important;
