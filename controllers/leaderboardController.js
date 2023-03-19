@@ -6,6 +6,7 @@ module.exports = {
     try {
       let selectedCategory = req.query.category || '';
       let selectedBodyweight = req.query.bodyweight || '';
+      let selectedReps = req.query.reps || '';
       const prsByCategory = await PR.find({ category: selectedCategory });
       let prs = await PR.find(selectedCategory ? { category: selectedCategory } : {})
         .sort({ weight: -1 })
@@ -14,7 +15,10 @@ module.exports = {
       if (selectedBodyweight) {
         prs = prs.filter(pr => pr.bodyweight === Number(selectedBodyweight));
       }
-      res.render('leaderboard', { prsByCategory, prs, selectedCategory, selectedBodyweight, loggedUser: req.user, onNotificationsPage: false });
+      if (selectedReps) {
+        prs = prs.filter(pr => pr.reps === Number(selectedReps));
+      }
+      res.render('leaderboard', { prsByCategory, prs, selectedCategory, selectedBodyweight, selectedReps, loggedUser: req.user, onNotificationsPage: false });
     } catch (error) {
       console.error(error);
       res.status(500).send('Server Error');

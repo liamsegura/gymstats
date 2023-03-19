@@ -19,7 +19,12 @@
         <label for="bodyweight-input">Enter a bodyweight in kg:</label>
         <input type="number" class="form-control form-control-lg" id="bodyweight-input" name="bodyweight" value="<%= selectedBodyweight || '' %>" onchange="this.form.submit()">
       </div>
+      <div class="form-group">
+        <label for="reps-input">Enter the number of reps:</label>
+        <input type="number" class="form-control form-control-lg" id="reps-input" name="reps" value="<%= selectedReps || '' %>" onchange="this.form.submit()">
+      </div>
     </form>
+    
     
     <% if (prs.length === 0) { %>
     <h2 class="col-12 text-center">No PRs found for <%= selectedCategory %></h2>
