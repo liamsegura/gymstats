@@ -414,6 +414,9 @@ tr, th{
     flex-direction: column;
   } 
   
+  #postForm, #prForm{
+    padding: 2.5rem;
+  }
 
   .followers-list,
 .following-list {
@@ -513,13 +516,13 @@ tr, th{
 width: 100%;
 }
 }
-  @media(max-width: 350px){
+  @media(max-width: 400px){
 
     .pt-4{
-      padding-top: 3rem!important;
+      padding-top: 2.5rem!important;
     }
     html {
-      font-size: 80%!important;
+      font-size: 75%!important;
     }
     body{
       padding-top: 1.5rem;
@@ -547,5 +550,8 @@ width: 100%;
     }
     .leaderboard-button {
       font-size: 18px;
+    }
+    #postForm, #prForm{
+      padding: 2.5rem;
     }
   }

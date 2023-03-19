@@ -18,14 +18,16 @@ exports.getNotifications = async (req, res) => {
   
     await User.findByIdAndUpdate(userId, { unreadCount: 0 });
 
+    
     notifications.forEach(notification => {
       if (notification.read) {
         setTimeout(async () => {
           await Notification.deleteOne({_id: notification._id});
-        }, 24 * 60 * 60 * 1000); // delete after 24/hrs
+        }, 1000); // delete after 10 seconds for testing
       }
     })
-    
+    //currently not running due to free service closing server after 15 minutes of inactivity 
+    // delete after 24/hrs - 24 * 60 * 60 * 1000
     
     // Format the createdAt date of each notification
 notifications.forEach(notification => {

@@ -68,7 +68,7 @@ module.exports = {
   getFeed: async (req, res) => {
 
     try {
-
+    
       const result = browser(req.headers['user-agent'])
 
 
