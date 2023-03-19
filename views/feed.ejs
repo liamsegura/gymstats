@@ -1,10 +1,17 @@
 <%- include('partials/header') -%>
 <div class="container">
-  <div class="flex-column justify-content-center mt-5">
+  <div class="mb-2 d-flex mt-4 w-25" style="margin-left:1rem;">
+    <button id="show-all-posts" class="btn btn-primary rounded-0 border-0 posts-btn active" ><i class="fas fa-table"></i></button>
+    <button id="show-category-posts" class="btn btn-primary rounded-0 border-0 table-btn"><i class="fas fa-trophy"></i></button>
+  </div>
+  <div class="flex-column justify-content-center mt-2">
     <ul class="col-12 col-md-8 col-lg-6 list-unstyled mx-auto">
       <% for(var i=0; i<mergedArray.length; i++) {%>
-        
-        <li id="post-<%= mergedArray[i]._id %>" class="post-item mb-5 lazy">
+        <% if(mergedArray[i].category) {%>
+        <li id="post-<%= mergedArray[i]._id %>" class="post-item mb-5 lazy category-post">
+          <% } else { %>
+        <li id="post-<%= mergedArray[i]._id %>" class="post-item mb-5 lazy all-post">
+          <% }  %> 
           <div class="d-flex justify-content-between align-items-center mb-1 p-2">
               <a href="/profile/<%= mergedArray[i].user._id %>" >
                 <div class="d-flex flex-row align-items-center">
@@ -20,41 +27,41 @@
               <span class="text-muted"><%= mergedArray[i].formattedElapsedTime %></span>
           </div>
           <div class="post-thumbnail">
-        <!-- Check if the browser is Safari -->
-        <% if (mergedArray[i].media.type === "video" && browser.name === "safari") { %>
+          <!-- Check if the browser is Safari -->
+          <% if (mergedArray[i].media.type === "video" && browser.name === "safari") { %>
+            <a href="/post/<%= mergedArray[i]._id %>" class="post">
+              <img class="img-fluid post-img lazy" data-src="<%= mergedArray[i].media.url %>" alt="Video">
+            </a>
+          <% } else if (mergedArray[i].media.type == "video") { %>
+
           <a href="/post/<%= mergedArray[i]._id %>" class="post">
-            <img class="img-fluid post-img lazy" data-src="<%= mergedArray[i].media.url %>" alt="Video">
+            <video 
+
+            id="my-video"
+            class="video-js vjs-big-play-centered img-fluid post-video"
+            disableRemotePlayback
+            autoplay
+            loop
+            muted
+            controls
+            preload="auto"
+            poster="<%= mergedArray[i].media.thumbnailUrl %>"
+            data-setup='{"fluid": true, "userActions": {"doubleClick": false}, "controlBar": { "fullscreenToggle": false, "pictureInPictureToggle": false }}'
+            playsinline
+            >
+              <source src="<%= mergedArray[i].media.url %>" type="video/mp4">
+
+            </video>
           </a>
-        <% } else if (mergedArray[i].media.type == "video") { %>
-          
-        <a href="/post/<%= mergedArray[i]._id %>" class="post">
-          <video 
-          
-          id="my-video"
-          class="video-js vjs-big-play-centered img-fluid post-video"
-          disableRemotePlayback
-          autoplay
-          loop
-          muted
-          controls
-          preload="auto"
-          poster="<%= mergedArray[i].media.thumbnailUrl %>"
-          data-setup='{"fluid": true, "userActions": {"doubleClick": false}, "controlBar": { "fullscreenToggle": false, "pictureInPictureToggle": false }}'
-          playsinline
-          >
-            <source src="<%= mergedArray[i].media.url %>" type="video/mp4">
-           
-          </video>
-        </a>
-        <% } else { %>
-          <a href="/post/<%= mergedArray[i]._id %>" class="post">
-            <img class="img-fluid post-img lazy" data-src="<%= mergedArray[i].media.url %>" alt="Image">
-          </a>
-        <% } %>
+          <% } else { %>
+            <a href="/post/<%= mergedArray[i]._id %>" class="post">
+              <img class="img-fluid post-img lazy" data-src="<%= mergedArray[i].media.url %>" alt="Image">
+           </a>
+          <% } %>
       
         
           </div>
-        <a href="/post/<%= mergedArray[i]._id%>" class="post">
+          <a href="/post/<%= mergedArray[i]._id%>" class="post">
           <div class="post-info ml-3 d-flex align-items-top flex-column p-2">
             <div class="d-flex align-items-top mb-1 justify-content-between ">
 
@@ -94,7 +101,7 @@
             </div>
           </a>
         </li>
-        
+
       <% } %>
       
     
@@ -106,5 +113,38 @@
 <script src="/js/lazyLoadPosts.js">
   
 </script>
+<script>
+  const categoryPostsButton = document.getElementById('show-category-posts');
+  const allPostsButton = document.getElementById('show-all-posts');
+  const categoryPosts = document.querySelectorAll('.category-post');
+  const allPosts = document.querySelectorAll('.all-post');
+
+  // Show posts with category when "Show Posts with Category" button is clicked
+  categoryPostsButton.addEventListener('click', () => {
+    allPostsButton.classList.remove("active"); // Add active class to the clicked button
+    categoryPostsButton.classList.add("active"); // Remove active class from the other button
+    categoryPosts.forEach(post => {
+      post.style.display = 'block';
+    });
+    allPosts.forEach(post => {
+      post.style.display = 'none';
+    });
+  });
+
+  // Show all posts when "Show All Posts" button is clicked
+  allPostsButton.addEventListener('click', () => {
+    allPostsButton.classList.add("active"); // Add active class to the clicked button
+    categoryPostsButton.classList.remove("active"); // Remove active class from the other button
+    categoryPosts.forEach(post => {
+      post.style.display = 'block';
+    });
+    allPosts.forEach(post => {
+      post.style.display = 'block';
+    });
+  });
+
+
+</script>
+
 
 <%- include('partials/footer') -%>
