@@ -82,7 +82,7 @@
           </form>
           <%}%>
           <div class="text-center">
-            <span><%= post.likes.length %> likes</span>
+            <a href="/post/<%=post._id%>/likes"><span><%= post.likes.length %> likes</span></a>
           </div>
           <% if(post.user._id.toString() == loggedUser._id.toString() && !post.category ){ %>
             <div class=" text-right">

@@ -22,7 +22,8 @@ module.exports = {
       transformation: [
         {duration: "30.0"},
         {named: "e_thumb"},
-      ]
+      ],
+      eager_async: true
       });
 
       const thumbnailUrl = result.eager && result.eager[0] && result.eager[0].secure_url;

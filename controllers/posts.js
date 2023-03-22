@@ -173,6 +173,47 @@ module.exports = {
     }
 },
 
+getLikes: async (req, res) => {
+  try {
+
+    const postId = req.params.id;
+     // Search for the post in the Post collection
+     let post = await Post.findOne({ _id: postId }).populate({
+      path: 'likes',
+      model: 'User'
+    }).lean();
+    
+
+    // If a post with the given ID is not found in the Post collection, search for it in the PR collection
+    if (!post) {
+        const pr = await PR.findOne({ _id: postId }).populate({
+          path: 'likes',
+          model: 'User'
+        }).lean();
+        if (pr) {
+            // If a PR with the given ID is found, assign it to the post variable
+            post = pr;
+        }
+    }
+
+    if (!post) {
+        // If neither a post nor a PR with the given ID is found, return a 404 error
+        return res.status(404).render("404.ejs");
+    }
+    
+    res.render("likes.ejs", {
+
+      loggedUser: req.user,
+      post,
+      onNotificationsPage: false
+
+    });
+  } catch (err) {
+    console.log(err);
+  }
+},
+
+
   getPostMenu: async (req, res) => { 
     try{
       res.render("postmenu.ejs", {loggedUser: req.user, onNotificationsPage: false})
@@ -190,16 +231,17 @@ module.exports = {
         transformation: [
           {duration: "30.0"},
           {named: "e_thumb"},
-        ]
+        ],
+        eager_async: true
       });
       const mongoose = require('mongoose');
       const thumbnailUrl = result.eager && result.eager[0] && result.eager[0].secure_url;
       const isValidObjectId = mongoose.Types.ObjectId.isValid(req.user._id);
-if (!isValidObjectId) {
-  console.log('not valid');
-}else{
-  console.log('valid')
-}
+      if (!isValidObjectId) {
+        console.log('not valid');
+      }else{
+        console.log('valid')
+      }
 
       const post = await Post.create({
         media: {

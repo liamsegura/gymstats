@@ -1,0 +1,56 @@
+<%- include('partials/header') -%>
+<div class="container">
+  <div style="margin-left: 1.5rem;" class="flex-column justify-content-center mt-5">
+    <div ><a href="/post/<%= post._id %>"><i class="fas fa-arrow-left"></i></a></div>
+    <div class="d-flex justify-content-around w-100 p-2 mb-3">
+      <p id="likes-btn" class="pointer">likes: <%= post.likes.length %></p>
+    </div>
+   
+    <ul id="likes-list" class="col-12 col-md-8 col-lg-6 list-unstyled mx-auto">
+      <% for(var i=0; i<post.likes.length; i++) {%>
+        <li id="post-<%= post.likes[i]._id %>" class="mb-1 lazy">
+          <div class="d-flex align-items-center mb-1 p-2">
+            <a href="/profile/<%= post.likes[i]._id %>" >
+              <div class="d-flex flex-row align-items-center">
+          <%if( post.likes[i]  == "" ){%>
+            <img class="rounded-circle mr-3 feed-pic" src="/imgs/default.png" alt="Profile picture" width="26" height="26">
+            <%}else{%>
+            <img class="rounded-circle mr-3 feed-pic" src="<%= post.likes[i].profilePic.url %>" alt="Profile picture" width="26" height="26">
+            <%}%>
+          <span class="font-weight-bold"> <%= post.likes[i].userName %></span>
+              </div>
+            </a>
+          </div>    
+        </li>
+      <% } %>
+    </ul>
+
+  </div>
+</div>
+
+<script src="/js/lazyLoadPosts.js">
+
+</script>
+<script>  console.log("work")
+
+  const likesBtn = document.querySelector('#likes-btn');
+  const followingBtn = document.querySelector('#following-btn');
+  const likesList = document.querySelector('#likes-list');
+  const followingList = document.querySelector('#following-list');
+  
+  followingBtn.addEventListener('click', () => {
+    console.log('test')
+    likesList.classList.add('d-none');
+    likesBtn.classList.add('text-muted')
+    followingList.classList.remove('d-none');
+    followingBtn.classList.remove('text-muted');
+
+  });
+  likesBtn.addEventListener('click', () => {
+    console.log('testtt')
+    likesBtn.classList.remove('text-muted')
+    followingBtn.classList.add('text-muted');
+    likesList.classList.remove('d-none');
+    followingList.classList.add('d-none');
+  });</script>
+<%- include('partials/footer') -%>
