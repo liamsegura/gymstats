@@ -66,53 +66,67 @@ module.exports = {
 
 
   getFeed: async (req, res) => {
-
     try {
-    
-      const result = browser(req.headers['user-agent'])
-
-
+      const result = browser(req.headers['user-agent']);
+  
       const posts = await Post.find().populate("user").populate("media").lean();
       const PRs = await PR.find().populate("user").populate("media").lean();
       const mergedArray = [...posts, ...PRs];
-      mergedArray.sort((a, b) => {
+  
+      // Fetch the number of comments for each post
+      const promises = mergedArray.map(async post => {
+        const numComments = await Comment.countDocuments({ post: post._id });
+        post.numComments = numComments;
+        return post;
+      });
+  
+      const postsWithComments = await Promise.all(promises);
+  
+      // Sort the merged array by the creation date of each post
+      postsWithComments.sort((a, b) => {
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
-      // Format the createdAt date of each notification
-        mergedArray.forEach(post => {
-          // Calculate the elapsed time
-          const elapsedTime = moment(post.createdAt).fromNow(true);
-
-          // Format the elapsed time string
-          let elapsedTimeString;
-          if (elapsedTime.startsWith('a few seconds')) {
-            elapsedTimeString = 'Just now';
-          } else if (elapsedTime.startsWith('a minute')) {
-            elapsedTimeString = '1m';
-          } else if (elapsedTime.startsWith('an hour')) {
-            elapsedTimeString = '1h';
-          } else if (elapsedTime.startsWith('a day')) {
-            elapsedTimeString = '1d';
-          } else {
-            elapsedTimeString = elapsedTime.replace('minutes', 'm').replace('hours', 'h').replace('days', 'd');
-          }
-
-          // Set the formatted elapsed time string on the notification object
-          post.formattedElapsedTime = elapsedTimeString.replace(/\s+/g, '');
-        });
-
-      res.render("feed.ejs", { mergedArray, loggedUser: req.user, browser: result, onNotificationsPage: false});
+  
+      // Format the createdAt date of each post
+      postsWithComments.forEach(post => {
+        const elapsedTime = moment(post.createdAt).fromNow(true);
+        let elapsedTimeString;
+  
+        if (elapsedTime.startsWith('a few seconds')) {
+          elapsedTimeString = 'Just now';
+        } else if (elapsedTime.startsWith('a minute')) {
+          elapsedTimeString = '1m';
+        } else if (elapsedTime.startsWith('an hour')) {
+          elapsedTimeString = '1h';
+        } else if (elapsedTime.startsWith('a day')) {
+          elapsedTimeString = '1d';
+        } else {
+          elapsedTimeString = elapsedTime.replace('minutes', 'm').replace('hours', 'h').replace('days', 'd');
+        }
+  
+        post.formattedElapsedTime = elapsedTimeString.replace(/\s+/g, '');
+      });
+  
+      res.render("feed.ejs", { mergedArray: postsWithComments, loggedUser: req.user, browser: result, onNotificationsPage: false });
     } catch (err) {
       console.log(err);
     }
   },
+  
 
   getPost: async (req, res) => {
     try {
+        
 
         const result = browser(req.headers['user-agent'])
         const postId = req.params.id;
-        const comments = await Comment.find({post: req.params.id}).populate({ path: 'user', model: 'User', select: 'userName' }).sort({ createdAt: "desc" }).lean();
+        const comments = await Comment.find({post: req.params.id}).populate({ path: 'user', model: 'User'}) .populate({
+          path: 'replies',
+          populate: {
+            path: 'user',
+            model: 'User'
+          }
+        }).sort({ createdAt: "desc" }).lean();
         
         if(req.query.notificationId){
            const notificationId = req.query.notificationId
@@ -131,7 +145,10 @@ module.exports = {
 
         // If a post with the given ID is not found in the Post collection, search for it in the PR collection
         if (!post) {
-            const pr = await PR.findOne({ _id: postId }).populate("user").populate("media").lean();
+            const pr = await PR.findOne({ _id: postId }).populate({
+              path: 'user',
+              model: 'User'
+            }).populate("media").lean();
             if (pr) {
                 // If a PR with the given ID is found, assign it to the post variable
                 post = pr;

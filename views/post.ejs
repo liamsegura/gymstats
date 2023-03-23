@@ -110,39 +110,127 @@
   
     </div>
     
-  
+
   </div>
 
-
-  
-  <ul class="comments">
-    <% for(var i=0; i<comments.length; i++) {%>
-      <li class="d-flex">
-        <a href="/profile/<%= comments[i].user._id %>" ><p><strong><%= comments[i].user.userName%></strong>:</p></a>  
-        <p class="mr-3"><%= comments[i].comment%></p>
-        <% if(comments[i].user._id.toString() == loggedUser._id.toString() ){ %>
-          <div class="col-3 text-right">
-            <form action="/comment/deleteComment/<%= comments[i]._id %>?_method=DELETE" method="POST">
-              <button class="btn btn-link p-0">
-                <i class="fas fa-times"></i>
-              </button>
-            </form>
+    <ul class="comments">
+    <% for(var i=0; i<comments.length; i++){ %>
+      <% if(!comments[i].parentComment){ %>
+        <li  class="d-flex mt-2">
+         
+            <img class="rounded-circle mr-3 feed-pic" src="<%= comments[i].user.profilePic.url %>" alt="Profile picture" width="26" height="26">
+          <a href="/profile/<%= comments[i].user._id %>" ><p><strong><%= comments[i].user.userName%></strong>:</p></a>  
+          <p class="ml-2"><%= comments[i].comment %></p> 
+          <% if(comments[i].user._id.toString() == loggedUser._id.toString() ){ %>
+            <div class="col-3 text-right">
+              <form action="/comment/deleteComment/<%= comments[i]._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-link p-0">
+                  <i class="fas fa-times"></i>
+                </button>
+              </form>
+            </div>
+            <% } %>         
+        </li>
+        <a class="reply-btn text-muted" onclick="toggleForm('<%=comments[i]._id%>-reply-form')">reply</a>
+        <% if(comments[i].replies.length > 0) {%>
+        <a class="reply-btn text-muted" onclick="toggleReplies('<%=comments[i]._id%>-replies-list')">view <%=comments[i].replies.length%> replies</a>
+        <%}%>
+        <form id="<%=comments[i]._id%>-reply-form" action="/comment/createComment/<%=post._id%>" method="POST" class="mt-2 d-none reply-form">
+          <div class="mb-3 d-flex justify-content-center w-70 comment-form">
+            <input type="text" class="form-control" id="comment" name="comment" value="@<%=comments[i].user.userName%> " required>
+            <input type="hidden" name="parentComment" value="<%=comments[i]._id%>">
+            <input type="hidden" name="replyToUser" value="<%=comments[i].user._id%>">
+            <button class="w-50 btn-primary btn" type="submit" class="btn btn-primary"> reply</button>
           </div>
+        </form>
+        <li id="<%=comments[i]._id%>-replies-list" class="ml-5 d-none mt-2">
+         <div class="w-100">
+          <% if (comments[i].replies.length > 0) { %>
+            <%let reply = comments[i]._id %>
+            <ul class="replies">
+              <% for(var j=0; j<comments[i].replies.length; j++) {%>
+                <li class="d-flex mt-2 ">
+                 
+                  <img class="rounded-circle mr-3 feed-pic" src="<%= comments[i].replies[j].user.profilePic.url %>" alt="Profile picture" width="26" height="26">
+                  <a href="/profile/<%= comments[i].replies[j].user._id %>" ><p><strong><%= comments[i].replies[j].user.userName%></strong>:</p></a>  
+                  <p class="ml-2"><%= comments[i].replies[j].comment %></p>   
+                  <% if(comments[i].replies[j].user._id.toString() == loggedUser._id.toString() ){ %>
+                    <div class="col-3 text-right">
+                      <form action="/comment/deleteComment/<%= comments[i]._id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-link p-0">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </form>
+                    </div>
+                    <% } %>
+                </li>
+                <a class="reply-btn mb-3 text-muted" onclick="toggleForm('<%=comments[i].replies[j]._id%>-reply-form')">reply</a>
+                <li id="<%=comments[i].replies[j]._id%>-reply-form" class="d-none ml-5 reply-form mt-2">
+                  <form action="/comment/createComment/<%=post._id%>" method="POST">
+                    <div class="mb-3 d-flex justify-content-center w-70 comment-form">
+                      <input type="text" class="form-control" id="comment" name="comment" placeholder="add comment" value="@<%= comments[i].replies[j].user.userName%> "required>
+                      <input type="hidden" name="parentComment" value="<%=reply%>">
+                      <input type="hidden" name="replyToUser" value="<%=comments[i].replies[j].user._id%>">
+                      <button class="w-50 btn-primary btn" type="submit" class="btn btn-primary">Reply</button>
+                    </div>
+                  </form>
+                </li>
+              <% } %>
+            </ul>
           <% } %>
-      </li>
-    
-    <% } %>
-  </ul>
+          </div> 
+        </li>
+      <% } %>
+      <% } %>
+    </ul>
+
   <div class="">
     <form action="/comment/createComment/<%=post._id%>" method="POST">
       <div class="mb-3 d-flex justify-content-center w-70 comment-form">
-          <input type="text" class="form-control" id="comment" name="comment" placeholder="add comment" required>
-          <button class="w-50 btn-primary btn" type="submit" class="btn btn-primary">Submit</button>
-        </div>
-      
+        <input type="text" class="form-control" id="comment" name="comment" placeholder="add comment" required>
+        <button class="w-50 btn-primary btn" type="submit" class="btn btn-primary">Submit</button>
+      </div>
     </form>
   </div>
-
+  
 </div>
+
+<script>
+  
+  const toggleForm = (target) => {
+  // get all the reply form elements
+  let replyForms = document.getElementsByClassName('reply-form')
+  for (let i = 0; i < replyForms.length; i++) {
+    // hide any reply forms that are currently displayed
+    if (!replyForms[i].classList.contains('d-none')) {
+      replyForms[i].classList.remove('d-flex')
+      replyForms[i].classList.add('d-none')
+    }
+  }
+  // show the target reply form
+  let replyForm = document.getElementById(target)
+  if (replyForm.classList.contains('d-none')) {
+    replyForm.classList.remove('d-none')
+    replyForm.classList.add('d-flex')
+  } else {
+    replyForm.classList.remove('d-flex')
+    replyForm.classList.add('d-none')
+  }
+}
+
+const toggleReplies = (target) => {
+  // get all the reply form elements
+  let replyList = document.getElementById(target)
+  
+  if (replyList.classList.contains('d-none')) {
+    replyList.classList.remove('d-none')
+    replyList.classList.add('d-flex')
+  } else {
+    replyList.classList.remove('d-flex')
+    replyList.classList.add('d-none')
+  }
+}
+
+</script>
 
 <%- include('partials/footer') -%>

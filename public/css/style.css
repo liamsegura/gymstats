@@ -283,13 +283,13 @@ textarea, input, select{
 
 .comments li{
   list-style: none;
-  padding-bottom: 0.5rem;
   padding-left: 0;
 }
 .comments a{
   padding-right: 0.5rem;
+
 }
-.comments div{
+.comments > div{
   margin-left: auto;
 }
 .comment-form{

@@ -6,7 +6,7 @@
     <div ><a href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a></div>
   
     <% if(notifications.length > 0) { %>
-    <ul id="followers-list" class="col-12 col-md-8 col-lg-6 list-unstyled mx-auto mt-4" ">
+    <ul id="followers-list" class="col-12 col-md-8 col-lg-6 list-unstyled mx-auto mt-4" style="font-size:0.8rem ;">
  
   
           <% notifications.forEach(notification => { %>
@@ -19,7 +19,7 @@
           <%}%>
               <div class="d-flex align-items-center mb-1 p-2">
                 <a href="/profile/<%= notification.generator._id %>?notificationId=<%= notification._id %>" >
-                  <div class="d-flex flex-row align-items-center">
+                  <div class="d-flex flex-row">
                     <img class="rounded-circle mr-3 feed-pic" src="<%= notification.generator.profilePic.url %>" alt="Profile picture" width="26" height="26">
                     <span class="font-weight-bold"> <%= notification.generator.userName %> </span><span style="margin-left: 0.3rem;">followed you <%=notification.formattedElapsedTime %></span>
                   </div>
@@ -34,7 +34,7 @@
               <%}%>
                 <div class="d-flex align-items-center mb-1 p-2">
                   <a href="/post/<%= notification.post._id %>?notificationId=<%= notification._id %>" >
-                    <div class="d-flex flex-row align-items-center">
+                    <div class="d-flex flex-row">
                       <img class="rounded-circle mr-3 feed-pic" src="<%= notification.generator.profilePic.url %>" alt="Profile picture" width="26" height="26">
                       <span> <%= notification.generator.userName %></span><span style="margin-left: 0.3rem;"> posted a new personal record <%=notification.formattedElapsedTime %></span>
                     </div>
@@ -49,7 +49,7 @@
               <%}%>
                 <div class="d-flex align-items-center mb-1 p-2">
                   <a href="/post/<%= notification.post._id %>?notificationId=<%= notification._id %>" >
-                    <div class="d-flex flex-row align-items-center">
+                    <div class="d-flex flex-row ">
                       <img class="rounded-circle mr-3 feed-pic" src="<%= notification.generator.profilePic.url %>" alt="Profile picture" width="26" height="26">
                       <span class="font-weight-bold"> <%= notification.generator.userName%></span><span style="margin-left: 0.3rem;">  liked your <%= notification.post.category ? "personal record" : "post" %> <%=notification.formattedElapsedTime %></span>
                     </div>
@@ -64,14 +64,29 @@
                 <%}%>
                   <div class="d-flex align-items-center mb-1 p-2">
                     <a href="/post/<%= notification.post._id %>?notificationId=<%= notification._id %>" >
-                      <div class="d-flex flex-row align-items-center">
+                      <div class="d-flex flex-row ">
                         <img class="rounded-circle mr-3 feed-pic" src="<%= notification.generator.profilePic.url %>" alt="Profile picture" width="26" height="26">
                         <span class="font-weight-bold"> <%= notification.generator.userName %></span><span style="margin-left: 0.3rem;"> commented on your <%= notification.post.category ? "personal record" : "post" %> <%=notification.formattedElapsedTime %></span>
                       </div>
                     </a>
                   </div>    
                 </li>
-                <% }%>
+                <% } else if (notification.type === 'reply') { %>
+                  <% if (notification.read === false) { %>
+                    <li id="post-<%= notification.generator._id %>" class="mb-1 lazy">
+                  <%}else{%>
+                    <li id="post-<%= notification.generator._id %>" class="mb-1 lazy read">
+                  <%}%>
+                    <div class="d-flex align-items-center mb-1 p-2">
+                      <a href="/post/<%= notification.post._id %>?notificationId=<%= notification._id %>" >
+                        <div class="d-flex flex-row">
+                          <img class="rounded-circle mr-3 feed-pic" src="<%= notification.generator.profilePic.url %>" alt="Profile picture" width="26" height="26">
+                          <span class="font-weight-bold"> <%= notification.generator.userName %></span><span style="margin-left: 0.3rem;"> replied to your comment <%=notification.formattedElapsedTime %></span>
+                        </div>
+                      </a>
+                    </div>    
+                  </li>
+                  <% }%>
         <% }) %>
   
     </ul>

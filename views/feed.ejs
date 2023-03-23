@@ -15,11 +15,9 @@
           <div class="d-flex justify-content-between align-items-center mb-1 p-2">
               <a href="/profile/<%= mergedArray[i].user._id %>" >
                 <div class="d-flex flex-row align-items-center">
-                     <%if( mergedArray[i].user.profilePic.url == "" ){%>
-                    <img class="rounded-circle mr-3 feed-pic" src="/imgs/default.png" alt="Profile picture" width="26" height="26">
-                    <%}else{%>
+                 
                     <img class="rounded-circle mr-3 feed-pic" src="<%= mergedArray[i].user.profilePic.url %>" alt="Profile picture" width="26" height="26">
-                    <%}%>
+ 
                   <span class="font-weight-bold"><%= mergedArray[i].user.userName.toLowerCase() %></span>
                 </div>
                 
@@ -83,19 +81,20 @@
                         </div>
                       </div>
 
-
-                 
                 <%}else{%>
                   <span class="font-weight-normal mr-1"><%= mergedArray[i].likes.length > 0 ? mergedArray[i].likes.length : 0 %> <span class="text-muted">likes</span></span>
                   <%}%>
               </div>
-             
-
               <div class="d-flex flex-column mt-2">
             
-               
                   <span class="font-weight-normal mr-1"><%= mergedArray[i].caption %></span>
-                  <span class="text-muted pb-2">view comments</span>
+                  <%if(mergedArray[i].numComments < 1){%>
+                    <span class="text-muted pb-2">view comments</span>
+                  <%}else if(mergedArray[i].numComments === 1){%>
+                    <span class="text-muted pb-2">view <%=mergedArray[i].numComments %> comment</span>
+                  <%}else if(mergedArray[i].numComments > 1){%>
+                    <span class="text-muted pb-2">view <%=mergedArray[i].numComments %> comments</span>
+                  <%}%>
                 </a>
               </div>
             </div>

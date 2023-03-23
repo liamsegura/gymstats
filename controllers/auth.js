@@ -104,6 +104,7 @@ exports.postSignup = async (req, res, next) => {
         type: req.file.mimetype
       },
       cloudinaryId: result.public_id,
+      bodyweight: 0
 
     })}else{
       user = new User({
@@ -113,7 +114,8 @@ exports.postSignup = async (req, res, next) => {
         profilePic: {
           url: "",
           type: "image/jpeg",
-        }
+        },
+        bodyweight: 0
 
     })
   }

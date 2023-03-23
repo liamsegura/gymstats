@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const NotificationSchema = new mongoose.Schema({
   type: {
     type: String,
-    enum: ['comment', 'like', 'follow', 'post'],
+    enum: ['comment', 'like', 'follow', 'post', 'reply'],
     required: true,
   },
   generator: {
