@@ -39,7 +39,7 @@ module.exports = {
         likes: [],
         user: req.user.id,
         category: req.body.category,
-        bodyweight: req.user.bodyweight,
+        bodyweight: req.body.bodyweight,
         weight: req.body.weight,
         reps: req.body.reps,
         cloudinaryId: result.public_id

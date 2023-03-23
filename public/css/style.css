@@ -466,9 +466,9 @@ tr, th{
     top: 0;
     left: -400px;
     width: 400px;
-    height: 92vh;
+    height: 100%;
     background-color: var(--white);
-    z-index: 999;
+    z-index: 1000;
     transition: all 0.3s ease-in-out;
   }
   #postForm .close-icon, #prForm .close-icon {
