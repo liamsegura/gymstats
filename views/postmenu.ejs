@@ -39,7 +39,10 @@
               <option  disabled value="squat">Premuim Leg Press</option>
               <option  disabled value="squat">Premuim Barbell Row</option>
             </select>
-            
+            <div class="mb-2 mt-2">
+              <label for="weight" class="form-label">Body Weight in kg</label>
+              <input class="w-100" type="number" id="weight" name="weight" value="<%=loggedUser.bodyweight%>" required>
+            </div>
             <div class="mb-2 mt-2">
               <label for="weight" class="form-label">Weight in kg</label>
               <input class="w-100" type="number" id="weight" name="weight" required>
@@ -48,10 +51,7 @@
               <label for="reps" class="form-label">Number of reps</label>
               <input class="w-100" type="number" id="reps" name="reps" required>
             </div>
-            <div class="mb-2 mt-2">
-              <label for="weight" class="form-label">Body Weight in kg</label>
-              <input class="w-100" type="number" id="weight" name="weight" value="<%=loggedUser.bodyweight%>" required>
-            </div>
+            
             <label for="caption" class="form-label">Caption</label>
             <textarea class="form-control" id="caption" name="caption" required></textarea>
           </div>
