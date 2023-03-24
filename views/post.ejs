@@ -137,10 +137,10 @@
         <%}%>
         <form id="<%=comments[i]._id%>-reply-form" action="/comment/createComment/<%=post._id%>" method="POST" class="mt-2 d-none reply-form">
           <div class="mb-3 d-flex justify-content-center w-70 comment-form">
-            <input type="text" class="form-control" id="comment" name="comment" value="@<%=comments[i].user.userName%> " required>
+            <input type="text" class="form-control" style="border-radius: 0.6rem 0rem 0rem 0.6rem;" id="comment" name="comment" value="@<%=comments[i].user.userName%> " required>
             <input type="hidden" name="parentComment" value="<%=comments[i]._id%>">
             <input type="hidden" name="replyToUser" value="<%=comments[i].user._id%>">
-            <button class="w-50 btn-primary btn" type="submit" class="btn btn-primary"> reply</button>
+            <button class="w-50 btn-primary btn" type="submit" class="btn btn-primary" style="border-radius: 0rem 0.6rem 0.6rem 0rem!important;"> reply</button>
           </div>
         </form>
         <li id="<%=comments[i]._id%>-replies-list" class="ml-5 d-none mt-2">
@@ -168,10 +168,10 @@
                 <li id="<%=comments[i].replies[j]._id%>-reply-form" class="d-none ml-5 reply-form mt-2">
                   <form action="/comment/createComment/<%=post._id%>" method="POST">
                     <div class="mb-3 d-flex justify-content-center w-70 comment-form">
-                      <input type="text" class="form-control" id="comment" name="comment" placeholder="add comment" value="@<%= comments[i].replies[j].user.userName%> "required>
+                      <input type="text" class="form-control" style="border-radius: 0.6rem 0rem 0rem 0.6rem;" id="comment" name="comment" placeholder="add comment" value="@<%= comments[i].replies[j].user.userName%> "required>
                       <input type="hidden" name="parentComment" value="<%=reply%>">
                       <input type="hidden" name="replyToUser" value="<%=comments[i].replies[j].user._id%>">
-                      <button class="w-50 btn-primary btn" type="submit" class="btn btn-primary">Reply</button>
+                      <button class="w-50 btn-primary btn" type="submit" class="btn btn-primary" style="border-radius: 0rem 0.6rem 0.6rem 0rem!important;">Reply</button>
                     </div>
                   </form>
                 </li>
@@ -187,8 +187,8 @@
   <div class="">
     <form action="/comment/createComment/<%=post._id%>" method="POST">
       <div class="mb-3 d-flex justify-content-center w-70 comment-form">
-        <input type="text" class="form-control" id="comment" name="comment" placeholder="add comment" required>
-        <button class="w-50 btn-primary btn" type="submit" class="btn btn-primary">Submit</button>
+        <input type="text" class="form-control" style="border-radius: 0.6rem 0rem 0rem 0.6rem;"id="comment" name="comment" placeholder="add comment" required>
+        <button class="w-50 btn-primary btn" type="submit" class="btn btn-primary" style="border-radius: 0rem 0.6rem 0.6rem 0rem!important;">Submit</button>
       </div>
     </form>
   </div>
