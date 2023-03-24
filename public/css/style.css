@@ -23,6 +23,14 @@ html{
   --card: #3a3a3a;
   --post-btn: #F9FAFE;
   }
+
+  a:focus,
+  button:focus,
+  input:focus,
+  textarea:focus {
+  outline: none;
+  box-shadow: none;
+  }
 .read{
   opacity: 40%;
 }
@@ -209,8 +217,8 @@ textarea, input, select{
 
 }
 .icon-btn{
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%!important;
 }
 .icon-btn-trophy{

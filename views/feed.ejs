@@ -1,8 +1,8 @@
 <%- include('partials/header') -%>
 <div class="container">
   <div class="mb-2 d-flex mt-5" style="margin-left:1rem;">
-    <button id="show-all-posts" class="icon-btn btn-primary rounded-0 border-0 posts-btn active" ><i class="fas fa-table"></i></button>
-    <button id="show-category-posts" class="icon-btn btn-primary rounded-0 border-0 table-btn"><i class="fas fa-trophy"></i></button>
+    <button style="outline:none;"id="show-all-posts" class="icon-btn btn-primary rounded-0 border-0 posts-btn active" ><i class="fa fa-table"></i></button>
+    <button style="outline:none;"id="show-category-posts" class="icon-btn btn-primary rounded-0 border-0 table-btn"><i class="fa fa-trophy"></i></button>
   </div>
   <div class="flex-column justify-content-center mt-4">
     <ul class="col-12 col-md-8 col-lg-6 list-unstyled mx-auto">
@@ -141,35 +141,6 @@
       post.style.display = 'block';
     });
   });
-
-  // get header and footer elements
-const header = document.querySelector('.fixed-header');
-const footer = document.querySelector('.fixed-footer');
-
-// initialize variable to store last scroll position
-let lastScrollPosition = 0;
-
-// function to toggle header and footer visibility based on scroll direction
-function toggleHeaderFooter() {
-  const currentScrollPosition = window.pageYOffset;
-
-  if (currentScrollPosition > lastScrollPosition) {
-    // scrolling down, hide header and footer
-    header.style.top = '100';
-    footer.style.bottom = '100';
-  } else {
-    // scrolling up, show header and footer
-    header.style.top = '0';
-    footer.style.bottom = '0';
-  }
-
-  lastScrollPosition = currentScrollPosition;
-}
-
-// add scroll event listener to window
-window.addEventListener('scroll', toggleHeaderFooter);
-
-
 
 </script>
 
