@@ -91,30 +91,7 @@ module.exports = {
     }
   },
   
-  
-  
 
-
-
-
-
-
-
-  // createComment: async (req, res) => {
-  //   try {
-  //     console.log(req.user)
-  //     await Comment.create({
-  //       comment: req.body.comment,
-  //       likes: 0,
-  //       post: req.params.id,
-  //       user: req.user._id
-  //     });
-  //     console.log("Comment has been added!");
-  //     res.redirect("/post/" + req.params.id);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // },
 
   deleteComment: async (req, res) => {
     try {
@@ -162,6 +139,27 @@ module.exports = {
       res.redirect("/");
     }
   },
+
+  deleteReply: async (req, res) => {
+    try {
+  const replyId = req.params.id;
+  const reply = await Comment.findByIdAndDelete(replyId)
+  console.log(reply)
+  let post = await Post.findById(reply.post);
+      if (!post) {
+        post = await PR.findById(reply.post);
+      }
+
+      // delete notification
+      const notification = await Notification.findOneAndDelete({comment: replyId})
+      await User.findByIdAndUpdate(notification.recipient, { $inc: { unreadCount: -1 } });
+
+  console.log("Deleted Comment");
+  res.redirect("/post/" + post._id.toString());
+} catch (err) {
+  console.log(err);
+  res.redirect("/");
 }
-  
+},
+}
   

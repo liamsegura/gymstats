@@ -2,7 +2,7 @@
 
 <div class="container">
   <%  if (post.media.type == "video") { %>
-  <div class="row justify-content-center mt-5 video-margin post-thumbnail">
+  <div class="row justify-content-center mt-4 video-margin post-thumbnail">
        <!-- Check if the browser is Safari -->
      
        
@@ -26,7 +26,7 @@
         
 
       <% } else { %>
-        <div class="row justify-content-center mt-5"></div>
+        <div class="row justify-content-center mt-4"></div>
           <img class="img-fluid post-img" src="<%= post.media.url %>" alt="Image">
       <% } %>
       
@@ -73,7 +73,7 @@
             <button class="btn btn-link p-0">
 
               <% if(post.likes.toString().includes(loggedUser._id.toString())) { %>
-                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart" style="font-weight:900!important ;"></i>
               <% } else { %>
                 <i class="far fa-heart"></i>
               <% } %>
@@ -104,21 +104,14 @@
               <% } %>
            
           </div>
-          
-   
-   
-  
     </div>
     
-
-  </div>
-
-    <ul class="comments">
+<!-- //comments -->
+  </div><ul class="comments">
     <% for(var i=0; i<comments.length; i++){ %>
       <% if(!comments[i].parentComment){ %>
-        <li  class="d-flex mt-2">
-         
-            <img class="rounded-circle mr-3 feed-pic" src="<%= comments[i].user.profilePic.url %>" alt="Profile picture" width="26" height="26">
+        <li class="d-flex mt-2">
+          <img class="rounded-circle mr-3 feed-pic" src="<%= comments[i].user.profilePic.url %>" alt="Profile picture" width="26" height="26">
           <a href="/profile/<%= comments[i].user._id %>" ><p><strong><%= comments[i].user.userName%></strong>:</p></a>  
           <p class="ml-2"><%= comments[i].comment %></p> 
           <% if(comments[i].user._id.toString() == loggedUser._id.toString() ){ %>
@@ -129,11 +122,42 @@
                 </button>
               </form>
             </div>
-            <% } %>         
+          <% } %>         
         </li>
         <a class="reply-btn text-muted" onclick="toggleForm('<%=comments[i]._id%>-reply-form')">reply</a>
-        <% if(comments[i].replies.length > 0) {%>
-        <a class="reply-btn text-muted" onclick="toggleReplies('<%=comments[i]._id%>-replies-list')">view <%=comments[i].replies.length%> replies</a>
+        <% if(comments[i].replies.length < 3) {%>
+          <% for(var j=0; j<comments[i].replies.length; j++) {%>
+            <%let reply = comments[i]._id %>
+            <ul class="replies">
+            <li class="d-flex mt-2 ml-5" id="reply-<%= comments[i].replies[j]._id %>">
+              <img class="rounded-circle mr-3 feed-pic" src="<%= comments[i].replies[j].user.profilePic.url %>" alt="Profile picture" width="26" height="26">
+              <a href="/profile/<%= comments[i].replies[j].user._id %>" ><p><strong><%= comments[i].replies[j].user.userName%></strong>:</p></a>  
+              <p class="ml-2"><%= comments[i].replies[j].comment %></p>   
+              <% if(comments[i].replies[j].user._id.toString() == loggedUser._id.toString() ){ %>
+                <div class="col-3 text-right">
+                  <form action="/comment/deleteReply/<%= comments[i].replies[j]._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-link p-0">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </form>
+                </div>
+              <% } %>
+            </li>
+            <a class="reply-btn mb-3 text-muted" onclick="toggleForm('<%=comments[i].replies[j]._id%>-reply-form')">reply</a>
+                <li id="<%=comments[i].replies[j]._id%>-reply-form" class="d-none ml-5 reply-form mt-2">
+                  <form action="/comment/createComment/<%=post._id%>" method="POST">
+                    <div class="mb-3 d-flex justify-content-center w-70 comment-form">
+                      <input type="text" class="form-control" style="border-radius: 0.6rem 0rem 0rem 0.6rem;" id="comment" name="comment" placeholder="add comment" value="@<%= comments[i].replies[j].user.userName%> "required>
+                      <input type="hidden" name="parentComment" value="<%=reply%>">
+                      <input type="hidden" name="replyToUser" value="<%=comments[i].replies[j].user._id%>">
+                      <button class="w-50 btn-primary btn" type="submit" class="btn btn-primary" style="border-radius: 0rem 0.6rem 0.6rem 0rem!important;">Reply</button>
+                    </div>
+                  </form>
+                </li>
+          </ul>
+          <% } %>
+        <% } else {%>
+          <a class="reply-btn text-muted" onclick="toggleReplies('<%=comments[i]._id%>-replies-list')">view <%=comments[i].replies.length%> comments</a>
         <%}%>
         <form id="<%=comments[i]._id%>-reply-form" action="/comment/createComment/<%=post._id%>" method="POST" class="mt-2 d-none reply-form">
           <div class="mb-3 d-flex justify-content-center w-70 comment-form">
@@ -149,14 +173,14 @@
             <%let reply = comments[i]._id %>
             <ul class="replies">
               <% for(var j=0; j<comments[i].replies.length; j++) {%>
-                <li class="d-flex mt-2 ">
+                <li class="d-flex mt-2 " id="reply-<%= comments[i].replies[j]._id %>">
                  
                   <img class="rounded-circle mr-3 feed-pic" src="<%= comments[i].replies[j].user.profilePic.url %>" alt="Profile picture" width="26" height="26">
                   <a href="/profile/<%= comments[i].replies[j].user._id %>" ><p><strong><%= comments[i].replies[j].user.userName%></strong>:</p></a>  
                   <p class="ml-2"><%= comments[i].replies[j].comment %></p>   
                   <% if(comments[i].replies[j].user._id.toString() == loggedUser._id.toString() ){ %>
                     <div class="col-3 text-right">
-                      <form action="/comment/deleteComment/<%= comments[i]._id %>?_method=DELETE" method="POST">
+                      <form action="/comment/deleteReply/<%= comments[i].replies[j]._id %>?_method=DELETE" method="POST">
                         <button class="btn btn-link p-0">
                           <i class="fas fa-times"></i>
                         </button>

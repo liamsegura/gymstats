@@ -67,13 +67,6 @@ module.exports = {
 
   getFeed: async (req, res) => {
     try {
-      User.updateMany({ bodyweight: { $exists: false } }, { $set: { bodyweight: 0 } }, (err, res) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(`${res.modifiedCount} documents updated.`);
-        }
-      });
       
       const result = browser(req.headers['user-agent']);
   

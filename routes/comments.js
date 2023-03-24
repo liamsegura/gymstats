@@ -10,4 +10,6 @@ router.post("/createComment/:id", commentsController.createComment);
 
 router.delete("/deleteComment/:id", commentsController.deleteComment);
 
+router.delete("/deleteReply/:id", commentsController.deleteReply);
+
 module.exports = router;
