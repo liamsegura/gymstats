@@ -1,11 +1,12 @@
 
 :root{
 
-  --black: #2f3961;
+  --black: #353b52;
   --white: #F9FAFE;
   --muted: #8e8e8e;
-  --border: rgb(230, 228, 249)!important;
+  --border: rgb(238, 237, 251)!important;
   --card: #ffffff;
+  --post-btn: #AFD1F2;
 
 
 
@@ -20,6 +21,7 @@ html{
   --muted: #d5d4d4!important;
   --border: #202020;
   --card: #3a3a3a;
+  --post-btn: #F9FAFE;
   }
 .read{
   opacity: 40%;
@@ -42,14 +44,39 @@ tbody, td, tfoot, th, thead, tr {
 }
 .notification-icon {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
   width: 30px;
   height: 30px;
   margin-right: 10px;
 }
 
+.plus-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  padding: 0.5rem;
+  font-weight: 200!important;
+background-color: var(--post-btn);
+border-radius: 50%;
+}
+
+.plus-icon i{
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  color: var(--white);
+}
+
+/* a{
+display: inline-flex;
+} */
 .notification-icon i {
   font-size: 1.5rem;
+  display: inline-flex;
+align-items: center;
 }
 
 .notification-count {
@@ -140,7 +167,9 @@ textarea, input, select{
   color: var(--black)!important;
 }
 
-
+.hidden {
+  transform: translateY(-100%);
+}
 .fixed-header{
     position: fixed;
     top: 0;
@@ -185,8 +214,8 @@ textarea, input, select{
   border-radius: 50%!important;
 }
 .icon-btn-trophy{
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%!important;
   background-color: #fffd82;
   display: flex;
@@ -241,19 +270,24 @@ textarea, input, select{
 
 .post-button {
     border: none;
+    display: inline-flex;
+align-items: center;
+justify-content: center;
     background-color: transparent;
     color: var(--black);
     font-size: 24px;
-    padding-right: 1rem;
   }
-  
+  .fa-plus{
+    color: var(--black);
+
+  }
   .fa-plus:before {
     content: "\f067";
   }
   
   .trophy-icon {
     display: inline-block;
-    font-size: 20px;
+    font-size: 16px;
   }
  
   .fa-trophy:before {
@@ -273,9 +307,10 @@ textarea, input, select{
     opacity: 30%;
   }
 
+  .fas {
+    font-weight: 400!important;
 
-
-
+  }
 
   .video-container {
     position: relative;
@@ -428,10 +463,11 @@ textarea, input, select{
 
   
   .logo {
-    font-family: "Inter", sans-serif;
-    font-size: 2rem;
+    font-family: roboto;
+    font-size: 2.4rem;
     font-weight: bold;
     margin-right: auto;
+    letter-spacing: -2px;
   }
   
   .headerlinks {
@@ -572,17 +608,13 @@ width: 100%;
 }
   @media(max-width: 400px){
 
-    .pt-4{
-      padding-top: 2.5rem!important;
-    }
+
     html {
       font-size: 75%!important;
     }
-    body{
-      padding-top: 1.5rem;
-    }
+   
     .logo {
-      font-size: 1.5rem;
+      font-size: 2.4rem;
 
     }
     .post-button {
