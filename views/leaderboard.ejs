@@ -30,14 +30,14 @@
     <h2 class="col-12 text-center">No PRs found for <%= selectedCategory %></h2>
     <% } else { %>
     <div class="col-12 table-responsive">
-      <table class="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th>User</th>
+      <table class="styled-table">
+        <thead >
+          <tr style="color: white!important;">
+            <th style="border-radius: 1em 0 0 0!important;">User</th>
             <th>BW</th>
             <th>Category</th>
             <th>Weight</th>
-            <th>Reps</th>
+            <th style="border-radius: 0 1em 0 0!important;">Reps</th>
           </tr>
         </thead>
         <tbody>
@@ -71,7 +71,7 @@
                   <a href="/post/<%= pr._id %>" class="post">
                     <%= pr.reps %>
                   </a>
-                </td>
+                </td >
                 
               </tr>
             <% } %>
