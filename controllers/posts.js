@@ -236,7 +236,7 @@ getLikes: async (req, res) => {
 
   getPostMenu: async (req, res) => { 
     try{
-      res.render("postmenu.ejs", {pageTitle: 'post menu', loggedUser: req.user, onNotificationsPage: false})
+      res.render("postmenu.ejs", {pageTitle: 'menu', loggedUser: req.user, onNotificationsPage: false})
     } catch (err) {
       console.log(err);
     }

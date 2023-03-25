@@ -8,7 +8,6 @@
         <div class="d-flex justify-content-end">
           <a href="/profile/<%= user._id %>"><i class="fas fa-times close-icon"></i></a>
         </div>
-        <h2>Edit profile</h2>
         <% if (locals.messages.errors) { %>
           <% messages.errors.forEach( el => { %>
               <div class="alert alert-danger"><%= el.msg %></div>
