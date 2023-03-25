@@ -5,16 +5,7 @@
     
        
     <div class="profile-info">
-      <div>
-        
-    
-
-      <a href=" /users/<%=user._id%>/followers ">
-        <p class="small">Followers: <%= user.followers.length %></p>
-        <p class="small">Following: <%= user.following.length %></p>
-      </a>
       
-      </div>
 
       <div class="">
         <div id="form-container">
@@ -38,6 +29,7 @@
         <img  id="profile-pic" class="rounded-circle mr-3 mb-2 pointer" src="<%= user.profilePic.url %>" alt="Profile picture" width="100" height="100">
         <%}%>
 
+        
 
   <% if(user._id.toString() == loggedUser._id.toString()){ %>
       <a href="/logout" class="col-3 btn btn-primary">Logout</a>
@@ -56,6 +48,16 @@
   <% } %>
 
       </div>
+      <div style="padding: 1rem 7rem 0 0;">
+        
+    
+
+        <a href=" /users/<%=user._id%>/followers ">
+          <p class="small">Followers: <%= user.followers.length %></p>
+          <p class="small">Following: <%= user.following.length %></p>
+        </a>
+        
+        </div>
   </div>
   
     <div class="col-0">
