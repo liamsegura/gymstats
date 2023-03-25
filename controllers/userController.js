@@ -53,6 +53,7 @@ notifications.forEach(notification => {
 });
 
 res.render('notifications.ejs', {
+  pageTitle: 'notifications',
   notifications,
   loggedUser: req.user,
   onNotificationsPage: true
@@ -143,7 +144,7 @@ exports.getFollowers = async (req, res) => {
     const userId = req.params.userId;
     const user = await User.findById(userId).populate({ path: 'followers', model: 'User'}).populate({ path: 'following', model: 'User'})
     res.render("followers.ejs", {
-
+      pageTitle: user.userName,
       loggedUser: req.user,
       user,
       onNotificationsPage: false

@@ -31,6 +31,7 @@ module.exports = {
   
 
         res.render("profile.ejs", {
+          pageTitle: user.userName,
           posts,
           prs,
           loggedUser: req.user,
@@ -52,6 +53,7 @@ module.exports = {
       const prs = await PR.find({ user: userId })
       
       res.render("editprofile.ejs", {
+        pageTitle: 'edit profile',
         posts,
         prs,
         loggedUser: req.user,
@@ -108,7 +110,7 @@ module.exports = {
         post.formattedElapsedTime = elapsedTimeString.replace(/\s+/g, '');
       });
   
-      res.render("feed.ejs", { mergedArray: postsWithComments, loggedUser: req.user, browser: result, onNotificationsPage: false });
+      res.render("feed.ejs", { pageTitle: 'gymstats', mergedArray: postsWithComments, loggedUser: req.user, browser: result, onNotificationsPage: false });
     } catch (err) {
       console.log(err);
     }
@@ -184,7 +186,7 @@ module.exports = {
           // Set the formatted elapsed time string on the notification object
           post.formattedElapsedTime = elapsedTimeString.replace(/\s+/g, '');
 
-        res.render("post.ejs", { post: post, loggedUser: req.user, user: user, browser: result, comments: comments, onNotificationsPage: false });
+        res.render("post.ejs", { pageTitle: 'gymstats', post: post, loggedUser: req.user, user: user, browser: result, comments: comments, onNotificationsPage: false });
 
     } catch (err) {
         console.log(err);
@@ -220,7 +222,7 @@ getLikes: async (req, res) => {
     }
     
     res.render("likes.ejs", {
-
+      pageTitle: 'likes',
       loggedUser: req.user,
       post,
       onNotificationsPage: false
@@ -234,7 +236,7 @@ getLikes: async (req, res) => {
 
   getPostMenu: async (req, res) => { 
     try{
-      res.render("postmenu.ejs", {loggedUser: req.user, onNotificationsPage: false})
+      res.render("postmenu.ejs", {pageTitle: 'post menu', loggedUser: req.user, onNotificationsPage: false})
     } catch (err) {
       console.log(err);
     }

@@ -33,7 +33,14 @@
   <body class="test">
     <header class="container fixed-header">
       <div class="header ">
-        <a href="/feed"><h1 class="logo m-0">gymstats</h1></a>
+        <%if(pageTitle == "gymstats"){ %>
+        <a href="/feed"><h1 class="logo m-0"><%= pageTitle %></h1></a>
+        <%}else if(pageTitle == loggedUser.userName.toString()){%>
+            <a href="/editProfile/<%= loggedUser._id %>"><h1 class="logo m-0"> <%= pageTitle %><i class="fas fa-edit"></i></h1></a>
+              <% }else{ %>
+      
+        <a href="javascript:history.back()"><h1 class="logo m-0"><%= pageTitle %></h1></a>
+        <%}%>
         <div class="headerlinks d-flex justify-content-center align-items-center">
           <!-- header.ejs -->
          

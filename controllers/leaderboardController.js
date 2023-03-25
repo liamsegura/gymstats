@@ -18,7 +18,7 @@ module.exports = {
       if (selectedReps) {
         prs = prs.filter(pr => pr.reps === Number(selectedReps));
       }
-      res.render('leaderboard', { prsByCategory, prs, selectedCategory, selectedBodyweight, selectedReps, loggedUser: req.user, onNotificationsPage: false });
+      res.render('leaderboard', { pageTitle: 'leaderboard', prsByCategory, prs, selectedCategory, selectedBodyweight, selectedReps, loggedUser: req.user, onNotificationsPage: false });
     } catch (error) {
       console.error(error);
       res.status(500).send('Server Error');
