@@ -19,16 +19,6 @@ module.exports = {
       const isFollowing = user.followers.includes(req.user._id);
       const prs = await PR.find({ user: userId })
 
-     
-      
-      if(req.query.notificationId){
-        const notificationId = req.query.notificationId
-
-     // Update the read property of the notification with the given _id
-     await Notification.findByIdAndUpdate(notificationId, { read: true });
-     }
-
-  
 
         res.render("profile.ejs", {
           pageTitle: user.userName,

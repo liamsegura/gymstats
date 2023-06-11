@@ -66,7 +66,19 @@
       </div>
     </div>
     <div class="col-0">
-     
+      <h1>Create Challenge</h1>
+  <form method="POST" action="/challenges/createChallenge">
+    <label for="title">Title:</label>
+    <input type="text" name="title" required>
+
+    <label for="description">Description:</label>
+    <input type="text" name="description" required>
+
+    <label for="endDate">End Date:</label>
+    <input type="datetime-local" name="endDate" required>
+
+    <button type="submit">Create Challenge</button>
+  </form>
     </div>
   </div>
 </div>

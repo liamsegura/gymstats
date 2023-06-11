@@ -13,6 +13,7 @@ const postRoutes = require("./routes/posts");
 const prRoutes = require("./routes/prs");
 const commentRoutes = require("./routes/comments");
 const userRoutes = require("./routes/users");
+const challengeRoutes = require("./routes/challenges");
 const notificationsMiddleware = require('./middleware/notifications');
 
 
@@ -75,6 +76,7 @@ app.use("/post", postRoutes);
 app.use("/pr", prRoutes);
 app.use("/comment", commentRoutes);
 app.use("/users", userRoutes);
+app.use("/challenges", challengeRoutes);
 
 //Server Running
 connectDB().then(() => {
