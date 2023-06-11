@@ -19,7 +19,15 @@ const UserSchema = new mongoose.Schema({
   unreadCount: {
     type: Number,
     default: 0
-  }
+  },
+  challenges: [{
+    challenge: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Challenge',
+    },
+    completed: { type: Boolean, default: false },
+    completedAt: { type: Date },
+  }],
 });
 
 // Password hash middleware.
