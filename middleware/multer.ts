@@ -1,8 +1,8 @@
-const multer = require("multer");
+import multer from "multer"
 
-module.exports = multer({
+export default multer({
   storage: multer.diskStorage({}),
-  fileFilter: (req, file, cb) => {
+  fileFilter: (req, file, cb: any) => {
     if (file.mimetype.startsWith("image/") || file.mimetype.startsWith("video/")) {
       cb(null, true);
     } else {

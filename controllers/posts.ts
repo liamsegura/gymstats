@@ -1,15 +1,15 @@
-const cloudinary = require("../middleware/cloudinary");
-const Post = require("../models/Post");
-const User = require("../models/User");
-const PR = require("../models/PR");
-const Comment = require("../models/Comments");
-const browser = require('browser-detect');
-const Relationship = require("../models/Relationship");
-const Notification = require("../models/Notification");
-const moment = require('moment');
+import cloudinary from "../middleware/cloudinary"
+import Post from "../models/Post"
+import User from "../models/User"
+import PR from "../models/PR"
+import Comment from "../models/Comments"
+import browser from 'browser-detect'
+import Relationship from "../models/Relationship"
+import Notification from "../models/Notification"
+import moment from 'moment'
 
 
-module.exports = {
+export default {
 
   getProfile: async (req, res) => {
     try {

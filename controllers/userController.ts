@@ -1,11 +1,15 @@
-const User = require('../models/User');
-const Relationship = require('../models/Relationship');
-const Notification = require("../models/Notification");
-const cloudinary = require("../middleware/cloudinary");
-const moment = require('moment');
+import User from '../models/User'
+import Relationship from '../models/Relationship'
+import Notification from "../models/Notification"
+import moment from 'moment'
+import cloudinary from "../middleware/cloudinary"
 
 
-exports.getNotifications = async (req, res) => {
+export default {
+
+
+
+getNotifications: async (req, res) => {
   try {
     const userId = req.user._id;
   
@@ -67,7 +71,7 @@ res.render('notifications.ejs', {
 };
 
 
-exports.saveProfile = async (req, res) => {
+saveProfile: async (req, res) => {
   try {
     console.log(req.file)
     console.log(req.body)
@@ -102,7 +106,7 @@ exports.saveProfile = async (req, res) => {
 };
 
 
-exports.saveProfilePic = async (req, res) => {
+saveProfilePic: async (req, res) => {
   try {
     console.log(req.file)
       const user = await User.findById(req.params.id)
@@ -138,7 +142,7 @@ exports.saveProfilePic = async (req, res) => {
   }
 };
 
-exports.getFollowers = async (req, res) => {
+getFollowers: async (req, res) => {
   try {
 
     const userId = req.params.userId;
@@ -155,7 +159,7 @@ exports.getFollowers = async (req, res) => {
   }
 },
 
-exports.followUser = async (req, res) => {
+followUser: async (req, res) => {
   try {
     const userId = req.params.userId;
     const userToFollowId = req.params.userToFollowId;
@@ -202,7 +206,7 @@ exports.followUser = async (req, res) => {
   }
 };
 
-exports.unfollowUser = async (req, res) => {
+unfollowUser: async (req, res) => {
   try {
     const userId = req.params.userId;
     const userToUnfollowId = req.params.userToUnfollowId;
@@ -245,6 +249,7 @@ exports.unfollowUser = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
-};
+}
 
 
+}

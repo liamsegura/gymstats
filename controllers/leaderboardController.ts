@@ -1,7 +1,7 @@
-const PR = require('../models/PR');
-const User = require("../models/User");
+import PR from '../models/PR'
+import User from "../models/User"
 
-module.exports = {
+export default {
   getLeaderboard: async (req, res) => {
     try {
       let selectedCategory = req.query.category || '';

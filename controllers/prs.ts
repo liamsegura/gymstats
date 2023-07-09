@@ -1,14 +1,14 @@
-const cloudinary = require("../middleware/cloudinary");
-const User = require("../models/User");
-const PR = require("../models/PR")
-const Relationship = require("../models/Relationship");
-const Notification = require("../models/Notification");
-const Comment = require("../models/Comments");
-const { post } = require("../routes/main");
+import cloudinary from "../middleware/cloudinary"
+import User from "../models/User"
+import PR from "../models/PR"
+import Relationship from "../models/Relationship"
+import Notification from "../models/Notification"
+import Comment from "../models/Comments"
+import { post } from "../routes/main"
 
 
 
-module.exports = {
+export default {
 
 
   

@@ -1,10 +1,10 @@
-const Comment = require("../models/Comments");
-const Notification = require("../models/Notification");
-const Post = require("../models/Post");
-const PR = require("../models/PR");
-const User = require("../models/User");
+import Comment from "../models/Comments"
+import Notification from "../models/Notification"
+import Post from "../models/Post"
+import PR from "../models/PR"
+import User from "../models/User"
 
-module.exports = {
+export default {
   createComment: async (req, res) => {
     try {
       const { comment, parentComment, replyToUser } = req.body;

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose"
 
 const PRSchema = new mongoose.Schema({
   
@@ -58,4 +58,4 @@ const PRSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("PR", PRSchema);
+export default mongoose.model("PR", PRSchema);
