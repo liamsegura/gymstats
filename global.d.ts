@@ -171,6 +171,13 @@ namespace X {
   }
 }
 type X = string;
+namespace X {
+  export var Y: number;
+  export namespace Z {
+    export class C {}
+  }
+}
+type X = string;
 
 
 
