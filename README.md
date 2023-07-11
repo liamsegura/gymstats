@@ -3,6 +3,11 @@ Live Demo on YouTube:<br>
 
 [![Live Demo On YouTube](https://i.ibb.co/X38p4NN/Screenshot-2023-07-10-at-22-45-24.png)](https://www.youtube.com/watch?v=EHH3tD1ghMA)
 
+
+**Note:** gymstats is still in development. Future plans for the app include the implementation of exciting features to enhance the user experience and provide additional functionalities.
+
+-Converted to typescript Jul 11
+
 # Functionality
 
 – Users can track and monitor their gym activities, including workouts, sets, and reps <br>
@@ -23,6 +28,7 @@ Live Demo on YouTube:<br>
 
 # Technologies Used
 
+- Typescript: Maintaining type safety<br>
 – Node.js: Server-side JavaScript runtime<br>
 – Express.js: Web application framework for Node.js<br>
 – MongoDB: NoSQL database for storing user and workout data<br>
