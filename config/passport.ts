@@ -1,11 +1,12 @@
-const LocalStrategy = require("passport-local").Strategy;
-const mongoose = require("mongoose");
-const User = require("../models/User");
+import { Strategy as LocalStrategy } from "passport-local";
+import mongoose from "mongoose"
+import User from "../models/User"
 
-module.exports = function (passport) {
+
+export default function (passport:any) {
   passport.use(
-    new LocalStrategy({ usernameField: "email" }, (email, password, done) => {
-      User.findOne({ email: email.toLowerCase() }, (err, user) => {
+    new LocalStrategy({ usernameField: "email" }, (email, password, done:any) => {
+      User.findOne({ email: email.toLowerCase() }, (err:any, user:any) => {
         if (err) {
           return done(err);
         }
@@ -18,7 +19,7 @@ module.exports = function (passport) {
               "Your account was registered using a sign-in provider. To enable password login, sign in using a provider, and then set a password under your user profile.",
           });
         }
-        user.comparePassword(password, (err, isMatch) => {
+        user.comparePassword(password, (err:any, isMatch:any) => {
           if (err) {
             return done(err);
           }
@@ -31,11 +32,11 @@ module.exports = function (passport) {
     })
   );
 
-  passport.serializeUser((user, done) => {
+  passport.serializeUser((user:{id:string}, done:any) => {
     done(null, user.id);
   });
 
-  passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => done(err, user));
+  passport.deserializeUser((id:string, done:any) => {
+    User.findById(id, (err:any, user:any) => done(err, user));
   });
 };

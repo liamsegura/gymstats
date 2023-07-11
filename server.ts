@@ -1,27 +1,31 @@
-const express = require("express");
+import express from "express"
 const app = express();
-const mongoose = require("mongoose");
-const passport = require("passport");
-const session = require("express-session");
-const MongoStore = require("connect-mongo")(session);
-const methodOverride = require("method-override");
-const flash = require("express-flash");
-const logger = require("morgan");
-const connectDB = require("./config/database");
-const mainRoutes = require("./routes/main");
-const postRoutes = require("./routes/posts");
-const prRoutes = require("./routes/prs");
-const commentRoutes = require("./routes/comments");
-const userRoutes = require("./routes/users");
-const challengeRoutes = require("./routes/challenges");
-const notificationsMiddleware = require('./middleware/notifications');
+import mongoose from "mongoose"
+import passport from "passport"
+import session from "express-session"
+import connectMongo from "connect-mongo"
+const MongoStore = connectMongo(session);
+import methodOverride from "method-override"
+import flash from "express-flash"
+import logger from "morgan"
+import connectDB from "./config/database"
+import mainRoutes from "./routes/main"
+import postRoutes from "./routes/posts"
+import prRoutes from "./routes/prs"
+import commentRoutes from "./routes/comments"
+import userRoutes from "./routes/users"
+import notificationsMiddleware from './middleware/notifications'
 
 
-//Use .env file in config folder
-require("dotenv").config({ path: "./config/.env" });
+// //Use .env file in config folder
+// require("dotenv").config({ path: "./config/.env" });
 
+
+import dotenv from 'dotenv'
+dotenv.config({ path: "./config/.env" })
+import myFunc from './config/passport'
 // Passport config
-require("./config/passport")(passport);
+myFunc(passport);
 
 
 //Using EJS for views
@@ -76,7 +80,6 @@ app.use("/post", postRoutes);
 app.use("/pr", prRoutes);
 app.use("/comment", commentRoutes);
 app.use("/users", userRoutes);
-app.use("/challenges", challengeRoutes);
 
 //Server Running
 connectDB().then(() => {

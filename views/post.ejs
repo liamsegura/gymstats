@@ -16,14 +16,13 @@
           data-setup='{"fluid": true, "userActions": {"doubleClick": false}, "controlBar": { "fullscreenToggle": false, "pictureInPictureToggle": false }}'
           playsinline
           >
-          <source src="<%= post.media.url %>" type="video/mp4">        
+          <source src="<%= post.media.url %>" type="video/mp4">      
         </video>
       <% } else { %>
         <div class="row justify-content-center mt-4"></div>
           <img class="img-fluid post-img" src="<%= post.media.url %>" alt="Image">
       <% } %>
   </div>
-  
 
   <div class="col-12 p-4">
     <div class="d-flex justify-content-between align-items-top">
@@ -42,7 +41,6 @@
           <%}%>
 
     </div>
-
     <div class="row align-items-center justify-content-between mb-3 mt-2">
       <div class="d-flex">
         <a href="/profile/<%= post.user._id %>" ><strong style="margin-right:0.5rem;"><%= user.userName.toLowerCase() %></strong></a> <p><%= post.caption %></p>

@@ -1,20 +1,11 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose"
 
-const submissionSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true
-  },
-  challenge: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Challenge",
-    required: true
-  },
+const PostSchema = new mongoose.Schema({
+  
   media: {
     type: {
       type: String,
-      enum: ["video"],
+      enum: ["image", "video"],
       required: true,
     },
     url: {
@@ -24,10 +15,11 @@ const submissionSchema = new mongoose.Schema({
     thumbnailUrl: {
       type: String,
       required: true,
-    }
+    },
   },
   caption: {
     type: String,
+    required: true,
   },
   likes: {
     type: [{
@@ -36,14 +28,9 @@ const submissionSchema = new mongoose.Schema({
     }],
     default: [],
   },
-  bodyweight: {
-    type: Number,
-  },
-  weight: {
-    type: Number,
-  },
-  reps: {
-    type: Number,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
   cloudinaryId: {
     type: String,
@@ -55,4 +42,7 @@ const submissionSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Submission", submissionSchema);
+export default mongoose.model("Post", PostSchema);
+
+
+

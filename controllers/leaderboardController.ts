@@ -1,8 +1,8 @@
-const PR = require('../models/PR');
-const User = require("../models/User");
+import PR from '../models/PR'
+import User from "../models/User"
 
-module.exports = {
-  getLeaderboard: async (req, res) => {
+export default {
+  getLeaderboard: async (req:any, res:any) => {
     try {
       let selectedCategory = req.query.category || '';
       let selectedBodyweight = req.query.bodyweight || '';
@@ -13,10 +13,10 @@ module.exports = {
         .limit(100)
         .populate({ path: 'user', model: 'User' });
       if (selectedBodyweight) {
-        prs = prs.filter(pr => pr.bodyweight === Number(selectedBodyweight));
+        prs = prs.filter((pr:{bodyweight:number}) => pr.bodyweight === Number(selectedBodyweight));
       }
       if (selectedReps) {
-        prs = prs.filter(pr => pr.reps === Number(selectedReps));
+        prs = prs.filter((pr:{reps:number})=> pr.reps === Number(selectedReps));
       }
       const prsByUser = new Map();
       for (const pr of prs) {

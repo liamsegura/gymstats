@@ -1,7 +1,6 @@
-const express = require("express");
+import express from "express"
 const router = express.Router();
-const commentsController = require("../controllers/comments");
-const { ensureAuth, ensureGuest } = require("../middleware/auth");
+import commentsController from "../controllers/comments"
 
 
 router.post("/createComment/:id", commentsController.createComment);
@@ -12,4 +11,4 @@ router.delete("/deleteComment/:id", commentsController.deleteComment);
 
 router.delete("/deleteReply/:id", commentsController.deleteReply);
 
-module.exports = router;
+export default router;

@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js",
+    "dev": "nodemon server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -35,6 +35,20 @@
     "node": ">=14 <15"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.17",
+    "@types/express-flash": "^0.0.2",
+    "@types/express-session": "^1.17.7",
+    "@types/method-override": "^0.0.32",
+    "@types/morgan": "^1.9.4",
+    "@types/multer": "^1.4.7",
+    "@types/node": "^20.4.1",
+    "@types/passport": "^1.0.12",
+    "@types/passport-local": "^1.0.35",
+    "@types/validator": "^13.7.17",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6",
     "video.js": "^8.0.4"
   }
 }

@@ -1,8 +1,7 @@
-const express = require('express');
+import express from 'express'
 const router = express.Router();
-const userController = require('../controllers/userController');
-const { ensureAuth, ensureGuest } = require("../middleware/auth");
-const upload = require("../middleware/multer");
+import userController from '../controllers/userController'
+import upload from "../middleware/multer"
 
 
 // Follow a user
@@ -19,5 +18,5 @@ router.put("/saveProfilePic/:id", upload.single("file"), userController.saveProf
 // Unfollow a user
 router.delete('/:userId/unfollow/:userToUnfollowId', userController.unfollowUser);
 
-module.exports = router;
+export default router;
 
