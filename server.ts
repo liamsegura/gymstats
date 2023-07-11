@@ -17,11 +17,15 @@ import userRoutes from "./routes/users"
 import notificationsMiddleware from './middleware/notifications'
 
 
-//Use .env file in config folder
-require("dotenv").config({ path: "./config/.env" });
+// //Use .env file in config folder
+// require("dotenv").config({ path: "./config/.env" });
 
+
+import dotenv from 'dotenv'
+dotenv.config({ path: "./config/.env" })
+import myFunc from './config/passport'
 // Passport config
-require("./config/passport")(passport);
+myFunc(passport);
 
 
 //Using EJS for views
