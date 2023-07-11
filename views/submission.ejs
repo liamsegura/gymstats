@@ -1,7 +1,7 @@
 <%- include('partials/header') -%>
 
 <div class="container">
-  <%  if (post.media.type == "video") { %>
+
   <div class="row justify-content-center mt-4 video-margin post-thumbnail">
        <!-- Check if the browser is Safari -->
           <video
@@ -16,84 +16,20 @@
           data-setup='{"fluid": true, "userActions": {"doubleClick": false}, "controlBar": { "fullscreenToggle": false, "pictureInPictureToggle": false }}'
           playsinline
           >
-          <source src="<%= post.media.url %>" type="video/mp4">      
+          <source src="<%= post.media.url %>" type="video/mp4">        
         </video>
-      <% } else { %>
-        <div class="row justify-content-center mt-4"></div>
-          <img class="img-fluid post-img" src="<%= post.media.url %>" alt="Image">
-      <% } %>
   </div>
-
   <div class="col-12 p-4">
     <div class="d-flex justify-content-between align-items-top">
-      
-        <% if(post.category) {%>
-            <div >
-              <div class="trophy-icon d-flex align-items-center ">
-              <h3 class="m-0">PERSONAL RECORD</h3><i class="fas fa-trophy" style="color: rgb(228, 228, 46)!important;"></i>
-            </div>
-              <div class="d-flex flex-column">
-                <% let bodyWeight = post.bodyweight == 0 ? "n/a" : post.bodyweight + "KG" %>
-                <p ><%= `${post.category}  ${post.weight}KG @ ${bodyWeight} bodyweight` %></p>
-              </div>
-            </div>
-            <span class="text-muted"><%= post.formattedElapsedTime %></span>
-          <%}%>
+
 
     </div>
+
     <div class="row align-items-center justify-content-between mb-3 mt-2">
       <div class="d-flex">
         <a href="/profile/<%= post.user._id %>" ><strong style="margin-right:0.5rem;"><%= user.userName.toLowerCase() %></strong></a> <p><%= post.caption %></p>
       </div>
-      <div class="d-flex pt-2 w-0 justify-content-between">
-        <% if(!post.category ){ %>
-        <form action="/post/likePost/<%= post._id %>" method="POST">
-          <button class="btn btn-link p-0">
-            <% if(post.likes.toString().includes(loggedUser._id.toString())) { %>
-              <%console.log('true') %>
-              <i class="fas fa-heart" style="font-weight:900!important ;"></i>
-            <% } else { %>
-              <i class="far fa-heart"></i>
-            <% } %>
-          </button>
-        </form>
-        <%}%>
-        <% if(post.category ){ %>
-          
-          <form action="/pr/likePR/<%= post._id %>" method="POST">
-            <button class="btn btn-link p-0">
-
-              <% if(post.likes.toString().includes(loggedUser._id.toString())) { %>
-                <i class="fas fa-heart" style="font-weight:900!important ;"></i>
-              <% } else { %>
-                <i class="far fa-heart"></i>
-              <% } %>
-              
-            </button>
-          </form>
-          <%}%>
-          <div class="text-center">
-            <a href="/post/<%=post._id%>/likes"><span><%= post.likes.length %> likes</span></a>
-          </div>
-          <% if(post.user._id.toString() == loggedUser._id.toString() && !post.category ){ %>
-            <div class=" text-right">
-              <form action="/post/deletePost/<%= post._id %>?_method=DELETE" method="POST">
-                <button class="btn btn-link p-0">
-                  <i class="far fa-trash-alt"></i>
-                </button>
-              </form>
-            </div>
-            <% } %>
-            <% if(post.user._id.toString() == loggedUser._id.toString() && post.category){ %>
-              <div class="text-right">
-                <form action="/pr/deletePR/<%= post._id %>?_method=DELETE" method="POST">
-                  <button class="btn btn-link p-0">
-                    <i class="far fa-trash-alt"></i>
-                  </button>
-                </form>
-              </div>
-              <% } %>
-          </div>
+      
     </div>
     
 <!-- //comments -->

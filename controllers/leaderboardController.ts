@@ -18,6 +18,21 @@ export default {
       if (selectedReps) {
         prs = prs.filter((pr:{reps:number})=> pr.reps === Number(selectedReps));
       }
+      const prsByUser = new Map();
+      for (const pr of prs) {
+        const key = `${pr.user._id}_${pr.bodyweight}_${pr.reps}`;
+        if (!prsByUser.has(key)) {
+          prsByUser.set(key, pr);
+        } else {
+          const existingPr = prsByUser.get(key);
+          if (pr.weight > existingPr.weight) {
+            prsByUser.set(key, pr);
+          }
+        }
+      }
+      prs = Array.from(prsByUser.values());
+
+      // limit the number of PRs to 100
       res.render('leaderboard', { pageTitle: 'leaderboard', prsByCategory, prs, selectedCategory, selectedBodyweight, selectedReps, loggedUser: req.user, onNotificationsPage: false });
     } catch (error) {
       console.error(error);
