@@ -9,7 +9,7 @@ export default {
 
 
 
-getNotifications: async (req, res) => {
+getNotifications: async (req: any, res: any) => {
   try {
     const userId = req.user._id;
   
@@ -23,7 +23,7 @@ getNotifications: async (req, res) => {
     await User.findByIdAndUpdate(userId, { unreadCount: 0 });
 
     
-    notifications.forEach(notification => {
+    notifications.forEach((notification: { read: boolean; _id: string }) => {
       if (notification.read) {
         setTimeout(async () => {
           await Notification.deleteOne({_id: notification._id});
@@ -34,7 +34,7 @@ getNotifications: async (req, res) => {
     // delete after 24/hrs - 24 * 60 * 60 * 1000
     
     // Format the createdAt date of each notification
-notifications.forEach(notification => {
+notifications.forEach((notification: { createdAt: string; formattedElapsedTime: string }) => {
   // Calculate the elapsed time
   const elapsedTime = moment(notification.createdAt).fromNow(true);
 
@@ -68,10 +68,10 @@ res.render('notifications.ejs', {
     console.error(err);
     res.status(500).json({ message: 'Server Error' });
   }
-};
+},
 
 
-saveProfile: async (req, res) => {
+saveProfile: async (req:any, res:any) => {
   try {
     console.log(req.file)
     console.log(req.body)
@@ -103,20 +103,20 @@ saveProfile: async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-};
+},
 
 
-saveProfilePic: async (req, res) => {
+saveProfilePic: async (req:any, res:any) => {
   try {
     console.log(req.file)
       const user = await User.findById(req.params.id)
       console.log(user)
 
-      if(user.cloudinaryId){
+      if(user && user.cloudinaryId){
       await cloudinary.uploader.destroy(user.cloudinaryId, { resource_type: "image" })
       }
       
-      result = await cloudinary.uploader.upload(req.file.path, {
+      const result = await cloudinary.uploader.upload(req.file.path, {
         transformation: [
          { width: 200, height: 200, crop: "fill" }
         ]})
@@ -128,7 +128,7 @@ saveProfilePic: async (req, res) => {
         $set: {
           profilePic: {
             url: result.secure_url,
-            type: req.file ? req.file.mimetype : user.profilePic.type
+            type: req.file ? req.file.mimetype : user ? user.profilePic.type : null,  
           },
           cloudinaryId: result.public_id
         },
@@ -140,15 +140,15 @@ saveProfilePic: async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-};
+},
 
-getFollowers: async (req, res) => {
+getFollowers: async (req: any, res: any) => {
   try {
 
     const userId = req.params.userId;
     const user = await User.findById(userId).populate({ path: 'followers', model: 'User'}).populate({ path: 'following', model: 'User'})
     res.render("followers.ejs", {
-      pageTitle: user.userName,
+      pageTitle: user ? user.userName : null,
       loggedUser: req.user,
       user,
       onNotificationsPage: false
@@ -159,7 +159,7 @@ getFollowers: async (req, res) => {
   }
 },
 
-followUser: async (req, res) => {
+followUser: async (req:any, res:any) => {
   try {
     const userId = req.params.userId;
     const userToFollowId = req.params.userToFollowId;
@@ -190,8 +190,9 @@ followUser: async (req, res) => {
     await User.findByIdAndUpdate(userId, { $addToSet: { following: userToFollowId } });
     await User.findByIdAndUpdate(userToFollowId, { $addToSet: { followers: userId } });
 
+    
       // Create notification for the user being followed
-      const notification = new Notification({
+      const notification:any = new Notification({
         type: 'follow',
         generator: userId,
         recipient: userToFollowId
@@ -204,9 +205,9 @@ followUser: async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
-};
+},
 
-unfollowUser: async (req, res) => {
+unfollowUser: async (req:any, res:any) => {
   try {
     const userId = req.params.userId;
     const userToUnfollowId = req.params.userToUnfollowId;

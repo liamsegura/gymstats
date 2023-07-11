@@ -11,12 +11,12 @@ import moment from 'moment'
 
 export default {
 
-  getProfile: async (req, res) => {
+  getProfile: async (req: any, res: any) => {
     try {
       const userId = req.params.id;
       const posts = await Post.find({ user: userId });
       const user = await User.findById(userId);
-      const isFollowing = user.followers.includes(req.user._id);
+      const isFollowing = user ? user.followers.includes(req.user._id) : false;
       const prs = await PR.find({ user: userId })
 
      
@@ -31,7 +31,7 @@ export default {
   
 
         res.render("profile.ejs", {
-          pageTitle: user.userName,
+          pageTitle: user ? user.userName : "User Profile",
           posts,
           prs,
           loggedUser: req.user,
@@ -44,12 +44,12 @@ export default {
       }
   },
 
-  editProfile: async (req, res) => {
+  editProfile: async (req: any, res: any) => {
     try {
       const userId = req.params.id;
       const posts = await Post.find({ user: userId });
       const user = await User.findById(userId);
-      const isFollowing = user.followers.includes(req.user._id);
+      const isFollowing = user ? user.followers.includes(req.user._id) : false;
       const prs = await PR.find({ user: userId })
       
       res.render("editprofile.ejs", {
@@ -67,7 +67,7 @@ export default {
   },
 
 
-  getFeed: async (req, res) => {
+  getFeed: async (req: any, res: any) => {
     try {
       
       const result = browser(req.headers['user-agent']);
@@ -86,8 +86,8 @@ export default {
       const postsWithComments = await Promise.all(promises);
   
       // Sort the merged array by the creation date of each post
-      postsWithComments.sort((a, b) => {
-        return new Date(b.createdAt) - new Date(a.createdAt);
+      postsWithComments.sort((a:any, b:any) => {
+        return new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf();
       });
   
       // Format the createdAt date of each post
@@ -117,7 +117,7 @@ export default {
   },
   
 
-  getPost: async (req, res) => {
+  getPost: async (req: any, res: any) => {
     try {
         
 
@@ -193,7 +193,7 @@ export default {
     }
 },
 
-getLikes: async (req, res) => {
+getLikes: async (req: any, res: any) => {
   try {
 
     const postId = req.params.id;
@@ -234,7 +234,7 @@ getLikes: async (req, res) => {
 },
 
 
-  getPostMenu: async (req, res) => { 
+  getPostMenu: async (req: any, res: any) => { 
     try{
       res.render("postmenu.ejs", {pageTitle: 'menu', loggedUser: req.user, onNotificationsPage: false})
     } catch (err) {
@@ -242,7 +242,7 @@ getLikes: async (req, res) => {
     }
   },
 
-  createPost: async (req, res) => {
+  createPost: async (req: any, res: any) => {
     try {
       // Upload media to cloudinary
       const result = await cloudinary.uploader.upload(req.file.path, {
@@ -277,14 +277,14 @@ getLikes: async (req, res) => {
         
       console.log("Post has been added!");
       res.redirect("/feed");
-    } catch (err) {
+    } catch (err:any) {
       console.log(err);
       res.status(500).json({ error: err.message });
     }
   },
   
   
-likePost: async (req, res) => {
+likePost: async (req: any, res: any) => {
   const postId = req.params.id;
   const userId = req.user._id;
   try {
@@ -313,7 +313,7 @@ likePost: async (req, res) => {
     } else {
       // User has not yet liked the post, so add their like
       if(!req.user._id.equals(post.user)){
-        const notification = new Notification({
+        const notification:any = new Notification({
           type: 'like',
           generator: userId,
           recipient: post.user,
@@ -339,7 +339,7 @@ likePost: async (req, res) => {
 
 
 
-  deletePost: async (req, res) => {
+  deletePost: async (req: any, res: any) => {
  
     try {
       // Find post by id

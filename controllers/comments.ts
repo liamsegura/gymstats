@@ -5,7 +5,7 @@ import PR from "../models/PR"
 import User from "../models/User"
 
 export default {
-  createComment: async (req, res) => {
+  createComment: async (req: any, res: any) => {
     try {
       const { comment, parentComment, replyToUser } = req.body;
 
@@ -31,8 +31,8 @@ export default {
         await parent.save();
           // Create a notification for the parent comment author
           const parentCommentAuthor = await User.findById(replyToUser);
-          if (parentCommentAuthor._id.toString() !== req.user._id.toString()) {
-              const notification = new Notification({
+          if (parentCommentAuthor && parentCommentAuthor._id.toString() !== req.user._id.toString()) {
+              const notification:any = new Notification({
                   type: "reply",
                   post: parent.post,
                   recipient: replyToUser,
@@ -51,14 +51,14 @@ export default {
         });
       }
   
-      const savedComment = await newComment.save();
+      const savedComment:any= await newComment.save();
   
       // Create a notification if necessary
       const post = await Post.findById(savedComment.post);
       if (!post) {
         const pr = await PR.findById(savedComment.post);
         if (pr && pr.user.toString() !== req.user._id.toString()) {
-          const notification = new Notification({
+          const notification:any = new Notification({
             type: "comment",
             post: pr._id,
             onModel: 'PR',
@@ -71,7 +71,7 @@ export default {
         }
       } else {
         if (post.user.toString() !== req.user._id.toString()) {
-          const notification = new Notification({
+          const notification:any = new Notification({
             type: "comment",
             post: post._id,
             onModel: 'Post',
@@ -93,14 +93,14 @@ export default {
   
 
 
-  deleteComment: async (req, res) => {
+  deleteComment: async (req: any, res: any) => {
     try {
       const comment = await Comment.findById(req.params.id);
       if (!comment) {
         return { success: false, message: "Comment not found" };
       }
   
-      const replyIds = comment.replies.map(reply => reply._id);
+      const replyIds = comment.replies.map((reply:{_id:string}) => reply._id);
 
         // find all the replies and their corresponding users
         const replies = await Comment.find({ _id: { $in: replyIds } }).populate('user');
@@ -115,7 +115,7 @@ export default {
         await Notification.deleteMany({ comment: { $in: replyIds } });
 
         // update the unreadCount for each user who has a reply
-        const userIds = new Set(replies.map(reply => reply.user._id.toString()));
+        const userIds = new Set(replies.map((reply:any) => reply.user._id.toString()));
         for (const userId of userIds) {
           await User.findByIdAndUpdate(userId, { $inc: { unreadCount: -1 }  });
         }
@@ -140,7 +140,7 @@ export default {
     }
   },
 
-  deleteReply: async (req, res) => {
+  deleteReply: async (req: any, res: any) => {
     try {
   const replyId = req.params.id;
   const reply = await Comment.findByIdAndDelete(replyId)

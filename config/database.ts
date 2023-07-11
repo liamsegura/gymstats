@@ -1,5 +1,12 @@
 import mongoose from "mongoose";
 
+declare const process : {
+  env: {
+  DB_STRING: string
+  }
+  exit: (code?: number) => void
+}
+
 export default async function connectDB() {
   try {
     const conn = await mongoose.connect(process.env.DB_STRING, {

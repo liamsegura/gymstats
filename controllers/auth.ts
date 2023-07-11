@@ -4,7 +4,7 @@ import User from "../models/User";
 import cloudinary from "../middleware/cloudinary";
 
 export default {
-  getLogin: function (req, res) {
+  getLogin: function (req:any, res:any) {
     if (req.user) {
       return res.redirect("/feed");
     }
@@ -13,7 +13,7 @@ export default {
     });
   },
 
-  postLogin: function (req, res, next) {
+  postLogin: function (req:any, res:any, next:any) {
     const validationErrors = [];
     if (!validator.isEmail(req.body.email))
       validationErrors.push({ msg: "Please enter a valid email address." });
@@ -28,7 +28,7 @@ export default {
       gmail_remove_dots: false,
     });
 
-    passport.authenticate("local", (err, user, info) => {
+    passport.authenticate("local", (err:any, user:any, info:any) => {
       if (err) {
         return next(err);
       }
@@ -36,7 +36,7 @@ export default {
         req.flash("errors", info);
         return res.redirect("/login");
       }
-      req.logIn(user, (err) => {
+      req.logIn(user, (err:any) => {
         if (err) {
           return next(err);
         }
@@ -46,11 +46,11 @@ export default {
     })(req, res, next);
   },
 
-  logout: function (req, res) {
+  logout: function (req:any, res:any) {
     req.logout(() => {
       console.log("User has logged out.");
     });
-    req.session.destroy((err) => {
+    req.session.destroy((err:any) => {
       if (err)
         console.log(
           "Error: Failed to destroy the session during logout.",
@@ -61,7 +61,7 @@ export default {
     });
   },
 
-  getSignup: function (req, res) {
+  getSignup: function (req:any, res:any) {
     if (req.user) {
       return res.redirect("/feed");
     }
@@ -70,7 +70,7 @@ export default {
     });
   },
 
-  postSignup: async function (req, res, next) {
+  postSignup: async function (req:any, res:any, next:any) {
     let user; // Declare user variable here
     const validationErrors = [];
     if (!validator.isEmail(req.body.email))
@@ -135,7 +135,7 @@ export default {
       }
 
       await user.save();
-      req.logIn(user, async (err) => {
+      req.logIn(user, async (err: any) => {
         if (err) {
           req.flash("errors", {
             msg:

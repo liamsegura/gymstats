@@ -4,7 +4,6 @@ import PR from "../models/PR"
 import Relationship from "../models/Relationship"
 import Notification from "../models/Notification"
 import Comment from "../models/Comments"
-import { post } from "../routes/main"
 
 
 
@@ -13,7 +12,7 @@ export default {
 
   
       
-  createPR: async (req, res) => {
+  createPR: async (req:any, res:any) => {
     console.log(req.file.mimetype)
     
       // Upload media to cloudinary
@@ -47,7 +46,7 @@ export default {
 
       // Create post notification for all followers
       const followers = await Relationship.find({ following: req.user.id }).populate("follower");
-      const notificationPromises = followers.map(async (follower) => {
+      const notificationPromises = followers.map(async (follower: { follower: { _id: string; }; }) => {
         if (follower.follower._id.toString() !== req.user.id) {
           await Notification.create({
             type: "post",
@@ -63,14 +62,14 @@ export default {
   
       console.log("Pr has been added!");
       res.redirect("/feed");
-    } catch (err) {
+    } catch (err:any) {
       console.log(err);
       res.status(500).json({ error: err.message });
     }
   },
  
   
-  likePR: async (req, res) => {
+  likePR: async (req:any, res:any) => {
     const postId = req.params.id;
     const userId = req.user._id;
     try {
@@ -98,7 +97,9 @@ export default {
       } else {
         // User has not yet liked the post, so add their like
         if(!req.user._id.equals(post.user)){
-          const notification = new Notification({
+
+        
+          const notification:any = new Notification({
             type: 'like',
             generator: userId,
             recipient: post.user,
@@ -122,20 +123,21 @@ export default {
 
 
 
-  deletePR: async (req, res) => {
+  deletePR: async (req:any, res:any) => {
     try {
       // Find post by id
       let pr = await PR.findById({ _id: req.params.id });
       await Comment.deleteMany({ post: req.params.id });
       await Notification.deleteMany({ post: req.params.id })
-      let user = await User.findById({ _id: pr.user });
-      const notificationPromises = await Promise.all(user.followers.map(async (follower) => {
+      let user:any = await User.findById({ _id: pr.user });
+      const notificationPromises = await Promise.all(user.followers.map(async (follower:{_id:string}) => {
         console.log("Processing follower: ", follower);
         if (follower && follower && follower._id.toString() !== req.user.id) {
           console.log(follower)
           await User.findByIdAndUpdate(follower._id, { $inc: { unreadCount: -1 } });
         }
-        return Promise.resolve(null);
+        return Promise.resolve(null)
+      
       }));
       
       

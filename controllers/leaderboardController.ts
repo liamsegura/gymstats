@@ -2,7 +2,7 @@ import PR from '../models/PR'
 import User from "../models/User"
 
 export default {
-  getLeaderboard: async (req, res) => {
+  getLeaderboard: async (req:any, res:any) => {
     try {
       let selectedCategory = req.query.category || '';
       let selectedBodyweight = req.query.bodyweight || '';
@@ -13,10 +13,10 @@ export default {
         .limit(100)
         .populate({ path: 'user', model: 'User' });
       if (selectedBodyweight) {
-        prs = prs.filter(pr => pr.bodyweight === Number(selectedBodyweight));
+        prs = prs.filter((pr:{bodyweight:number}) => pr.bodyweight === Number(selectedBodyweight));
       }
       if (selectedReps) {
-        prs = prs.filter(pr => pr.reps === Number(selectedReps));
+        prs = prs.filter((pr:{reps:number})=> pr.reps === Number(selectedReps));
       }
       res.render('leaderboard', { pageTitle: 'leaderboard', prsByCategory, prs, selectedCategory, selectedBodyweight, selectedReps, loggedUser: req.user, onNotificationsPage: false });
     } catch (error) {

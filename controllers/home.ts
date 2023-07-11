@@ -1,5 +1,5 @@
 export default {
-  getIndex: (req, res) => {
+  getIndex: (req:any, res:any) => {
     res.render("index.ejs");
     
   },
