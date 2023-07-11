@@ -6,7 +6,7 @@ Live Demo on YouTube:<br>
 
 **Note:** gymstats is still in development. Future plans for the app include the implementation of exciting features to enhance the user experience and provide additional functionalities.
 
--Converted to typescript Jul 11
+– Converted to typescript Jul 11
 
 # Functionality
 
@@ -28,7 +28,7 @@ Live Demo on YouTube:<br>
 
 # Technologies Used
 
-- Typescript: Maintaining type safety<br>
+– Typescript: Maintaining type safety<br>
 – Node.js: Server-side JavaScript runtime<br>
 – Express.js: Web application framework for Node.js<br>
 – MongoDB: NoSQL database for storing user and workout data<br>
